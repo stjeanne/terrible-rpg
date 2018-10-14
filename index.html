@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>terrible rpg</title>
+	<title>capitalism zero: terrible edition</title>
 	<link rel="stylesheet" href="rpgtest.css">
 	<meta 
 		name="terrible rpg, please ignore" 
@@ -8,17 +8,10 @@
 		>
 	</head>
 
-								<script>
-									function cmd_idle() {
-										document.getElementById("plr_log").innerHTML = "Idling";
-									}
-								</script>
-
-
 	<body>
 		<div id="wrapper">
 			<div id="header">
-				<h1>terrible rpg</h1>
+				<h1>capitalism zero: terrible edition</h1>
 			</div>
 
 			<div id="topcolwrap">
@@ -26,9 +19,14 @@
 				<div id="leftcol">
 							<div id="charsheet">
 								<h2>Char Sheet</h2>
-								<p>name: Default</p>
-								<p>hp: 1</p>
-								<p>ARMS: 2</p>
+								<ul><li>name: Default</li>
+								<li>motto: I Exist</li>
+								<li>health: 1</li>
+								<li>stamina: 0.1</li>
+								<li>focus: 0.1</li>
+								<li>strength: 0</li>
+								<li>will: 0</li>
+							</ul>
 							</div>
 						</div>
 
@@ -39,13 +37,26 @@
 
 							<div id="commands">
 								<h2>Commands</h2>
-								<button onclick="cmd_idle()">Idle</button>
+									<button id="cmd_button">Idle</button>
 							</div>
+
+							<script>
+								var clickCMD = document.getElementById("cmd_button");
+								var statWindow = getElementById("statwindow");
+								clickCMD.addEventListener("click", "cmd_idle");
+
+								function cmd_idle() {
+									statWindow.innerHTML = "Idling\n";
+								}
+							</script>
+
+
 				</div>
 
 			</div>
 
 			<div id="plr_log">
+				<p id="statwindow">test</p>
 			</div>
 
 			<div id="footer">

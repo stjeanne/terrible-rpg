@@ -2,7 +2,6 @@
 	margin-left: auto;
 	margin-right: auto;
 	width: 1000px;
-	background-color: #ccc;
 	font-family: Andale Mono, monospace;
 }
 
@@ -15,14 +14,25 @@
 	font-size: 12px;
 }
 
+#charsheet ul {
+	list-style-position: outside;
+	padding-left: 1em;
+
+}
+
+#charsheet li {
+	font-size: 12px;
+}
+
 #header {
 
 }
 
 #leftcol {
-	width: 300px;
+	width: 150px;
 	float: left;
-	margin-left: 1em;
+	margin-left: 25px;
+	margin-right: 125px;
 	padding: 1em;
 	background-color: #eee;
 }
@@ -46,17 +56,15 @@
 }
 
 #topcolwrap {
-	margin-bottom: 10px;
+	margin-bottom: 25px;
 }
  
 #plr_log {
 	clear: both;
 	margin-left: auto;
 	margin-right: auto;
-	width: 1000px;
-	margin-top: 12em;
+	width: 950px;
 	margin-bottom: 1em;
-	background-color: #eee;
 	font-size: 12px;
 }
 
