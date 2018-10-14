@@ -1,6 +1,7 @@
 <html>
 <head>
 	<title>capitalism zero: terrible edition</title>
+	<script type="text/javascript" src="init.js"></script>
 	<script type="text/javascript" src="player.js"></script>
 	<script type="text/javascript" src="commands.js"></script>
 	<link rel="stylesheet" href="rpgtest.css">
@@ -21,7 +22,8 @@
 
 				<div id="leftcol">
 							<div id="charsheet">
-								<h2>Char Sheet</h2>
+							<script>displayCharSheet();</script>
+<!--								<h2>Char Sheet</h2>
 								<ul><li>name: Default</li>
 								<li>motto: I Exist</li>
 								<li>health: 1</li>
@@ -29,7 +31,7 @@
 								<li>focus: 0.1</li>
 								<li>strength: 0</li>
 								<li>will: 0</li>
-							</ul>
+							</ul>1-->
 							</div>
 						</div>
 
@@ -43,11 +45,6 @@
 									<button id="cmd_button">Idle</button>
 							</div>
 
-							<script>
-								var clickCMD = document.getElementById("cmd_button");
-								var statWindow = getElementById("statwindow");
-								clickCMD.addEventListener("click", "cmd_idle");
-							</script>
 
 
 				</div>
@@ -57,6 +54,11 @@
 			<div id="plr_log">
 				<p id="statwindow">Nothing can happen yet.</p>
 			</div>
+
+			<script>
+				var clickCMD = document.getElementById("cmd_button");
+				clickCMD.addEventListener("click", cmd_idle);
+			</script>
 
 			<div id="footer">
 				Terrible RPG is a product of <a href="http://traps.fun">fun merchants llc</a>, all rights reserved
