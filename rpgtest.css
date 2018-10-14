@@ -32,13 +32,13 @@
 	width: 150px;
 	float: left;
 	margin-left: 25px;
-	margin-right: 125px;
+	margin-right: 50px;
 	padding: 1em;
 	background-color: #eee;
 }
 
 #rightcol {
-	width: 600px;
+	width: 700px;
 	float: right;
 	padding: 1em;
 }
