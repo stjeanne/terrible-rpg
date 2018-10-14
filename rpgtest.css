@@ -2,12 +2,35 @@
 	margin-left: auto;
 	margin-right: auto;
 	width: 1000px;
-	padding: 5px;
 	background-color: #ccc;
+	font-family: Andale Mono, monospace;
+}
+
+#wrapper h2 {
+	font-size: 16px;
+	color: #990000;
+}
+
+#wrapper p {
+	font-size: 12px;
 }
 
 #header {
 
+}
+
+#leftcol {
+	width: 300px;
+	float: left;
+	margin-left: 1em;
+	padding: 1em;
+	background-color: #eee;
+}
+
+#rightcol {
+	width: 600px;
+	float: right;
+	padding: 1em;
 }
 
 #charsheet {
@@ -15,7 +38,7 @@
 }
 
 #stimuli {
-	
+
 }
 
 #commands {
@@ -23,5 +46,7 @@
 }
 
 #footer {
+	margin-top: 1em;
+	font-size: 10px;
 	clear: both;
 }
