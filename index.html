@@ -7,28 +7,45 @@
 		description="a terrible rpg for learning purposes"
 		>
 	</head>
+
+								<script>
+									function cmd_idle() {
+										document.getElementById("plr_log").innerHTML = "Idling";
+									}
+								</script>
+
+
 	<body>
 		<div id="wrapper">
 			<div id="header">
 				<h1>terrible rpg</h1>
 			</div>
 
-			<div id="leftcol">
-						<div id="charsheet">
-							<h2>Char Sheet</h2>
-							<p>name: Default</p>
-							<p>hp: 1</p>
-							<p>ARMS: 2</p>
-						</div>
-					</div>
-			<div id="rightcol">
-						<div id="stimuli">
-							<p>You see a field, pregnant with possibility.</p>
+			<div id="topcolwrap">
+
+				<div id="leftcol">
+							<div id="charsheet">
+								<h2>Char Sheet</h2>
+								<p>name: Default</p>
+								<p>hp: 1</p>
+								<p>ARMS: 2</p>
+							</div>
 						</div>
 
-						<div id="commands">
-							<h2>Commands</h2>
-						</div>
+				<div id="rightcol">
+							<div id="stimuli">
+								<p>You see a field, pregnant with possibility.</p>
+							</div>
+
+							<div id="commands">
+								<h2>Commands</h2>
+								<button onclick="cmd_idle()">Idle</button>
+							</div>
+				</div>
+
+			</div>
+
+			<div id="plr_log">
 			</div>
 
 			<div id="footer">
