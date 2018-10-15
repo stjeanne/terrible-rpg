@@ -23,15 +23,6 @@
 				<div id="leftcol">
 							<div id="charsheet">
 							<script>displayCharSheet();</script>
-<!--								<h2>Char Sheet</h2>
-								<ul><li>name: Default</li>
-								<li>motto: I Exist</li>
-								<li>health: 1</li>
-								<li>stamina: 0.1</li>
-								<li>focus: 0.1</li>
-								<li>strength: 0</li>
-								<li>will: 0</li>
-							</ul>1-->
 							</div>
 						</div>
 
@@ -43,22 +34,24 @@
 							<div id="commands">
 								<h2>Commands</h2>
 									<button id="cmd_button">Idle</button>
+									<button id="clean_button">Clean</button>
+
+								<script>
+									var clickCMD = document.getElementById("cmd_button");
+									var cleanCMD = document.getElementById("clean_button");
+
+									clickCMD.addEventListener("click", cmd_idle);
+									cleanCMD.addEventListener("click", cmd_clean);
+								</script>
 							</div>
-
-
-
 				</div>
 
 			</div>
 
 			<div id="plr_log">
-				<p id="statwindow">Nothing can happen yet.</p>
+				<p id="statwindow">Command?</p>
 			</div>
 
-			<script>
-				var clickCMD = document.getElementById("cmd_button");
-				clickCMD.addEventListener("click", cmd_idle);
-			</script>
 
 			<div id="footer">
 				Terrible RPG is a product of <a href="http://traps.fun">fun merchants llc</a>, all rights reserved
