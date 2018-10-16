@@ -1,5 +1,7 @@
 // player JSON objects and functions related to updating/interacting
 
+// for right now this is stupid but
+
 var PC = {
 	name: "Caramella",
 	motto: "I come from a file",
@@ -8,12 +10,11 @@ var PC = {
 	focus: defaultStat,
 	will: defaultStat,
 	strength: defaultStat,
-	location: defaultLocation
-};
+	location: defaultLocation,
+}; 
 
 var displayCharSheet = function() {
-	document.getElementById("charsheet").innerHTML =
-
+	document.getElementById("charsheet").innerHTML = 	
 	'<h2>Char Sheet</h2>' +
 	'<ul><li>' + PC.name + '</li>' +
 	'<li>Health: ' + PC.health + '</li>' +
