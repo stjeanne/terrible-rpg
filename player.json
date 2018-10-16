@@ -1,0 +1,19 @@
+{
+	"player": {
+		"name" : "Caramella",
+		"motto" : "I exist",
+
+		"health": null,
+		"stamina": null,
+		"focus": null,
+
+		"strength": null,
+		"will": null,
+
+		"creditlevel": null,
+		"debt": null,
+		"credit_max": null,
+
+		"location": "home",
+	}
+}
