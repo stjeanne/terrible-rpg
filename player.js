@@ -2,22 +2,16 @@
 
 // for right now this is stupid but
 
-var PC = {
-	name: "Caramella",
-	motto: "I come from a file",
-	health: defaultStat,
-	stamina: defaultStat,
-	focus: defaultStat,
-	will: defaultStat,
-	strength: defaultStat,
-	location: defaultLocation,
-}; 
 
-var displayCharSheet = function() {
+var updateCharSheet = function() {
 	document.getElementById("charsheet").innerHTML = 	
 	'<h2>Char Sheet</h2>' +
 	'<ul><li>' + PC.name + '</li>' +
+	'<li>\"' + PC.motto + '\"</li>' +
 	'<li>Health: ' + PC.health + '</li>' +
+	'<li>Focus: ' + PC.focus + '</li>' +
 	'<li>Location: ' + PC.location + '</l1>' + 
 	'</ul>';
+
+	console.log(PC);
 }
