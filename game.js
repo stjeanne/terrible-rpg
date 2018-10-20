@@ -8,13 +8,15 @@ class Game {
 	}
 
 	gLoop() {
-		$("charsheet").html("<h2>Char Sheet</h2>" +
+		$("#charsheet").html("<h2>Char Sheet</h2>" +
 		'<ul><li>' + PC.name + '</li>' +
 		'<li>\"' + PC.motto + '\"</li>' +
 		'<li>Health: ' + PC.health + '</li>' +
 		'<li>Focus: ' + PC.focus + '</li>' +
 		'<li>Location: ' + PC.location + '</l1>' + 
 		'</ul>');
+
+//		updateCharSheet();
 
 		this.loop_count++;
 		console.log("game loops: " + this.loop_count + " game rate: " + this.rate);

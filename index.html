@@ -19,9 +19,14 @@
 
 	<body onload="startGame()">
 
-			<script>$("document").ready(function (){
+			<script>
+				let GM = new Game(1000);
+				$("document").ready(function (){
 								$("#header").append("<h1>capitalism zero: crisis in the stars</h1>");
-						});</script>
+						});
+				GM.gLoop();
+
+			</script>
 
 		<div id="wrapper">
 			<div id="header">

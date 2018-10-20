@@ -4,7 +4,7 @@ const CMD_PARSER = "* ";
 
 let cmd_idle = function() {
 	$("#statwindow").prepend("<p>" + CMD_PARSER + "Idling.</p>");
-//	GM.gLoop();
+	GM.gLoop();
 
 	console.log("clicked idle");
 //	var commandLog = document.getElementById("statwindow");
@@ -13,7 +13,7 @@ let cmd_idle = function() {
 
 let cmd_clean = function() {
 	$("#statwindow").html("<p>" + CMD_PARSER + "You clean the area.</p>");
-//	GM.gLoop();
+	GM.gLoop();
 
 	console.log("clicked clean");
 };
@@ -23,8 +23,7 @@ let cmd_meditate = function() {
 	$("#statwindow").prepend("<p>" + CMD_PARSER + "You meditate, gaining focus.</p>");
 
 	PC.focus += Math.floor((Math.random() * 4) + 8);
-
-//	GM.gLoop();
+	GM.gLoop();
 
 	console.log("focus for " + PC.name + ": " + PC.focus);
 };

@@ -1,9 +1,6 @@
 // initialization file for weird game
 
-var PC = new Object;
-
-
-PC = {
+var PC = {
 	name: "FAILURE",
 	motto: "raw code",
 	health: defaultStat,
@@ -38,7 +35,7 @@ function startGame() {
 
 	request.send();
 
-	updateCharSheet();
+//	updateCharSheet();
 
 	console.log(request);
 
