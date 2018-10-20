@@ -2,17 +2,17 @@
 
 var PC = new Object;
 
-/*
-var PC = {
+
+PC = {
 	name: "FAILURE",
-	motto: "I come from a file",
+	motto: "raw code",
 	health: defaultStat,
 	stamina: defaultStat,
 	focus: defaultStat,
 	will: defaultStat,
 	strength: defaultStat,
 	location: defaultLocation,
-}; */
+}; 
 
 
 function loadGameData() {
