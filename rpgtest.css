@@ -64,8 +64,13 @@
 	margin-left: auto;
 	margin-right: auto;
 	width: 950px;
+	margin-top: 25px;
 	margin-bottom: 1em;
 	font-size: 12px;
+}
+
+#plr_log p {
+	margin-bottom: 12px;
 }
 
 #footer {

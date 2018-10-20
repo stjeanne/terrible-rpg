@@ -15,7 +15,9 @@ PC = {
 }; 
 
 
-function loadGameData() {
+function startGame() {
+
+	let GM = new Game(1000);
 
 	var request;
 
@@ -29,7 +31,6 @@ function loadGameData() {
 	request.onreadystatechange = function() {
 		if ((request.status===200) && (request.readyState===4)) {
 			PC = JSON.parse(request.responseText);
-//			PC.name = playerData.player.name;
 			console.log(PC);
 		}
 
@@ -37,10 +38,14 @@ function loadGameData() {
 
 	request.send();
 
+	updateCharSheet();
+
 	console.log(request);
 
+	GM.startLoop();
+
 //	displayCharSheet();	
-} // loadGameData: loads game data from JSON files
+} // startGame: initialize game data from json
 
 var defaultStat = 10;
 var defaultLocation = "home"; 

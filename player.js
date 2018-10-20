@@ -2,16 +2,18 @@
 
 // for right now this is stupid but
 
+// this function isn't called RN. 
+let updateCharSheet = function() {
 
-var updateCharSheet = function() {
-	document.getElementById("charsheet").innerHTML = 	
-	'<h2>Char Sheet</h2>' +
+	//console.log("called update CS");
+
+	$("charsheet").html("<h2>Char Sheet</h2>" +
 	'<ul><li>' + PC.name + '</li>' +
 	'<li>\"' + PC.motto + '\"</li>' +
 	'<li>Health: ' + PC.health + '</li>' +
 	'<li>Focus: ' + PC.focus + '</li>' +
 	'<li>Location: ' + PC.location + '</l1>' + 
-	'</ul>';
+	'</ul>');
 
-	console.log(PC);
+//	console.log(PC);
 }

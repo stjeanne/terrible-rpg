@@ -1,21 +1,30 @@
 // commands for capitalism zero
 
+const CMD_PARSER = "* ";
 
-var cmd_idle = function() {
+let cmd_idle = function() {
+	$("#statwindow").prepend("<p>" + CMD_PARSER + "Idling.</p>");
+//	GM.gLoop();
+
 	console.log("clicked idle");
-	var commandLog = document.getElementById("statwindow");
-	commandLog.innerHTML = "<p>* Idling!</p>";
+//	var commandLog = document.getElementById("statwindow");
+//	commandLog.innerHTML = "<p>* Idling!</p>";
 };
 
-var cmd_clean = function() {
+let cmd_clean = function() {
+	$("#statwindow").html("<p>" + CMD_PARSER + "You clean the area.</p>");
+//	GM.gLoop();
+
 	console.log("clicked clean");
-	var commandLog = document.getElementById("statwindow");
-	commandLog.innerHTML = "<p>* You clean the area.</p>";
 };
 
-var cmd_meditate = function() {
+let cmd_meditate = function() {
 	console.log("clicked meditate");
-	var commandLog = document.getElementById("statwindow");
-	commandLog.innerHTML = "<p>* Meditated; gained focus.</p>";
-	PC.focus += 10;
+	$("#statwindow").prepend("<p>" + CMD_PARSER + "You meditate, gaining focus.</p>");
+
+	PC.focus += Math.floor((Math.random() * 4) + 8);
+
+//	GM.gLoop();
+
+	console.log("focus for " + PC.name + ": " + PC.focus);
 };
