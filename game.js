@@ -19,20 +19,24 @@ class Game {
 	startLoop() {
 //		window.requestAnimationFrame(this.gLoop);
 		console.log("initializing game loop with setInterval at rate: " + this.rate);
-		this.timer = window.setInterval(this.gLoop(), this.rate);
+//		this.timer = setInterval(this.gLoop(), this.rate);
+		self = this;
+		this.timer = setInterval(this.gLoop, this.rate);
+		this.gLoop(); // one last lil push
 	}
 
-	gLoop() { // one day this will be the main screen update loop. right now it isn't!
+	gLoop() { // this is the main screen update loop, but for some reason it only works when we update manually on command input . . .
 		$("#charsheet").html("<h2>Char Sheet</h2>" +
-		'<ul><li>' + this.PC.name + '</li>' +
-		'<li>\"' + this.PC.motto + '\"</li>' +
-		'<li>Health: ' + this.PC.health + '</li>' +
-		'<li>Focus: ' + this.PC.focus + '</li>' +
-		'<li>Location: ' + this.PC.location + '</l1>' + 
+		'<ul><li>' + self.PC.name + '</li>' +
+		'<li>\"' + self.PC.motto + '\"</li>' +
+		'<li>Health: ' + Math.floor(self.PC.health) + '</li>' +
+		'<li>Focus: ' + self.PC.focus + '</li>' +
+		'<li>Location: ' + self.PC.location + '</l1>' + 
 		'</ul>');
 
-		this.loop_count++;
-//		console.log("game loops: " + this.loop_count + " game rate: " + this.rate);
+//		self.PC.health += 0.1;
+		self.loop_count++;
+//		console.log("game loops: " + self.loop_count + " game rate: " + self.rate);
 	}
 
 	totalTime() {

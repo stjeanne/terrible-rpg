@@ -1,19 +1,6 @@
 // initialization file for weird game
 
-var GM = null;
-//var PC = null;
-
-/*{
-	name: "FAILURE",
-	motto: "raw code",
-	health: defaultStat,
-	stamina: defaultStat,
-	focus: defaultStat,
-	will: defaultStat,
-	strength: defaultStat,
-	location: defaultLocation,
-}*/ 
-
+// let GM = null;
 
 function startGame() {
 
