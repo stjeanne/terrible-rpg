@@ -3,8 +3,9 @@
 class Game {
 	constructor(rate) {
 		this.rate = rate;
+		this.startTime = new Date();
 		this.loop_count = 0;
-		this.timerID = null;
+		this.timer = null;
 		this.PC = new Player;
 		this.gameLog = new Array;
 	}
@@ -16,11 +17,12 @@ class Game {
 	}
 
 	startLoop() {
-		this.timerID = setInterval(this.gLoop(), this.rate);
-		this.gLoop();
+//		window.requestAnimationFrame(this.gLoop);
+		console.log("initializing game loop with setInterval at rate: " + this.rate);
+		this.timer = window.setInterval(this.gLoop(), this.rate);
 	}
 
-	gLoop() {
+	gLoop() { // one day this will be the main screen update loop. right now it isn't!
 		$("#charsheet").html("<h2>Char Sheet</h2>" +
 		'<ul><li>' + this.PC.name + '</li>' +
 		'<li>\"' + this.PC.motto + '\"</li>' +
@@ -30,7 +32,12 @@ class Game {
 		'</ul>');
 
 		this.loop_count++;
-		console.log("game loops: " + this.loop_count + " game rate: " + this.rate);
+//		console.log("game loops: " + this.loop_count + " game rate: " + this.rate);
+	}
+
+	totalTime() {
+		console.log("note the time");
+		return startTime.now;
 	}
 
 }

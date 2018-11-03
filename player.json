@@ -9,6 +9,8 @@
 		"strength": null,
 		"will": null,
 
+		"cash": 0,
+
 		"creditlevel": null,
 		"debt": null,
 		"credit_max": null,

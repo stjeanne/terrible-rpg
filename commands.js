@@ -23,28 +23,21 @@ let playerMessage = function(msg) {
 		$("#statwindow").prepend("<p>" + CMD_PARSER + key);
 	}
 
-	GM.gLoop();
+	GM.gLoop(); // make sure to update the screen, until we start to do it automatically
 
 //	console.log("added message to statwindow: " + msg);
 }
 
 let cmd_idle = function() {
 	playerMessage("Idling.");
-	console.log("clicked idle");
 };
 
 let cmd_clean = function() {
+	GM.PC.giveCash(1);
 	playerMessage("Cleaned the area. Yuck!");
-	console.log("clicked clean");
 };
 
 let cmd_meditate = function() {
+	GM.PC.giveFocus(rollRandom(6,1) + 1);
 	playerMessage("You meditate, gaining focus.");
-	GM.PC.giveFocus(rollRandom(4,1));
-	console.log("clicked meditate");
-//	$("#statwindow").prepend("<p>" + CMD_PARSER + "You meditate, gaining focus.</p>");
-
-	GM.gLoop();
-
-//	console.log("focus for " + PC.name + ": " + PC.focus);
 };
