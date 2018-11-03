@@ -2,8 +2,17 @@
 
 const CMD_PARSER = "* ";
 
+let playerMessage = function(msg) {
+
+	$("#statwindow").prepend("<p>" + CMD_PARSER + msg);
+	GM.gLoop();
+
+	console.log("added message to statwindow: " + msg);
+}
+
 let cmd_idle = function() {
-	$("#statwindow").prepend("<p>" + CMD_PARSER + "Idling.</p>");
+	playerMessage("Idling.");
+
 	GM.gLoop();
 
 	console.log("clicked idle");
