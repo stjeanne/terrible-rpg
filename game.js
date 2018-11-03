@@ -6,6 +6,7 @@ class Game {
 		this.loop_count = 0;
 		this.timerID = null;
 		this.PC = new Player;
+		this.gameLog = new Array;
 	}
 
 	generatePlayer(PC) { // takes a JSON object
