@@ -12,27 +12,21 @@ let playerMessage = function(msg) {
 
 let cmd_idle = function() {
 	playerMessage("Idling.");
-
-	GM.gLoop();
-
 	console.log("clicked idle");
-//	var commandLog = document.getElementById("statwindow");
-//	commandLog.innerHTML = "<p>* Idling!</p>";
 };
 
 let cmd_clean = function() {
-	$("#statwindow").html("<p>" + CMD_PARSER + "You clean the area.</p>");
-	GM.gLoop();
-
+	playerMessage("Cleaned the area. Yuck!");
 	console.log("clicked clean");
 };
 
 let cmd_meditate = function() {
+	playerMessage("You meditate, gaining focus.");
+	GM.PC.giveFocus(rollRandom(4,1));
 	console.log("clicked meditate");
-	$("#statwindow").prepend("<p>" + CMD_PARSER + "You meditate, gaining focus.</p>");
+//	$("#statwindow").prepend("<p>" + CMD_PARSER + "You meditate, gaining focus.</p>");
 
-	PC.focus += Math.floor((Math.random() * 4) + 8);
 	GM.gLoop();
 
-	console.log("focus for " + PC.name + ": " + PC.focus);
+//	console.log("focus for " + PC.name + ": " + PC.focus);
 };

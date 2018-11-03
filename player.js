@@ -1,19 +1,24 @@
-// player JSON objects and functions related to updating/interacting
+// player class definition and accessor functions. Must come before game.js.
 
-// for right now this is stupid but
 
-// this function isn't called RN. 
-let updateCharSheet = function() {
+class Player {
 
-	//console.log("called update CS");
+	constructor() {
+		this.name = "Bland";
+		this.focus = 0;
+		this.motto = "the JSON isn't loading";
+		this.health = 3;
+		this.location = "limbo";
+	}
 
-	$("charsheet").html("<h2>Char Sheet</h2>" +
-	'<ul><li>' + PC.name + '</li>' +
-	'<li>\"' + PC.motto + '\"</li>' +
-	'<li>Health: ' + PC.health + '</li>' +
-	'<li>Focus: ' + PC.focus + '</li>' +
-	'<li>Location: ' + PC.location + '</l1>' + 
-	'</ul>');
+/*	constructor(PC_obj) {
+		let RNA = PC_obj;
+		if (RNA['name']) { this.name = RNA.name; }
+	}*/
 
-//	console.log(PC);
+
+	giveFocus(amt) {
+		console.log("giving " + amt + " focus via giveFocus");
+		this.focus += amt;
+	}
 }

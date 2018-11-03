@@ -3,9 +3,9 @@
 	<title>capitalism zero: crisis in the stars</title>
 
 	<script src="jquery-3.3.1.min.js"></script>
+	<script src="player.js"></script>
 	<script src="game.js"></script>
 	<script src="init.js"></script>
-	<script src="player.js"></script>
 	<script src="commands.js"></script>
 
 
@@ -20,12 +20,9 @@
 	<body onload="startGame()">
 
 			<script>
-				let GM = new Game(1000);
 				$("document").ready(function (){
 								$("#header").append("<h1>capitalism zero: crisis in the stars</h1>");
 						});
-				GM.gLoop();
-
 			</script>
 
 		<div id="wrapper">

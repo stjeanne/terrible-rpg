@@ -1,6 +1,9 @@
 // initialization file for weird game
 
-var PC = {
+var GM = null;
+//var PC = null;
+
+/*{
 	name: "FAILURE",
 	motto: "raw code",
 	health: defaultStat,
@@ -9,14 +12,16 @@ var PC = {
 	will: defaultStat,
 	strength: defaultStat,
 	location: defaultLocation,
-}; 
+}*/ 
 
 
 function startGame() {
 
-	let GM = new Game(1000);
+	console.log("LETS START A GAME");
 
+	GM = new Game(1000);
 	var request;
+	var PC;
 
 	if (window.XMLHttpRequest) {
 		request = new XMLHttpRequest();
@@ -38,7 +43,7 @@ function startGame() {
 //	updateCharSheet();
 
 	console.log(request);
-
+	GM.generatePlayer(PC);
 	GM.startLoop();
 
 //	displayCharSheet();	

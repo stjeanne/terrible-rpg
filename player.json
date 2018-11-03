@@ -2,7 +2,7 @@
 		"name" : "Caramella",
 		"motto" : "I exist",
 
-		"health": null,
+		"health": 25,
 		"stamina": null,
 		"focus": 0,
 
