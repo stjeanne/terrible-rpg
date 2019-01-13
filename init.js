@@ -10,9 +10,11 @@ function startGame() {
 	var request;
 	var PC;
 
-	PC = $.getJSON('player.json');
+	$.getJSON('player.json', function(result) {
+		GM.generatePlayer(result);
+	});
 
-	GM.generatePlayer(PC);
+//	GM.generatePlayer(PC);
 	GM.startLoop();
 
 } // startGame: initialize game data from json

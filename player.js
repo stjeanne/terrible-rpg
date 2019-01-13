@@ -3,31 +3,17 @@
 
 class Player {
 
-/*	constructor() {
-		this.name = "Bland";
-		this.focus = 0;
-		this.motto = "the JSON isn't loading";
-		this.health = 3;
-		this.location = "limbo";
-		this.cash = 0;
-	}
-*/
 	constructor(plr) {
-		console.log ("testing what was passed to player constructor:" + plr);
+		console.log ("testing what was passed to player constructor, which is:");
+		console.log(plr);
 
 		this.name = plr.name;
-		this.focus = 0;
-		this.motto = "this was it";
-		this.health = 3;
-		this.location = "limbo";
-		this.cash = 0;
+		this.focus = plr.focus;
+		this.motto = plr.motto;
+		this.health = plr.health;
+		this.location = plr.location;
+		this.cash = plr.cash;
 	}
-
-/*	constructor(PC_obj) {
-		let RNA = PC_obj;
-		if (RNA['name']) { this.name = RNA.name; }
-	}*/
-
 
 	giveFocus(amt) {
 		console.log("giving " + amt + " focus via giveFocus");

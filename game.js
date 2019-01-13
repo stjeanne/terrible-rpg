@@ -12,14 +12,12 @@ class Game {
 
 	generatePlayer(plr) { // takes a JSON object
 		this.PC = new Player(plr);
-		console.log("generated player data from JSON as follows:"); 
-		console.log(this.PC);
+		console.log("generated player data from JSON as follows:");
+		console.log(this.PC); 
 	}
 
 	startLoop() {
-//		window.requestAnimationFrame(this.gLoop);
 		console.log("initializing game loop with setInterval at rate: " + this.rate);
-//		this.timer = setInterval(this.gLoop(), this.rate);
 		self = this;
 		this.timer = setInterval(this.gLoop, this.rate);
 		this.gLoop(); // one last lil push
@@ -34,7 +32,6 @@ class Game {
 		'<li>Location: ' + self.PC.location + '</l1>' + 
 		'</ul>');
 
-//		self.PC.health += 0.1;
 		self.loop_count++;
 //		console.log("game loops: " + self.loop_count + " game rate: " + self.rate);
 	}
