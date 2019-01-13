@@ -10,30 +10,11 @@ function startGame() {
 	var request;
 	var PC;
 
-	if (window.XMLHttpRequest) {
-		request = new XMLHttpRequest();
-	} else {
-		request = new ActiveXObject("Microsoft.XMLHTTP");
-	}
+	PC = $.getJSON('player.json');
 
-	request.open('GET','player.json');
-	request.onreadystatechange = function() {
-		if ((request.status===200) && (request.readyState===4)) {
-			PC = JSON.parse(request.responseText);
-			console.log(PC);
-		}
-
-	}
-
-	request.send();
-
-//	updateCharSheet();
-
-	console.log(request);
 	GM.generatePlayer(PC);
 	GM.startLoop();
 
-//	displayCharSheet();	
 } // startGame: initialize game data from json
 
 var defaultStat = 10;

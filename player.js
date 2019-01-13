@@ -3,10 +3,21 @@
 
 class Player {
 
-	constructor() {
+/*	constructor() {
 		this.name = "Bland";
 		this.focus = 0;
 		this.motto = "the JSON isn't loading";
+		this.health = 3;
+		this.location = "limbo";
+		this.cash = 0;
+	}
+*/
+	constructor(plr) {
+		console.log ("testing what was passed to player constructor:" + plr);
+
+		this.name = plr.name;
+		this.focus = 0;
+		this.motto = "this was it";
 		this.health = 3;
 		this.location = "limbo";
 		this.cash = 0;

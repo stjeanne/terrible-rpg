@@ -6,12 +6,12 @@ class Game {
 		this.startTime = new Date();
 		this.loop_count = 0;
 		this.timer = null;
-		this.PC = new Player;
+		this.PC = null;
 		this.gameLog = new Array;
 	}
 
-	generatePlayer(PC) { // takes a JSON object
-		this.PC = new Player(PC);
+	generatePlayer(plr) { // takes a JSON object
+		this.PC = new Player(plr);
 		console.log("generated player data from JSON as follows:"); 
 		console.log(this.PC);
 	}
