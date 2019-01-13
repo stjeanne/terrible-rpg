@@ -1,0 +1,33 @@
+{
+	"Locations" : 
+
+	{
+		"name": "home",
+		"alias": "Your Apartment",
+		"commands": 
+		{
+			"name": "meditate",
+			"alias": "Meditate"
+		},
+
+		"exits":
+		{
+			"name": "crapfields"
+		}
+	}
+
+	{
+		"name": "crapfields",
+		"alias": "The Crap Fields",
+		"commands": 
+		{
+			"name": "dig",
+			"alias": "Dig up Crap"
+		},
+
+		"exits":
+		{
+			"name": "home"
+		}
+	}
+}
