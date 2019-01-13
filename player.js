@@ -8,11 +8,17 @@ class Player {
 		console.log(plr);
 
 		this.name = plr.name;
-		this.focus = plr.focus;
 		this.motto = plr.motto;
 		this.health = plr.health;
+		this.focus = plr.focus;
+		this.stamina = plr.stamina;
+		this.strength = plr.strength;
+		this.will = plr.will;
 		this.location = plr.location;
 		this.cash = plr.cash;
+		this.creditlevel = plr.creditlevel;
+		this.credit_max = plr.credit_max;
+		this.debt = plr.debt;
 	}
 
 	giveFocus(amt) {

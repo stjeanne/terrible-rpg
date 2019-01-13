@@ -23,23 +23,31 @@ class Game {
 		this.gLoop(); // one last lil push
 	}
 
-	gLoop() { // this is the main screen update loop, but for some reason it only works when we update manually on command input . . .
+	displayCharSheet() {
 		$("#charsheet").html("<h2>Char Sheet</h2>" +
 		'<ul><li>' + self.PC.name + '</li>' +
 		'<li>\"' + self.PC.motto + '\"</li>' +
 		'<li>Health: ' + Math.floor(self.PC.health) + '</li>' +
 		'<li>Focus: ' + self.PC.focus + '</li>' +
 		'<li>Location: ' + self.PC.location + '</l1>' + 
-		'</ul>');
+		'<li>Credit Level: ' + self.PC.creditlevel + '</li>' +
+		'</ul>');		
+	}
+
+	gLoop() { 
+
+		self.displayCharSheet();
+		
+		$("#clock").html("<p>" + self.loop_count + "</p>");
 
 		self.loop_count++;
-//		console.log("game loops: " + self.loop_count + " game rate: " + self.rate);
 	}
 
 	totalTime() {
 		console.log("note the time");
-		return startTime.now;
+		return this.startTime + Date.now;
 	}
+
 
 }
 
@@ -50,6 +58,6 @@ let rollRandom = function(die, numdie) {
 
 	}
 
-	console.log("final result: " + result);
+//	console.log("final result: " + result);
 	return result + 1;
 }

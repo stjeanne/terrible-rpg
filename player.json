@@ -3,7 +3,7 @@
 		"motto" : "I exist",
 
 		"health": 25,
-		"stamina": null,
+		"stamina": 0,
 		"focus": 0,
 
 		"strength": null,
@@ -11,9 +11,10 @@
 
 		"cash": 0,
 
-		"creditlevel": null,
+		"creditlevel": 1,
 		"debt": null,
 		"credit_max": null,
 
-		"location": "home"
+		"location": "home",
+		"real": true
 }
