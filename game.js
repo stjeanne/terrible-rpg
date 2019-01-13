@@ -16,6 +16,10 @@ class Game {
 		console.log(this.PC); 
 	}
 
+	generateLocations(loc) { // takes a JSON object
+		console.log("generated locations but didn't really do anything yet");
+	}
+
 	startLoop() {
 		console.log("initializing game loop with setInterval at rate: " + this.rate);
 		self = this;

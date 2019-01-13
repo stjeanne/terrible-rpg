@@ -7,14 +7,17 @@ function startGame() {
 	console.log("LETS START A GAME");
 
 	GM = new Game(1000);
-	var request;
-	var PC;
 
 	$.getJSON('player.json', function(result) {
 		GM.generatePlayer(result);
 	});
 
-//	GM.generatePlayer(PC);
+	$.getJSON('locations.json', function(result) { // i don't think this works yet
+		console.log("locations file is: ");
+		console.log(result);
+		GM.generateLocations(result);
+	});
+
 	GM.startLoop();
 
 } // startGame: initialize game data from json
