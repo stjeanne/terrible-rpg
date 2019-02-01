@@ -1,33 +1,16 @@
 {
 	"locs":
-		{
-			"name": "home",
-			"alias": "Your Apartment",
-			"commands": 
+		[
 			{
-				"name": "meditate",
-				"alias": "Meditate"
+				"name": "home",
+				"alias": "Your Apartment",
+				"commands": "null"
 			},
-
-			"exits":
+			
 			{
 				"name": "crapfields",
-				"val": 100
+				"alias": "The Crap Fields",
+				"commands": "null"
 			}
-		}
-
-		{
-			"name": "crapfields",
-			"alias": "The Crap Fields",
-			"commands": 
-			{
-				"name": "dig",
-				"alias": "Dig up Crap"
-			},
-
-			"exits":
-			{
-				"name": "home"
-			}
-		}
+		]
 }
