@@ -57,7 +57,7 @@ let cmd_apartment = function() {
 };
 
 let cmd_town = function() {
-	playerMessage("You're gone to the city.");
+	playerMessage("You've gone to the city.");
 	GM.changeLocation("town");
 };
 
