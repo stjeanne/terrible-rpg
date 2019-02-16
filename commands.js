@@ -20,7 +20,6 @@ let playerMessage = function(msg) {
 	for (key of tempLog) {
 		$("#statwindow").prepend("<p>" + CMD_PARSER + key);
 	}
-
 }
 
 
@@ -39,6 +38,14 @@ let cmd_meditate = function() {
 	playerMessage("You meditate, gaining focus.");
 };
 
+let cmd_ATM = function() {
+	GM.PC.giveCash(100);
+	GM.displayCharSheet();
+	playerMessage("Took out $100 from the ATM. But what to even spend it on?");
+}
+
+// LOCATION CHANGE FUNCTIONS. Eventually these may set specific game modes? //
+
 let cmd_crapfields = function() {
 	playerMessage("You have gone to the Crap Fields. :(");
 	GM.changeLocation("crapfields");
@@ -52,4 +59,24 @@ let cmd_apartment = function() {
 let cmd_town = function() {
 	playerMessage("You're gone to the city.");
 	GM.changeLocation("town");
-}
+};
+
+let cmd_hardware = function() {
+	playerMessage("Entered the hardware store.");
+	GM.changeLocation("hardware");
+};
+
+let cmd_bodega = function() {
+	playerMessage("Went to the bodega.");
+	GM.changeLocation("bodega");
+};
+
+let cmd_occult = function() {
+	playerMessage("Went to the local occult supply shop.");
+	GM.changeLocation("occult");
+};
+
+let cmd_bank = function() {
+	playerMessage("Went to the bank.");
+	GM.changeLocation("bank");
+};

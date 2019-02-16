@@ -28,8 +28,28 @@
 			"commands":
 			[
 				{
-					"disp": "Go to the Crap Fields",
+					"disp": "Leave for the Crap Fields",
 					"cmd": "cmd_crapfields"
+				},
+
+				{
+					"disp": "Occult Store",
+					"cmd": "cmd_occult"
+				},
+
+				{
+					"disp": "Hardware",
+					"cmd": "cmd_hardware"
+				},
+
+				{
+					"disp": "Boedega",
+					"cmd": "cmd_bodega"
+				},
+
+				{
+					"disp": "Bank",
+					"cmd": "cmd_bank"
 				},
 
 				{
@@ -40,16 +60,81 @@
 		},
 
 		"crapfields":		
-			{
-				"name": "crapfields",
-				"alias": "The Crap Fields",
-				"commands":
-				[
-					{
-						"disp": "Oh no, get out of here",
-						"cmd": "cmd_town"
-					}
-				],
-				"inittext": "The smell is a thousand smells, old smells from which all the virtue has been taken by other, better people. Opportunities for labor abound."
-			}
+		{
+			"name": "crapfields",
+			"alias": "The Crap Fields",
+			"commands":
+			[
+				{
+					"disp": "Oh no, get out of here",
+					"cmd": "cmd_town"
+				}
+			],
+			"inittext": "The smell is a thousand smells, old smells from which all the virtue has been taken by other, better people. Opportunities for labor abound."
+		},
+
+		"bodega":
+		{
+			"name": "bodega",
+			"alias": "Local Bodega",
+			"inittext": "Your favorite cat is pacing. Smells of coffee and pastrami. Lottery tickets print efficiently from a machine.",
+
+			"commands":
+			[
+				{
+					"disp": "Leave",
+					"cmd": "cmd_town"
+				}
+			]
+		},
+
+		"occult":
+		{
+			"name": "occult",
+			"alias": "Occult Supplies",
+			"inittext": "Advertisements for tarot readers. Sandalwood and crystals. Dion Fortune paperbacks. Part of you resents this place.",
+
+			"commands":
+			[
+				{
+					"disp": "Leave",
+					"cmd": "cmd_town"
+				}
+			]
+		},
+
+		"bank":
+		{
+			"name": "bank",
+			"alias": "Municipal Standard",
+			"inittext": "Two people flank the branch door: a holographic loan assistant, a woman with outstretched hand. Twin columns. The actual branch always seems closed.",
+
+			"commands":
+			[
+				{
+					"disp": "Leave",
+					"cmd": "cmd_town"
+				},
+
+				{
+					"disp": "Hit up the ATM for $100",
+					"cmd": "cmd_ATM"
+				}
+			]
+		},
+
+		"hardware":
+		{
+			"name": "hardware",
+			"alias": "Neighborhood Hardware",
+			"inittext": "Wood shavings, different kinds of grease, metal. The clerk watches you carefully, but not unkindly. More screws than you know how to understand.",
+
+			"commands":
+			[
+				{
+					"disp": "Leave",
+					"cmd": "cmd_town"
+				}
+			]
+		}
 }

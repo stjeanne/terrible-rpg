@@ -42,10 +42,10 @@ class Game {
 // SCREEN UPDATE FUNCTIONS //
 
 	displayCharSheet() {
-		$("#charsheet").html("<h2>Char Sheet</h2>" +
-		'<ul><li>Health: ' + Math.floor(self.PC.health) + '</li>' +
-		'<li>Focus: ' + self.PC.focus + '</li>' +
-		'<li>Credit Level: ' + self.PC.creditlevel + '</li>' +
+		$("#charsheet").html('<ul><li><span class=\"stat\">Health</span> ' + Math.floor(self.PC.health) + '</li>' +
+		'<li><span class=\"stat\">Focus</span> ' + self.PC.focus + '</li>' +
+		'<li><span class=\"stat\">Cash</span> ' + self.PC.cash + '</li>' +
+		'<li><span class=\"stat\">Credit</span> ' + self.PC.creditlevel + '</li>' +
 		'</ul>');		
 	}
 
@@ -58,7 +58,7 @@ class Game {
 	}
 
 	generateButtons() {
-		$("#commands").html("<h2>Commands</h2>");
+		$("#commands").html("");
 
 		let cur = self.PC.location;
 

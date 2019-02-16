@@ -16,8 +16,13 @@
 
 #charsheet ul {
 	list-style-position: outside;
+	list-style-type: none;
 	padding-left: 1em;
 
+}
+
+#charsheet .stat {
+	color: #9D9DFF;
 }
 
 #charsheet li {
@@ -25,22 +30,27 @@
 }
 
 #header {
+	margin-left: auto;
+	margin-right: auto;
+}
 
+#header h1 {
+	text-align: center;
 }
 
 #leftcol {
-	width: 150px;
+	width: 100px;
 	float: left;
 	margin-left: 25px;
-	margin-right: 50px;
+	margin-right: 25px;
 	padding: 1em;
-	background-color: #eee;
 }
 
 #rightcol {
-	width: 700px;
+	width: 750px;
 	float: right;
-	padding: 1em;
+	padding: 2em;
+	background-color: #CACAFF;
 }
 
 #charsheet {
@@ -48,11 +58,23 @@
 }
 
 #stimuli {
-
 }
 
-#commands {
 
+#commands {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#commands button {
+	border: none;
+	background-color: #9D9DFF;
+	color: #FFF;
+	font-family: 'Overpass Mono', monospace;
+}
+
+#commands button:hover {
+	background-color: #7575FD;
 }
 
 #topcolwrap {
@@ -63,10 +85,10 @@
 	clear: both;
 	margin-left: auto;
 	margin-right: auto;
-	width: 950px;
-	margin-top: 25px;
+	width: 900px;
+	margin-top: 100px;
 	margin-bottom: 1em;
-	font-size: 12px;
+	font-size: 10px;
 }
 
 #plr_log p {
