@@ -30,7 +30,12 @@ class Game {
 		console.log("initializing game loop with setInterval at rate: " + this.rate);
 		self = this;
 		this.timer = setInterval(this.gLoop, this.rate);
+		this.generateButtons();
 		this.gLoop(); // one last lil push
+	}
+
+	setLoadMessage() {
+		$("stimuli").html("<p>Loading secret data...</p>");
 	}
 
 
@@ -54,6 +59,12 @@ class Game {
 			" </p>");
 	}
 
+	generateButtons() {
+		$("#commands").html("<h2>Commands</h2>");
+	}
+
+
+
 ///////////////////////
 // PRIMARY GAME LOOP // (most important method)
 ///////////////////////
@@ -73,6 +84,11 @@ class Game {
 		return this.startTime + Date.now;
 	}
 
+	changeLocation(newloc) {
+		self.location = newloc;
+		self.updateStimuli();
+		self.generateButtons();
+	}
 
 }
 

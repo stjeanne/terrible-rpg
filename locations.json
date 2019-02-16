@@ -3,8 +3,16 @@
 			{
 				"name": "home",
 				"alias": "Your Apartment",
-				"commands": "null",
-				"inittext": "A couch with a soft blanket. Books. A photo of someone you love but have not seen for some time. A prayer mat."
+				"inittext": "A couch with a soft blanket. Books. A photo of someone you love but have not seen for some time. A prayer mat.",
+
+				"commands": 
+				{
+					"meditate": 
+					{
+						"disp": "Meditate",
+						"cmd": "cmd_meditate"
+					}
+				}
 			},
 
 		"crapfields":		

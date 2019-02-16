@@ -21,8 +21,8 @@ let playerMessage = function(msg) {
 		$("#statwindow").prepend("<p>" + CMD_PARSER + key);
 	}
 
-//	GM.gLoop(); // make sure to update the screen, until we start to do it automatically
 }
+
 
 let cmd_idle = function() {
 	playerMessage("Idling.");
