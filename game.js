@@ -43,9 +43,7 @@ class Game {
 
 	displayCharSheet() {
 		$("#charsheet").html("<h2>Char Sheet</h2>" +
-		'<ul><li>' + self.PC.name + '</li>' +
-		'<li>\"' + self.PC.motto + '\"</li>' +
-		'<li>Health: ' + Math.floor(self.PC.health) + '</li>' +
+		'<ul><li>Health: ' + Math.floor(self.PC.health) + '</li>' +
 		'<li>Focus: ' + self.PC.focus + '</li>' +
 		'<li>Credit Level: ' + self.PC.creditlevel + '</li>' +
 		'</ul>');		
@@ -61,6 +59,21 @@ class Game {
 
 	generateButtons() {
 		$("#commands").html("<h2>Commands</h2>");
+
+		let cur = self.PC.location;
+
+		console.log("testing commands for location cur = " + cur);
+
+		for (var key of self.locs[cur].commands) {
+
+			$("#commands").append("<button id = \"" + key.cmd + "_button\">" +
+					key.disp +
+				"</button>");
+
+			$("#commands").append("\n<script>document.getElementById(\"" + key.cmd + "_button\").addEventListener(\"click\", " + key.cmd + ");\n</script>");
+
+			console.log("iterating in command loop, value: " + key);
+		}
 	}
 
 

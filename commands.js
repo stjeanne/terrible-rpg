@@ -37,3 +37,7 @@ let cmd_meditate = function() {
 	GM.PC.giveFocus(rollRandom(6,1) + 1);
 	playerMessage("You meditate, gaining focus.");
 };
+
+let cmd_crapfields = function() {
+	playerMessage("You have gone to the Crap Fields. :( But you came back");
+};
