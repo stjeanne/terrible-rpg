@@ -7,6 +7,7 @@ class Game {
 		this.loop_count = 0;
 		this.timer = null;
 		this.PC = null;
+		this.locs = null;
 		this.gameLog = new Array;
 	}
 
@@ -17,7 +18,8 @@ class Game {
 	}
 
 	generateLocations(loc) { // takes a JSON object
-		console.log("generated locations but didn't really do anything yet");
+		console.log("generate locations entered");
+		this.locs = loc;
 	}
 
 	startLoop() {
@@ -38,9 +40,16 @@ class Game {
 		'</ul>');		
 	}
 
+	updateStimuli() {
+		
+
+		$("#stimuli").html("<p>Testing that the loop works--this is dynamic location datas</p>");
+	}
+
 	gLoop() { 
 
 		self.displayCharSheet();
+		self.updateStimuli();
 		
 		$("#clock").html("<p>" + self.loop_count + "</p>");
 

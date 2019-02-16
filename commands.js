@@ -3,6 +3,7 @@
 const CMD_PARSER = "* ";
 const LOG_LENGTH = 10;
 
+
 let playerMessage = function(msg) {
 
 	GM.gameLog.push(msg); // add the new message to the end of the game log array. this will certainly lead to memory troubles one day
