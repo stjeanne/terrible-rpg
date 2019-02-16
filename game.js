@@ -98,7 +98,7 @@ class Game {
 	}
 
 	changeLocation(newloc) {
-		self.location = newloc;
+		self.PC.location = newloc;
 		self.updateStimuli();
 		self.generateButtons();
 	}

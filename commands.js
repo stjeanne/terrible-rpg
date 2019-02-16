@@ -35,9 +35,21 @@ let cmd_clean = function() {
 
 let cmd_meditate = function() {
 	GM.PC.giveFocus(rollRandom(6,1) + 1);
+	GM.displayCharSheet();
 	playerMessage("You meditate, gaining focus.");
 };
 
 let cmd_crapfields = function() {
-	playerMessage("You have gone to the Crap Fields. :( But you came back");
+	playerMessage("You have gone to the Crap Fields. :(");
+	GM.changeLocation("crapfields");
 };
+
+let cmd_apartment = function() {
+	playerMessage("You have returned home to your apartment.");
+	GM.changeLocation("home");
+};
+
+let cmd_town = function() {
+	playerMessage("You're gone to the city.");
+	GM.changeLocation("town");
+}

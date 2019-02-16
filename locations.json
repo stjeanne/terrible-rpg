@@ -13,17 +13,43 @@
 					},
 
 					{
-						"disp": "Go to the Crap Fields",
-						"cmd": "cmd_crapfields"
+						"disp": "Leave your apartment",
+						"cmd": "cmd_town"
 					}
 				]
 			},
+
+		"town":
+		{
+			"name": "town",
+			"alias": "The Village Dreadful",
+			"inittext": "Better apartments here than in your own neighborhood. Can you afford one? The calculations depress you. It is a cold yet good day.",
+
+			"commands":
+			[
+				{
+					"disp": "Go to the Crap Fields",
+					"cmd": "cmd_crapfields"
+				},
+
+				{
+					"disp": "Back home",
+					"cmd": "cmd_apartment"
+				}
+			]
+		},
 
 		"crapfields":		
 			{
 				"name": "crapfields",
 				"alias": "The Crap Fields",
-				"commands": "null",
-				"inittext": "A terrible place. Don't go here."
+				"commands":
+				[
+					{
+						"disp": "Oh no, get out of here",
+						"cmd": "cmd_town"
+					}
+				],
+				"inittext": "The smell is a thousand smells, old smells from which all the virtue has been taken by other, better people. Opportunities for labor abound."
 			}
 }
