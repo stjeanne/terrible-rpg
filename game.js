@@ -11,6 +11,8 @@ class Game {
 		this.gameLog = new Array;
 	}
 
+// LOAD DATA FROM JSON FILES //
+
 	generatePlayer(plr) { // takes a JSON object
 		this.PC = new Player(plr);
 		console.log("generated player data from JSON as follows:");
@@ -22,6 +24,8 @@ class Game {
 		this.locs = loc;
 	}
 
+// TURN THE KEY FUNCTION //
+
 	startLoop() {
 		console.log("initializing game loop with setInterval at rate: " + this.rate);
 		self = this;
@@ -29,22 +33,30 @@ class Game {
 		this.gLoop(); // one last lil push
 	}
 
+
+// SCREEN UPDATE FUNCTIONS //
+
 	displayCharSheet() {
 		$("#charsheet").html("<h2>Char Sheet</h2>" +
 		'<ul><li>' + self.PC.name + '</li>' +
 		'<li>\"' + self.PC.motto + '\"</li>' +
 		'<li>Health: ' + Math.floor(self.PC.health) + '</li>' +
 		'<li>Focus: ' + self.PC.focus + '</li>' +
-		'<li>Location: ' + self.PC.location + '</l1>' + 
 		'<li>Credit Level: ' + self.PC.creditlevel + '</li>' +
 		'</ul>');		
 	}
 
 	updateStimuli() {
-		
+		let cur = self.PC.location;
 
-		$("#stimuli").html("<p>Testing that the loop works--this is dynamic location datas</p>");
+		$("#stimuli").html("<p>" +			
+			self.locs[cur].inittext +
+			" </p>");
 	}
+
+///////////////////////
+// PRIMARY GAME LOOP // (most important method)
+///////////////////////
 
 	gLoop() { 
 
@@ -64,6 +76,8 @@ class Game {
 
 }
 
+// different useful methods //
+
 let rollRandom = function(die, numdie) {
 	let result = 0;
 	for (var i = 0; i < numdie; i++) {
@@ -71,6 +85,5 @@ let rollRandom = function(die, numdie) {
 
 	}
 
-//	console.log("final result: " + result);
 	return result + 1;
 }

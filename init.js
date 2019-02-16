@@ -22,5 +22,5 @@ function startGame() {
 
 } // startGame: initialize game data from json
 
-var defaultStat = 10;
-var defaultLocation = "home"; 
+const defaultStat = 10;
+const defaultLocation = "home"; 

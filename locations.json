@@ -1,18 +1,17 @@
 {
-	"locs":
-		[
+		"home":
 			{
 				"name": "home",
 				"alias": "Your Apartment",
 				"commands": "null",
 				"inittext": "A couch with a soft blanket. Books. A photo of someone you love but have not seen for some time. A prayer mat."
 			},
-			
+
+		"crapfields":		
 			{
 				"name": "crapfields",
 				"alias": "The Crap Fields",
 				"commands": "null",
 				"inittext": "A terrible place. Don't go here."
 			}
-		]
 }
