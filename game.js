@@ -9,6 +9,7 @@ class Game {
 		this.PC = null;
 		this.locs = null;
 		this.gameLog = new Array;
+		this.mode = "loading";
 	}
 
 // LOAD DATA FROM JSON FILES //
@@ -29,13 +30,14 @@ class Game {
 	startLoop() {
 		console.log("initializing game loop with setInterval at rate: " + this.rate);
 		self = this;
+		this.mode = "normal";
 		this.timer = setInterval(this.gLoop, this.rate);
 		this.generateButtons();
 		this.gLoop(); // one last lil push
 	}
 
-	setLoadMessage() {
-		$("stimuli").html("<p>Loading secret data...</p>");
+	setLoadMessage(msg) {
+		$("stimuli").html("<p>" + msg + "</p>");
 	}
 
 
@@ -55,6 +57,12 @@ class Game {
 		$("#stimuli").html("<p>" +			
 			self.locs[cur].inittext +
 			" </p>");
+	}
+
+	deathProcess() {
+		$("#stimuli").html("<h2>YOU DIED</h2>" + 
+			"<p>You had " + self.PC.bank + " in the bank, not yet gathering interest for hero investors.</p>");
+		$("#commands").html("");
 	}
 
 	generateButtons() {
@@ -84,12 +92,24 @@ class Game {
 
 	gLoop() { 
 
-		self.displayCharSheet();
-		self.updateStimuli();
-		
-		$("#clock").html("<p>" + self.loop_count + "</p>");
+		if (self.mode == "loading") {
+			self.setLoadMessage("Loading game...");
+		}
 
-		self.loop_count++;
+		else if ((self.mode == "death") || self.PC.health <= 0) {
+			self.mode == "death";
+			self.PC.health = 0;
+			self.deathProcess();
+		}
+
+		else if (self.mode == "normal") {
+			self.displayCharSheet();
+			self.updateStimuli();
+			
+			$("#clock").html("<p>" + self.loop_count + "</p>");
+
+			self.loop_count++;
+		}
 	}
 
 	totalTime() {
