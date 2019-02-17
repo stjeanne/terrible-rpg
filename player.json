@@ -4,7 +4,8 @@
 
 		"health": 25,
 		"stamina": 0,
-		"focus": 0,
+		"focus": 5,
+		"max_focus": 10,
 
 		"strength": null,
 		"will": null,

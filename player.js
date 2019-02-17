@@ -11,6 +11,7 @@ class Player {
 		this.motto = plr.motto;
 		this.health = plr.health;
 		this.focus = plr.focus;
+		this.max_focus = plr.max_focus;
 		this.stamina = plr.stamina;
 		this.strength = plr.strength;
 		this.will = plr.will;
@@ -45,6 +46,13 @@ class Player {
 	meditateEnergy() {
 		if (!(GM.loop_count % MEDITATE_RATE)) {
 			this.giveFocus(rollRandom(6,1) + 1);
+		}
+
+		if (this.focus >= this.max_focus) {
+			this.focus = this.max_focus;
+
+			playerMessage("Your mind is beginning to wander... you stop meditating.");
+			GM.switchModes("normal");
 		}
 	}
 

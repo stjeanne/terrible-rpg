@@ -144,6 +144,11 @@
 				{
 					"disp": "Leave",
 					"cmd": "cmd_town"
+				},
+
+				{
+					"disp": "Buy items",
+					"cmd": "cmd_buyhardware"
 				}
 			]
 		}

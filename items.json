@@ -1,0 +1,19 @@
+	[
+		{
+			"name": "rustyshovel",
+			"disp": "Rusty shovel",
+			"price": 20
+		},
+
+		{
+			"name": "initring",
+			"disp": "Strange ring",
+			"price": 1750
+		},
+
+		{
+			"name": "clothapron",
+			"disp": "Worn cloth apron",
+			"price": 50
+		}
+	]

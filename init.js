@@ -22,8 +22,16 @@ function startGame() {
 		})
 
 			.done(function() {
-				GM.startLoop();
-			});
+				$.getJSON('items.json', function(result) {
+					console.log("items file : " + result);
+					GM.generateItems(result);
+				})
+			})
+
+				.done(function() {
+					GM.startLoop();
+				});
+
 		});
 
 } // startGame: initialize game data from json

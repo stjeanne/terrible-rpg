@@ -60,6 +60,14 @@
 #stimuli {
 }
 
+#stimuli li {
+	font-size: 12px;
+	list-style: none;
+}
+
+#stimuli input {
+	font-size: 12px;
+}
 
 #commands {
 	margin-left: auto;

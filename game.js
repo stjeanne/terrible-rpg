@@ -8,6 +8,7 @@ class Game {
 		this.timer = null;
 		this.PC = null;
 		this.locs = null;
+		this.items = null;
 		this.gameLog = new Array;
 		this.mode = "loading";
 	}
@@ -23,6 +24,12 @@ class Game {
 	generateLocations(loc) { // takes a JSON object
 		console.log("generate locations entered");
 		this.locs = loc;
+	}
+
+	generateItems(itm) {
+		this.items = itm;
+		console.log("generate items as follows:");
+		console.log(this.items);
 	}
 
 // TURN THE KEY FUNCTION //
@@ -69,6 +76,16 @@ class Game {
 				"<p>You had " + self.PC.bank + " in the bank, not yet gathering interest for hero investors.</p>");			
 		}
 
+		else if (self.mode == "buying") {
+			$("#stimuli").html("<p>Shopping for items, which are as follows:</p>");
+
+			for (var i of GM.items) {
+				$("#stimuli").append("<li><input type=\"checkbox\" name=\"" + i.name + "\" value=\"" + i.name + "\">" + i.disp + " &mdash; $" + i.price + "</input></li>");
+			}
+
+//			$("#stimuli").append("</form>");
+		}
+
 	}
 
 	generateButtons() {
@@ -102,6 +119,13 @@ class Game {
 			$("#commands").html("");
 			$("#commands").append("<button id = \"cmd_endbattle_button\">Stop working</button>");
 			$("#commands").append("\n<script>document.getElementById(\"cmd_endbattle_button\").addEventListener(\"click\", cmd_endbattle);\n</script>");
+//			console.log("added end battle command will it work");
+		}
+
+		else if (self.mode == "buying") {
+			$("#commands").html("");
+			$("#commands").append("<button id = \"cmd_endshopping_button\">Stop shopping</button>");
+			$("#commands").append("\n<script>document.getElementById(\"cmd_endshopping_button\").addEventListener(\"click\", cmd_endshopping);\n</script>");
 //			console.log("added end battle command will it work");
 		}
 

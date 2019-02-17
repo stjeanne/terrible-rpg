@@ -21,6 +21,8 @@ let playerMessage = function(msg) {
 }
 
 
+// old test commands
+
 let cmd_idle = function() {
 	playerMessage("Idling.");
 };
@@ -29,6 +31,20 @@ let cmd_clean = function() {
 	GM.PC.giveCash(1);
 	playerMessage("Cleaned the area. Yuck!");
 };
+
+
+// buying commands
+
+let cmd_buyhardware = function() {
+	GM.switchModes("buying");
+	playerMessage("Browsed some hardware. How exactly do you buy things again?");
+};
+
+let cmd_endshopping = function() {
+	GM.switchModes("normal");
+	playerMessage("You stopped shopping.");
+};
+
 
 let cmd_meditate = function() {
 //	GM.PC.giveFocus(rollRandom(6,1) + 1);
