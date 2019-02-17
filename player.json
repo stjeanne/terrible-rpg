@@ -10,6 +10,7 @@
 		"will": null,
 
 		"cash": 0,
+		"bank": 150,
 
 		"creditlevel": 1,
 		"debt": null,

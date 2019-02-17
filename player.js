@@ -16,6 +16,7 @@ class Player {
 		this.will = plr.will;
 		this.location = plr.location;
 		this.cash = plr.cash;
+		this.bank = plr.bank;
 		this.creditlevel = plr.creditlevel;
 		this.credit_max = plr.credit_max;
 		this.debt = plr.debt;

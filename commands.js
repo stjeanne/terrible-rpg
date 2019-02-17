@@ -39,9 +39,24 @@ let cmd_meditate = function() {
 };
 
 let cmd_ATM = function() {
-	GM.PC.giveCash(100);
+
+	if (GM.PC.bank >= 100) {
+		GM.PC.giveCash(100);
+		GM.PC.bank -= 100;
+		playerMessage("Took out $100 from the ATM. But what to even spend it on?");
+	}
+
+	else if (GM.PC.bank > 0) {
+		playerMessage("Not enough money in the bank--took out what you had.");
+		GM.PC.giveCash(GM.PC.bank);
+		GM.PC.bank = 0;
+	}
+
+	else {
+		playerMessage("You don't have any money in your account.");
+	}
+
 	GM.displayCharSheet();
-	playerMessage("Took out $100 from the ATM. But what to even spend it on?");
 }
 
 // LOCATION CHANGE FUNCTIONS. Eventually these may set specific game modes? //
