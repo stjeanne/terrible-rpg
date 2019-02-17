@@ -68,6 +68,11 @@
 				{
 					"disp": "Oh no, get out of here",
 					"cmd": "cmd_town"
+				},
+
+				{
+					"disp": "Work work work",
+					"cmd": "cmd_fakebattle"
 				}
 			],
 			"inittext": "The smell is a thousand smells, old smells from which all the virtue has been taken by other, better people. Opportunities for labor abound."
@@ -84,6 +89,11 @@
 				{
 					"disp": "Leave",
 					"cmd": "cmd_town"
+				},
+
+				{
+					"disp": "Buy foods",
+					"cmd": "cmd_tempHeal"
 				}
 			]
 		},

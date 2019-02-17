@@ -36,4 +36,9 @@ class Player {
 		console.log("giveCash: " + amt);
 		this.cash += amt;
 	}
+
+	giveBank(amt) {
+		console.log("bank account up by " + amt);
+		this.bank += amt;
+	}
 }

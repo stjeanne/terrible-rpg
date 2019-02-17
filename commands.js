@@ -2,6 +2,7 @@
 
 const CMD_PARSER = "* ";
 const LOG_LENGTH = 10;
+const PRICE_OF_EGGS = 8;
 
 
 let playerMessage = function(msg) {
@@ -38,6 +39,14 @@ let cmd_meditate = function() {
 	playerMessage("You meditate, gaining focus.");
 };
 
+let cmd_fakebattle = function() {
+	playerMessage("Work work work work work.");
+	GM.PC.giveHealth(rollRandom(3,1) - 4);
+	GM.PC.giveBank(rollRandom(6,2) + 2);
+
+	GM.displayCharSheet();
+};
+
 let cmd_ATM = function() {
 
 	if (GM.PC.bank >= 100) {
@@ -57,7 +66,22 @@ let cmd_ATM = function() {
 	}
 
 	GM.displayCharSheet();
-}
+};
+
+let cmd_tempHeal = function() {
+	if (GM.PC.cash >= PRICE_OF_EGGS) {
+		GM.PC.giveCash(PRICE_OF_EGGS * -1);
+		GM.PC.giveHealth(2);
+		playerMessage("You bought food. It helps you feel a little better.");
+	}
+
+	else {
+		playerMessage("No such thing as a free lunch. You feel kind of bad.");
+		GM.PC.giveFocus(-1);
+	}
+
+	GM.displayCharSheet();
+};
 
 // LOCATION CHANGE FUNCTIONS. Eventually these may set specific game modes? //
 
@@ -92,6 +116,6 @@ let cmd_occult = function() {
 };
 
 let cmd_bank = function() {
-	playerMessage("Went to the bank.");
+	playerMessage("Went to the bank. Your account is: " + GM.PC.bank);
 	GM.changeLocation("bank");
 };
