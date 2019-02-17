@@ -47,4 +47,16 @@ class Player {
 			this.giveFocus(rollRandom(6,1) + 1);
 		}
 	}
+
+	dummyBattle() { // replace this eventually obviously
+		if (!(GM.loop_count % MEDITATE_RATE)) {
+			this.giveHealth(rollRandom(3,1) - 4);
+			this.giveBank(rollRandom(6,2) + 2);
+			this.giveFocus(-1);
+
+			let trashOptions = ['crud', 'trash', 'junk', 'scum', 'garbage', 'one man\'s treasure', 'yech'];
+
+			playerMessage("You cleared a small area of " + trashOptions[Math.floor(Math.random() * trashOptions.length)] + ". Whew.");
+		}
+	}
 }

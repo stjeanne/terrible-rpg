@@ -43,11 +43,13 @@ let cmd_stopmeditate = function() {
 };
 
 let cmd_fakebattle = function() {
-	playerMessage("Work work work work work.");
-	GM.PC.giveHealth(rollRandom(3,1) - 4);
-	GM.PC.giveBank(rollRandom(6,2) + 2);
+	GM.switchModes("crapfields");
+	playerMessage("You begin working...");
+};
 
-	GM.displayCharSheet();
+let cmd_endbattle = function() {
+	GM.switchModes("normal");
+	playerMessage("You stop working...you feel sore.");
 };
 
 let cmd_ATM = function() {

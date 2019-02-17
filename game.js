@@ -95,7 +95,14 @@ class Game {
 			$("#commands").html("");
 			$("#commands").append("<button id = \"cmd_stopmeditate_button\">Stop meditating</button>");
 			$("#commands").append("\n<script>document.getElementById(\"cmd_stopmeditate_button\").addEventListener(\"click\", cmd_stopmeditate);\n</script>");
-			console.log("added stop meditate command will it work");
+//			console.log("added stop meditate command will it work");
+		}
+
+		else if (self.mode == "crapfields") {
+			$("#commands").html("");
+			$("#commands").append("<button id = \"cmd_endbattle_button\">Stop working</button>");
+			$("#commands").append("\n<script>document.getElementById(\"cmd_endbattle_button\").addEventListener(\"click\", cmd_endbattle);\n</script>");
+//			console.log("added end battle command will it work");
 		}
 
 		else if (self.mode == "death") {
@@ -142,6 +149,13 @@ class Game {
 			self.displayCharSheet();
 			self.updateStimuli();
 			self.incrementClock();
+		}
+
+		else if ((self.mode == "crapfields")) {
+			self.PC.dummyBattle();
+			self.displayCharSheet();
+			self.updateStimuli();
+			self.incrementClock();			
 		}
 
 		else if (self.mode == "normal") {
