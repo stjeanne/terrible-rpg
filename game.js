@@ -30,9 +30,8 @@ class Game {
 	startLoop() {
 		console.log("initializing game loop with setInterval at rate: " + this.rate);
 		self = this;
-		this.mode = "normal";
+		self.switchModes("normal");
 		this.timer = setInterval(this.gLoop, this.rate);
-		this.generateButtons();
 		this.gLoop(); // one last lil push
 	}
 
@@ -52,38 +51,75 @@ class Game {
 	}
 
 	updateStimuli() {
-		let cur = self.PC.location;
 
-		$("#stimuli").html("<p>" +			
-			self.locs[cur].inittext +
-			" </p>");
-	}
+		if (self.mode == "normal") {
+			let cur = self.PC.location;
 
-	deathProcess() {
-		$("#stimuli").html("<h2>YOU DIED</h2>" + 
-			"<p>You had " + self.PC.bank + " in the bank, not yet gathering interest for hero investors.</p>");
-		$("#commands").html("");
+			$("#stimuli").html("<p>" +			
+				self.locs[cur].inittext +
+				" </p>");			
+		}
+
+		else if (self.mode == "meditate") {					// eventually this should be replaced by a lookup routine through a hypothetical meditate.json
+			$("#stimuli").html("<p>Meditating...</p>");
+		}
+
+		else if (self.mode == "death") {
+			$("#stimuli").html("<h2>YOU DIED</h2>" + 
+				"<p>You had " + self.PC.bank + " in the bank, not yet gathering interest for hero investors.</p>");			
+		}
+
 	}
 
 	generateButtons() {
-		$("#commands").html("");
+		if (self.mode == "normal") {
+			$("#commands").html("");
 
-		let cur = self.PC.location;
+			let cur = self.PC.location;
 
-		console.log("testing commands for location cur = " + cur);
+			console.log("testing commands for location cur = " + cur);
 
-		for (var key of self.locs[cur].commands) {
+			for (var key of self.locs[cur].commands) {
 
-			$("#commands").append("<button id = \"" + key.cmd + "_button\">" +
-					key.disp +
-				"</button>");
+				$("#commands").append("<button id = \"" + key.cmd + "_button\">" +
+						key.disp +
+					"</button>");
 
-			$("#commands").append("\n<script>document.getElementById(\"" + key.cmd + "_button\").addEventListener(\"click\", " + key.cmd + ");\n</script>");
+				$("#commands").append("\n<script>document.getElementById(\"" + key.cmd + "_button\").addEventListener(\"click\", " + key.cmd + ");\n</script>");
 
-			console.log("iterating in command loop, value: " + key);
+				console.log("iterating in command loop, value: " + key);
+			}
+		}
+
+		else if (self.mode == "meditate") {
+			$("#commands").html("");
+			$("#commands").append("<button id = \"cmd_stopmeditate_button\">Stop meditating</button>");
+			$("#commands").append("\n<script>document.getElementById(\"cmd_stopmeditate_button\").addEventListener(\"click\", cmd_stopmeditate);\n</script>");
+			console.log("added stop meditate command will it work");
+		}
+
+		else if (self.mode == "death") {
+			$("#commands").html("");
 		}
 	}
 
+	incrementClock (x = undefined) {
+			$("#clock").html("<p>" + self.loop_count + "</p>");
+
+			if (x) {
+				self.loop_count += x;
+			}
+
+			else {
+				self.loop_count++;
+			}
+	}
+
+	switchModes(newmode) {
+		self.mode = newmode;
+		self.updateStimuli();
+		self.generateButtons();
+	}
 
 
 ///////////////////////
@@ -97,18 +133,21 @@ class Game {
 		}
 
 		else if ((self.mode == "death") || self.PC.health <= 0) {
-			self.mode == "death";
 			self.PC.health = 0;
-			self.deathProcess();
+			self.switchModes("death");
+		}
+
+		else if ((self.mode == "meditate")) {
+			self.PC.meditateEnergy();
+			self.displayCharSheet();
+			self.updateStimuli();
+			self.incrementClock();
 		}
 
 		else if (self.mode == "normal") {
 			self.displayCharSheet();
 			self.updateStimuli();
-			
-			$("#clock").html("<p>" + self.loop_count + "</p>");
-
-			self.loop_count++;
+			self.incrementClock();
 		}
 	}
 

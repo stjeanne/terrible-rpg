@@ -1,8 +1,5 @@
 // commands for capitalism zero
 
-const CMD_PARSER = "* ";
-const LOG_LENGTH = 10;
-const PRICE_OF_EGGS = 8;
 
 
 let playerMessage = function(msg) {
@@ -34,9 +31,15 @@ let cmd_clean = function() {
 };
 
 let cmd_meditate = function() {
-	GM.PC.giveFocus(rollRandom(6,1) + 1);
-	GM.displayCharSheet();
-	playerMessage("You meditate, gaining focus.");
+//	GM.PC.giveFocus(rollRandom(6,1) + 1);
+//	GM.displayCharSheet();
+	GM.switchModes("meditate");
+	playerMessage("You enter a meditative state.");
+};
+
+let cmd_stopmeditate = function() {
+	GM.switchModes("normal");
+	playerMessage("You stop meditating.");
 };
 
 let cmd_fakebattle = function() {
@@ -52,11 +55,11 @@ let cmd_ATM = function() {
 	if (GM.PC.bank >= 100) {
 		GM.PC.giveCash(100);
 		GM.PC.bank -= 100;
-		playerMessage("Took out $100 from the ATM. But what to even spend it on?");
+		playerMessage("Took out $100 from the ATM.");
 	}
 
 	else if (GM.PC.bank > 0) {
-		playerMessage("Not enough money in the bank--took out what you had.");
+		playerMessage("You don't have $100 in the bank; took out what you had.");
 		GM.PC.giveCash(GM.PC.bank);
 		GM.PC.bank = 0;
 	}
