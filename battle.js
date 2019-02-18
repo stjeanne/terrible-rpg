@@ -4,13 +4,23 @@
 
 class BattleManager {
 	constructor(battle_id = 0) {
+		this.monster = null;
 	}
 
 	loadMonster(battle_id = 0) {
-		this.monster = GM.monsters[battle_id];
+		this.monster = new Object;
+		this.monster.hp = GM.monsters[battle_id].hp;
+		this.monster.atk = GM.monsters[battle_id].atk;
+		this.monster.val = GM.monsters[battle_id].val;
+
 		GM.inbattle = true;
 
 		console.log("new battle starts with " + this.monster.disp + ". HP starts at " + this.monster.hp + ", battle worth " + this.monster.val);
+	}
+
+	clearMonster() {
+		console.log("battle over, erasing monster from memory");
+		this.monster = null;
 	}
 
 	battleRound() {

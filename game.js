@@ -175,7 +175,7 @@ class Game {
 
 	endBattle() {
 		self.PC.bank += self.BM.monster.val;
-		self.BM.monster = null;
+		self.BM.clearMonster();
 		self.activeBattle = false;
 	}
 
