@@ -28,9 +28,16 @@ function startGame() {
 				})
 			})
 
-				.done(function() {
-					GM.startLoop();
-				});
+			.done(function() {
+				$.getJSON('monsters.json', function(result) {
+					console.log("monsters file: " + result);
+					GM.generateMonsters(result);
+				})
+			})
+
+			.done(function() {
+				GM.startLoop();
+			});
 
 		});
 

@@ -9,8 +9,12 @@ class Game {
 		this.PC = null;
 		this.locs = null;
 		this.items = null;
+		this.monsters = null;
 		this.gameLog = new Array;
 		this.mode = "loading";
+
+		this.activeBattle = false;
+		this.BM = new BattleManager;
 	}
 
 // LOAD DATA FROM JSON FILES //
@@ -30,6 +34,12 @@ class Game {
 		this.items = itm;
 		console.log("generate items as follows:");
 		console.log(this.items);
+	}
+
+	generateMonsters(mns) {
+		this.monsters = mns;
+		console.log("generate monsters as follows:");
+		console.log(this.monsters);
 	}
 
 // TURN THE KEY FUNCTION //
@@ -112,21 +122,24 @@ class Game {
 			$("#commands").html("");
 			$("#commands").append("<button id = \"cmd_stopmeditate_button\">Stop meditating</button>");
 			$("#commands").append("\n<script>document.getElementById(\"cmd_stopmeditate_button\").addEventListener(\"click\", cmd_stopmeditate);\n</script>");
-//			console.log("added stop meditate command will it work");
+		}
+
+		else if (self.mode == "crapfields_false") { // dummy battle mode, vestigial
+			$("#commands").html("");
+			$("#commands").append("<button id = \"cmd_endbattle_button\">Stop working</button>");
+			$("#commands").append("\n<script>document.getElementById(\"cmd_endbattle_button\").addEventListener(\"click\", cmd_endbattle);\n</script>");
 		}
 
 		else if (self.mode == "crapfields") {
 			$("#commands").html("");
 			$("#commands").append("<button id = \"cmd_endbattle_button\">Stop working</button>");
 			$("#commands").append("\n<script>document.getElementById(\"cmd_endbattle_button\").addEventListener(\"click\", cmd_endbattle);\n</script>");
-//			console.log("added end battle command will it work");
 		}
 
 		else if (self.mode == "buying") {
 			$("#commands").html("");
 			$("#commands").append("<button id = \"cmd_endshopping_button\">Stop shopping</button>");
 			$("#commands").append("\n<script>document.getElementById(\"cmd_endshopping_button\").addEventListener(\"click\", cmd_endshopping);\n</script>");
-//			console.log("added end battle command will it work");
 		}
 
 		else if (self.mode == "death") {
@@ -152,6 +165,20 @@ class Game {
 		self.generateButtons();
 	}
 
+// battle management functions //
+
+	initBattle() {
+		self.activeBattle = true;
+		self.BM.loadMonster(Math.floor(Math.random() * self.monsters.length));
+		playerMessage("Started cleaning " + self.BM.monster.art + " " + self.BM.monster.disp + ".");
+	}
+
+	endBattle() {
+		self.PC.bank += self.BM.monster.val;
+		self.BM.monster = null;
+		self.activeBattle = false;
+	}
+
 
 ///////////////////////
 // PRIMARY GAME LOOP // (most important method)
@@ -170,22 +197,34 @@ class Game {
 
 		else if ((self.mode == "meditate")) {
 			self.PC.meditateEnergy();
-			self.displayCharSheet();
-			self.updateStimuli();
-			self.incrementClock();
+			self.updateGUI();
+		}
+
+		else if ((self.mode == "crapfields_false")) {
+			self.PC.dummyBattle();
+			self.updateGUI();
 		}
 
 		else if ((self.mode == "crapfields")) {
-			self.PC.dummyBattle();
-			self.displayCharSheet();
-			self.updateStimuli();
-			self.incrementClock();			
+
+			if ((self.activeBattle == false) && !(self.loop_count % CRAPFIELDS_RATE)) {
+				self.initBattle();
+			}
+
+			else if ((self.activeBattle == false) && (self.loop_count % CRAPFIELDS_RATE)) {
+				playerMessage("Looking for trash to clean...");
+			}
+
+			else {
+				self.BM.battleRound();
+			}
+
+
+			self.updateGUI();
 		}
 
 		else if (self.mode == "normal") {
-			self.displayCharSheet();
-			self.updateStimuli();
-			self.incrementClock();
+			self.updateGUI();
 		}
 	}
 
@@ -200,6 +239,11 @@ class Game {
 		self.generateButtons();
 	}
 
+	updateGUI(mode = 0) { // eventually change this based on whether we're above ground or in vision mazes
+			self.displayCharSheet();
+			self.updateStimuli();
+			self.incrementClock();
+	}
 }
 
 // different useful methods //

@@ -47,8 +47,6 @@ let cmd_endshopping = function() {
 
 
 let cmd_meditate = function() {
-//	GM.PC.giveFocus(rollRandom(6,1) + 1);
-//	GM.displayCharSheet();
 	GM.switchModes("meditate");
 	playerMessage("You enter a meditative state.");
 };
@@ -59,8 +57,12 @@ let cmd_stopmeditate = function() {
 };
 
 let cmd_fakebattle = function() {
-	GM.switchModes("crapfields");
+	GM.switchModes("crapfields_false");
 	playerMessage("You begin working...");
+};
+
+let cmd_realcrapbattle = function() {
+	GM.switchModes("crapfields");
 };
 
 let cmd_endbattle = function() {

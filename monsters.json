@@ -1,0 +1,37 @@
+[
+	{
+		"name": "sackslime",
+		"disp": "slimy sack",
+		"art": "a",
+		"hp": 3,
+		"atk": 2,
+		"xp": 1,
+		"val": 1,
+		"level": 1,
+		"speed": 2
+	},
+
+	{
+		"name": "wirelath",
+		"disp": "wire lath",
+		"art": "a coil of",
+		"hp": 5,
+		"atk": 3,
+		"xp": 3,
+		"val": 5,
+		"level": 1,
+		"speed": 3
+	},
+
+	{
+		"name": "glowingrod",
+		"disp": "glowing rod",
+		"art": "a",
+		"hp": 6,
+		"atk": 5,
+		"xp": 10,
+		"val": 10,
+		"level": 1,
+		"speed": 3
+	}
+]

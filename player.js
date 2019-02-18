@@ -43,6 +43,10 @@ class Player {
 		this.bank += amt;
 	}
 
+	physAtk() {
+		return Math.floor(Math.random() * this.strength) + 1;
+	}
+
 	meditateEnergy() {
 		if (!(GM.loop_count % MEDITATE_RATE)) {
 			this.giveFocus(rollRandom(6,1) + 1);

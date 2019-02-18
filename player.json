@@ -7,8 +7,8 @@
 		"focus": 5,
 		"max_focus": 10,
 
-		"strength": null,
-		"will": null,
+		"strength": 2,
+		"will": 1,
 
 		"cash": 0,
 		"bank": 150,

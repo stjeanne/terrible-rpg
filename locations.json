@@ -71,8 +71,8 @@
 				},
 
 				{
-					"disp": "Work work work",
-					"cmd": "cmd_fakebattle"
+					"disp": "Clean endless trash",
+					"cmd": "cmd_realcrapbattle"
 				}
 			],
 			"inittext": "The smell is a thousand smells, old smells from which all the virtue has been taken by other, better people. Opportunities for labor abound."
