@@ -4,11 +4,13 @@
 
 class BattleManager {
 	constructor(battle_id = 0) {
-		this.monster = null;
+		this.monster = new Object;
 	}
 
 	loadMonster(battle_id = 0) {
-		this.monster = new Object;
+		this.monster.art = GM.monsters[battle_id].art;
+		this.monster.disp = GM.monsters[battle_id].disp;
+		this.monster.name = GM.monsters[battle_id].name;
 		this.monster.hp = GM.monsters[battle_id].hp;
 		this.monster.atk = GM.monsters[battle_id].atk;
 		this.monster.val = GM.monsters[battle_id].val;
@@ -21,6 +23,7 @@ class BattleManager {
 	clearMonster() {
 		console.log("battle over, erasing monster from memory");
 		this.monster = null;
+		this.monster = new Object;
 	}
 
 	battleRound() {
