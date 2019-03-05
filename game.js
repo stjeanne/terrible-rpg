@@ -258,3 +258,7 @@ let rollRandom = function(die, numdie) {
 
 	return result + 1;
 }
+
+let createBill = function() { // helper function for buying stuff
+	console.log("tried to buy stuff from the store");
+}
