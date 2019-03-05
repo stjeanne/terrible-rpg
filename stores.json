@@ -1,0 +1,25 @@
+[
+	{
+		"id":"hardware",
+		"capital": 100,
+		"level": [
+			{ 
+				"item": ["rustyshovel", "initring", "clothapron"]
+			},
+			{
+				"item": ["initring"]
+			},
+			{}
+		]
+	},
+
+	{
+		"id":"bodega",
+		"capital": 100
+	},
+
+	{
+		"id":"occult",
+		"capital": 0
+	}
+]

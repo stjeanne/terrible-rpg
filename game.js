@@ -42,6 +42,12 @@ class Game {
 		console.log(this.monsters);
 	}
 
+	generateStores(str) {
+		this.stores = str;
+		console.log("generate stores as follows:");
+		console.log(this.stores);
+	}
+
 // TURN THE KEY FUNCTION //
 
 	startLoop() {

@@ -29,6 +29,13 @@ function startGame() {
 			})
 
 			.done(function() {
+				$.getJSON('stores.json', function(result) {
+					console.log("stores file: " + result);
+					GM.generateStores(result);
+				})
+			})
+
+			.done(function() {
 				$.getJSON('monsters.json', function(result) {
 					console.log("monsters file: " + result);
 					GM.generateMonsters(result);
