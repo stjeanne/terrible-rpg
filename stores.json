@@ -2,9 +2,10 @@
 	{
 		"id":"hardware",
 		"capital": 100,
+		"stim": "There isn't too much here, is there?",
 		"level": [
 			{ 
-				"item": ["rustyshovel", "initring", "clothapron"]
+				"item": ["rustyshovel", "clothapron"]
 			},
 			{
 				"item": ["initring"]
@@ -15,11 +16,23 @@
 
 	{
 		"id":"bodega",
-		"capital": 100
+		"capital": 100,
+		"stim": "The bodega cat rubs your leg as you browse.",
+		"level": [
+			{
+				"item": ["bec","loosie"]
+			}
+		]
 	},
 
 	{
 		"id":"occult",
-		"capital": 0
+		"capital": 0,
+		"stim": "It smells of sandalwood and frankincense while you browse.",
+		"level": [
+			{
+				"item": ["initring"]
+			}
+		]
 	}
 ]

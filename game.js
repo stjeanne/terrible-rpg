@@ -15,6 +15,7 @@ class Game {
 
 		this.activeBattle = false;
 		this.BM = new BattleManager;
+		this.SM = new Store;
 	}
 
 // LOAD DATA FROM JSON FILES //
@@ -93,13 +94,7 @@ class Game {
 		}
 
 		else if (self.mode == "buying") {
-			$("#stimuli").html("<p>Shopping for items, which are as follows:</p>");
-
-			for (var i of GM.items) {
-				$("#stimuli").append("<li><input type=\"checkbox\" name=\"" + i.name + "\" value=\"" + i.name + "\">" + i.disp + " &mdash; $" + i.price + "</input></li>");
-			}
-
-//			$("#stimuli").append("</form>");
+			self.SM.showStore();
 		}
 
 	}

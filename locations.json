@@ -94,6 +94,11 @@
 				{
 					"disp": "Buy foods",
 					"cmd": "cmd_tempHeal"
+				},
+
+				{
+					"disp": "Browse the bodega",
+					"cmd": "cmd_buygoods"
 				}
 			]
 		},
@@ -109,6 +114,11 @@
 				{
 					"disp": "Leave",
 					"cmd": "cmd_town"
+				},
+
+				{
+					"disp": "Buy occult products",
+					"cmd": "cmd_buygoods"
 				}
 			]
 		},
@@ -148,7 +158,7 @@
 
 				{
 					"disp": "Buy items",
-					"cmd": "cmd_buyhardware"
+					"cmd": "cmd_buygoods"
 				}
 			]
 		}

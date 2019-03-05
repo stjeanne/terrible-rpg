@@ -15,5 +15,17 @@
 			"name": "clothapron",
 			"disp": "Worn cloth apron",
 			"price": 50
+		},
+
+		{
+			"name": "bec",
+			"disp": "Bacon egg and cheese on roll",
+			"price": 15
+		},
+
+		{
+			"name": "loosie",
+			"disp": "Loosie",
+			"price": 5
 		}
 	]

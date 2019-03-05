@@ -35,16 +35,15 @@ let cmd_clean = function() {
 
 // buying commands
 
-let cmd_buyhardware = function() {
+let cmd_buygoods = function() { 
 	GM.switchModes("buying");
-	playerMessage("Browsed some hardware. How exactly do you buy things again?");
+	playerMessage("You began to shop.");
 };
 
 let cmd_endshopping = function() {
 	GM.switchModes("normal");
 	playerMessage("You stopped shopping.");
 };
-
 
 let cmd_meditate = function() {
 	GM.switchModes("meditate");
@@ -126,16 +125,19 @@ let cmd_town = function() {
 let cmd_hardware = function() {
 	playerMessage("Entered the hardware store.");
 	GM.changeLocation("hardware");
+	GM.SM.loadStore(HARDWARE_ST);
 };
 
 let cmd_bodega = function() {
 	playerMessage("Went to the bodega.");
 	GM.changeLocation("bodega");
+	GM.SM.loadStore(BODEGA_ST);
 };
 
 let cmd_occult = function() {
 	playerMessage("Went to the local occult supply shop.");
 	GM.changeLocation("occult");
+	GM.SM.loadStore(OCCULT_ST);
 };
 
 let cmd_bank = function() {
