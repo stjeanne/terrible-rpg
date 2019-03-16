@@ -41,9 +41,37 @@ class Store {
 //		$("#stimuli").append("<form action=\"\" onsubmit=\"createBill(); return false;\">");
 
 		for (var i of thiz.products) {
-			$("#stimuli").append("<li><input type=\"checkbox\" name=\"" + i.name + "\" value=\"" + i.name + "\">" + i.disp + " &mdash; $" + i.price + "</li>");
+			$("#stimuli").append("<li><input type=\"checkbox\" name=\"" + i.name + "_box\" value=\"" + i.name + "\">" + i.disp + " &mdash; $" + i.price + "</li>");
 		}
 
-//		$("#stimuli").append("<input type=\"submit\" value=\"Buy\"></form>");
+		$("#stimuli").append("<input type=\"submit\" class=\"store_checkout\" value=\"Check out\">");
+		$("input.store_checkout").on('click', thiz.ringUpStore);
 	}
-}
+
+	ringUpStore() {
+
+		let bill = 0;
+		let thiz = self.SM; // this is so ugly ugh noooo fix this
+
+		for (var i of thiz.products) {  // for each product in the store: iterate through the store's items. if the item is checked off, add the price to the bill
+
+			let tst = i.name + "_box";
+
+			if ($('input[name=' + tst + ']').is(':checked')) {
+				console.log("testing: " + tst + "returns as checked");
+				bill += i.price;
+			}
+
+			else {
+				console.log("testing: either " + tst + " is not checked or something else is a mess.");
+			}
+		}
+
+		console.log("ringup total price: " + bill);
+
+		playerMessage("You purchased the goods for $" + bill +". (At least in theory.)");
+		GM.switchModes("normal");
+	}
+
+
+};
