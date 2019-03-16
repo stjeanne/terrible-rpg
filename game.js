@@ -105,7 +105,7 @@ class Game {
 
 			let cur = self.PC.location;
 
-			console.log("testing commands for location cur = " + cur);
+//			console.log("testing commands for location cur = " + cur);
 
 			for (var key of self.locs[cur].commands) {
 
@@ -180,6 +180,19 @@ class Game {
 		self.activeBattle = false;
 	}
 
+// item management functions //
+
+	getItemByName(itm) { // right now this just iterates through the items. there must be a better way but w/e!
+		let r = null;
+
+		for (var i in GM.items) {
+			if (GM.items[i].name == itm) {
+				r = i;
+			}
+		}
+
+		return GM.items[r];
+	}
 
 ///////////////////////
 // PRIMARY GAME LOOP // (most important method)
@@ -259,6 +272,3 @@ let rollRandom = function(die, numdie) {
 	return result + 1;
 }
 
-let createBill = function() { // helper function for buying stuff
-	console.log("tried to buy stuff from the store");
-}

@@ -60,7 +60,7 @@ class Player {
 		}
 	}
 
-	dummyBattle() { // replace this eventually obviously
+	dummyBattle() { // is this still used? I don't think so!
 		if (!(GM.loop_count % MEDITATE_RATE)) {
 			this.giveHealth(rollRandom(3,1) - 4);
 			this.giveBank(rollRandom(6,2) + 2);
@@ -71,4 +71,8 @@ class Player {
 			playerMessage("You cleared a small area of " + trashOptions[Math.floor(Math.random() * trashOptions.length)] + ". Whew.");
 		}
 	}
+
+	addInventory(itm) {
+		console.log("theoretically added " + itm + " to player inventory.");
+	} 
 }

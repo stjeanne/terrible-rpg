@@ -1,5 +1,9 @@
 // stores.js - a store inventory manager
 
+let getItemByName = function(itm) {
+	console.log("retrieving item " + itm);
+}
+
 class Store {
 	constructor(store_id = 0) {
 		this.store = new Object;
@@ -10,7 +14,6 @@ class Store {
 		let thiz = this;
 		let i = GM.items.filter(function (v, idx, array) {
 			if (v.name == hnd) {
-//				console.log("correctly filtered " + v.name + " as equal to "+ hnd + ", pushing index " + idx);
 				thiz.products.push(GM.items[idx]);
 			}
 		});	
@@ -27,7 +30,7 @@ class Store {
 		this.store.stim = GM.stores[store_id].stim;
 
 		this.store.level[GM.PC.creditlevel - 1].item.forEach(function (v,idx,array) {
-	//		console.log("testing addProduct with value " + v);
+			console.log("testing addProduct with value " + v);
 			thiz.addProduct(v);
 		})
 
@@ -51,6 +54,7 @@ class Store {
 	ringUpStore() {
 
 		let bill = 0;
+		let parcels = [];
 		let thiz = self.SM; // this is so ugly ugh noooo fix this
 
 		for (var i of thiz.products) {  // for each product in the store: iterate through the store's items. if the item is checked off, add the price to the bill
@@ -60,6 +64,7 @@ class Store {
 			if ($('input[name=' + tst + ']').is(':checked')) {
 				console.log("testing: " + tst + "returns as checked");
 				bill += i.price;
+				parcels.push(i.name);
 			}
 
 			else {
@@ -69,7 +74,20 @@ class Store {
 
 		console.log("ringup total price: " + bill);
 
-		playerMessage("You purchased the goods for $" + bill +". (At least in theory.)");
+		if (bill <= GM.PC.cash) { 
+			playerMessage("You purchased the goods for $" + bill +". (At least in theory.)");
+			GM.PC.cash -= bill;
+
+			for (var i of parcels) {
+				GM.PC.addInventory(i);
+			}
+			// eventually transfer this cash back to the store.
+		}
+
+		else {
+			playerMessage("You don't have enough money for those things. Ashamed, you stop shopping.");
+		}
+
 		GM.switchModes("normal");
 	}
 

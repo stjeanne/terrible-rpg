@@ -2,30 +2,35 @@
 		{
 			"name": "rustyshovel",
 			"disp": "Rusty shovel",
-			"price": 20
+			"price": 20,
+			"type": "p_tool"
 		},
 
 		{
 			"name": "initring",
 			"disp": "Strange ring",
-			"price": 1750
+			"price": 1750,
+			"type": "ring"
 		},
 
 		{
 			"name": "clothapron",
 			"disp": "Worn cloth apron",
-			"price": 50
+			"price": 50,
+			"type": "p_arm"
 		},
 
 		{
 			"name": "bec",
 			"disp": "Bacon egg and cheese on roll",
-			"price": 15
+			"price": 15,
+			"type": "food"
 		},
 
 		{
 			"name": "loosie",
 			"disp": "Loosie",
-			"price": 5
+			"price": 5,
+			"type": "food"
 		}
 	]
