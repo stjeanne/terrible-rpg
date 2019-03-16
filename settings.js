@@ -1,6 +1,6 @@
 // all consts and junk live here now
 
-const CMD_PARSER = "* ";
+const CMD_PARSER = "&bull; ";
 const LOG_LENGTH = 10;
 
 const PRICE_OF_EGGS = 15;

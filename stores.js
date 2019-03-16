@@ -64,7 +64,7 @@ class Store {
 			if ($('input[name=' + tst + ']').is(':checked')) {
 				console.log("testing: " + tst + "returns as checked");
 				bill += i.price;
-				parcels.push(i.name);
+				parcels.push(i);
 			}
 
 			else {
@@ -75,7 +75,7 @@ class Store {
 		console.log("ringup total price: " + bill);
 
 		if (bill <= GM.PC.cash) { 
-			playerMessage("You purchased the goods for $" + bill +". (At least in theory.)");
+			playerMessage("You paid $" + bill +" to the store.");
 			GM.PC.cash -= bill;
 
 			for (var i of parcels) {
@@ -85,7 +85,7 @@ class Store {
 		}
 
 		else {
-			playerMessage("You don't have enough money for those things. Ashamed, you stop shopping.");
+			playerMessage("You don't have enough money to pay the bill. Ashamed, you stop shopping.");
 		}
 
 		GM.switchModes("normal");

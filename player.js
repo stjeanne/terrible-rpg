@@ -72,7 +72,11 @@ class Player {
 		}
 	}
 
-	addInventory(itm) {
-		console.log("theoretically added " + itm + " to player inventory.");
+	addInventory(i) {
+		console.log("theoretically added " + i.name + " to player inventory.");
+
+		if(i.type == "food") {
+			effect_food(i);
+		}
 	} 
 }

@@ -92,11 +92,6 @@
 				},
 
 				{
-					"disp": "Buy foods",
-					"cmd": "cmd_tempHeal"
-				},
-
-				{
 					"disp": "Browse the bodega",
 					"cmd": "cmd_buygoods"
 				}

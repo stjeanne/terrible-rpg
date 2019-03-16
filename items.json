@@ -24,13 +24,17 @@
 			"name": "bec",
 			"disp": "Bacon egg and cheese on roll",
 			"price": 15,
-			"type": "food"
+			"type": "food",
+			"pwr": 8,
+			"eff": "You feel a rush of delicious protein energy!"
 		},
 
 		{
 			"name": "loosie",
 			"disp": "Loosie",
 			"price": 5,
-			"type": "food"
+			"type": "food",
+			"pwr": -1,
+			"eff": "Your lungs hurt, but you feel a little better maybe."
 		}
 	]
