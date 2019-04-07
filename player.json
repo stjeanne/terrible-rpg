@@ -6,12 +6,15 @@
 		"stamina": 0,
 		"focus": 5,
 		"max_focus": 10,
+		"focus_rate": 1,
 
-		"strength": 2,
-		"will": 1,
+		"STR": 2,
+		"WIL": 2,
+		"AGI": 2,
+		"ABS": 0,
 
 		"cash": 5,
-		"bank": 150,
+		"bank": 0,
 
 		"creditlevel": 1,
 		"debt": null,

@@ -3,14 +3,16 @@
 			"name": "rustyshovel",
 			"disp": "Rusty shovel",
 			"price": 20,
-			"type": "tool"
+			"type": "tool",
+			"STR": 5
 		},
 
 		{
 			"name": "initring",
 			"disp": "Strange ring",
 			"price": 1750,
-			"type": "ring"
+			"type": "ring",
+			"max_focus": 90
 		},
 
 		{
@@ -18,6 +20,15 @@
 			"disp": "Worn cloth apron",
 			"price": 50,
 			"type": "body"
+		},
+
+		{
+			"name": "cheapphones",
+			"disp": "Frayed headphones",
+			"price": 10,
+			"type": "music",
+			"max_focus": -5,
+			"AGI": 3
 		},
 
 		{

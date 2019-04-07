@@ -12,9 +12,14 @@ class Player {
 		this.health = plr.health;
 		this.focus = plr.focus;
 		this.max_focus = plr.max_focus;
+		this.focus_rate = plr.focus_rate;
+
 		this.stamina = plr.stamina;
-		this.strength = plr.strength;
-		this.will = plr.will;
+		this.STR = plr.STR;
+		this.WIL = plr.WIL;
+		this.ABS = plr.ABS;	// absorb
+		this.AGI = plr.AGI;
+
 		this.location = plr.location;
 		this.cash = plr.cash;
 		this.bank = plr.bank;
@@ -29,7 +34,7 @@ class Player {
 			statue: "none", 	// change effects of sigils, change dream effects
 			ring: "none" 		// increase focus, focus rate
 		};
-		this.inventory = {}		// push items to it
+		this.inventory = []		// push items to it
 	}
 
 	giveFocus(amt) {
@@ -52,37 +57,74 @@ class Player {
 		this.bank += amt;
 	}
 
-	equipItem(slot, item) {
-		if (slot == "tool") {
-			let i = GM.getItemByName(item);
-			this.unequipItem(slot);
-			this.gear.tool = i;
-			console.log("equipped " + i.disp + " as a tool.");
+/**************************************
+
+INVENTORY MANAGEMENT
+
+***************************************/
+
+	addInventory(item) {
+
+		let i = "";
+
+		if (typeof item == "string") {
+			i = GM.getItemByName(item);
 		}
 
 		else {
-			console.log("equipItem called for mysterious purposes.");
+			i = item;
+		}
+
+		console.log("added " + i.disp + " to player inventory.");
+
+		this.inventory.push(i);
+
+		if(i.type == "food") { // this must change, right now all food gets used immediately
+			effect_food(i);
 		}
 	}
 
+	removeInventory(item) {
+
+		// this will need to be built
+
+		console.log("theoretically removed " + item + " from player inventory.");
+	}
+
+	equipItem(slot, item) {
+	
+		this.removeInventory(item);
+
+		if (this.gear[slot] == "none") {
+			this.gear[slot] = GM.getItemByName(item);
+		}
+
+		else {
+			this.unequipItem(slot);
+			this.gear[slot] = GM.getItemByName(item);
+		}
+
+		// right now stat giving is busted--ultimately should check that you have the correct properties
+
+		this.STR += this.gear[slot].STR;
+		this.AGI += this.gear[slot].AGI;
+		this.WIL += this.gear[slot].WIL;
+		this.max_focus += this.gear[slot].max_focus;
+
+		console.log("equipped " + this.gear[slot].name + " in equipment slot: " + slot);
+
+	}
+
 	unequipItem(slot) {	// pass in the actual inventory slot
-		let s = this.gear.filter( function(sname) {
-			return sname == slot;
-		});
+		console.log("unequipItem slot = " + slot + ", unequipping " + this.gear[slot].name);
 
-		console.log("unequipItem s = " + s[0]);
-/*
-		if (slot == "tool") {
-			if (this.gear.tool == "none") {
-				console.log("nothing to unequip from slot " + slot + "!")
-			}
+		this.STR -= this.gear[slot].STR;
+		this.AGI -= this.gear[slot].AGI;
+		this.WIL -= this.gear[slot].WIL;
+		this.max_focus -= this.gear[slot].max_focus;
 
-			else {
-				console.log("unequipping " + this.gear.tool.name + " from tool slot.");
-				this.addInventory(this.gear.tool);
-				this.gear.tool = "none";
-			}
-		}*/
+		this.addInventory(GM.getItemByName(this.gear[slot].name));
+		this.gear[slot] = "none";
 	}
 
 	getEquipSlotByName(slot) {
@@ -90,12 +132,12 @@ class Player {
 	}
 
 	physAtk() {
-		return Math.floor(Math.random() * this.strength) + 1;
+		return rollRandom(3,1) + Math.floor(0.5 * this.STR);
 	}
 
 	meditateEnergy() {
 		if (!(GM.loop_count % MEDITATE_RATE)) {
-			this.giveFocus(rollRandom(6,1) + 1);
+			this.giveFocus(rollRandom(3,1) + 1);
 		}
 
 		if (this.focus >= this.max_focus) {
@@ -106,23 +148,5 @@ class Player {
 		}
 	}
 
-	dummyBattle() { // is this still used? I don't think so!
-		if (!(GM.loop_count % MEDITATE_RATE)) {
-			this.giveHealth(rollRandom(3,1) - 4);
-			this.giveBank(rollRandom(6,2) + 2);
-			this.giveFocus(-1);
 
-			let trashOptions = ['crud', 'trash', 'junk', 'scum', 'garbage', 'one man\'s treasure', 'yech'];
-
-			playerMessage("You cleared a small area of " + trashOptions[Math.floor(Math.random() * trashOptions.length)] + ". Whew.");
-		}
-	}
-
-	addInventory(i) {
-		console.log("theoretically added " + i.name + " to player inventory.");
-
-		if(i.type == "food") {
-			effect_food(i);
-		}
-	} 
 }

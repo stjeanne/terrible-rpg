@@ -50,6 +50,20 @@ let cmd_meditate = function() {
 	playerMessage("You enter a meditative state.");
 };
 
+let cmd_equipchange = function() {
+	GM.switchModes("equipchange");
+	playerMessage("Began to look at all your cool equipment (which you can't put on yet.)");
+};
+
+let cmd_equipdone = function() {
+	GM.switchModes("normal");
+	playerMessage("Stopped torturing yourself thinking about the cool equipment you can't yet use.");
+}
+
+let cmd_sleep = function() {
+	playerMessage("You go to sleep (though it doesn't do anything yet.)");
+};
+
 let cmd_stopmeditate = function() {
 	GM.switchModes("normal");
 	playerMessage("You stop meditating.");

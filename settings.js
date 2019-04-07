@@ -4,7 +4,7 @@ const CMD_PARSER = "&bull; ";
 const LOG_LENGTH = 10;
 
 const PRICE_OF_EGGS = 15;
-const MEDITATE_RATE = 4;
+const MEDITATE_RATE = 3;
 const CRAPFIELDS_RATE = 3;
 
 const HARDWARE_ST = 0;

@@ -13,9 +13,20 @@
 					},
 
 					{
+						"disp": "Change equipment",
+						"cmd": "cmd_equipchange"
+					},
+
+					{
+						"disp": "Go to sleep",
+						"cmd": "cmd_sleep"
+					},
+
+					{
 						"disp": "Leave your apartment",
 						"cmd": "cmd_town"
 					}
+
 				]
 			},
 

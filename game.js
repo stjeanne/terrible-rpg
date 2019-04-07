@@ -67,11 +67,22 @@ class Game {
 // SCREEN UPDATE FUNCTIONS //
 
 	displayCharSheet() {
+
+		let isbank = "";
+
+		if (self.PC.bank > 0) {
+			isbank = "+";
+		}
+
 		$("#charsheet").html('<ul><li><span class=\"stat\">Health</span> ' + Math.floor(self.PC.health) + '</li>' +
 		'<li><span class=\"stat\">Focus</span> ' + self.PC.focus + '</li>' +
-		'<li><span class=\"stat\">Cash</span> ' + self.PC.cash + '</li>' +
-		'<li><span class=\"stat\">Credit</span> ' + self.PC.creditlevel + '</li>' +
-		'</ul>');		
+		'<li><span class=\"stat\">Cash</span> ' + self.PC.cash + isbank + '</li></ul>' +
+//		'<li><span class=\"stat\">Credit</span> ' + self.PC.creditlevel + '</li>' +
+
+		"<ul><li><span class=\"stat\">TOOL</span> " + self.PC.gear.tool.disp + "</li>" + 
+									"<li><span class=\"stat\">BODY</span> " + self.PC.gear.body.disp + "</li>" +
+									"<li><span class=\"stat\">H.PHONES</span> " + self.PC.gear.music.disp + "</li>" + 
+									"</ul>");
 	}
 
 	updateStimuli() {
@@ -91,6 +102,10 @@ class Game {
 		else if (self.mode == "death") {
 			$("#stimuli").html("<h2>YOU DIED</h2>" + 
 				"<p>You had " + self.PC.bank + " in the bank, not yet gathering interest for hero investors.</p>");			
+		}
+
+		else if (self.mode == "equipchange") {
+			$("#stimuli").html("<p>Changing equipment. STR: " + self.PC.STR + " AGI: " + self.PC.AGI + " WIL: " + self.PC.WIL + " ABS: " + self.PC.ABS + "</p>");
 		}
 
 		else if (self.mode == "buying") {
@@ -123,6 +138,12 @@ class Game {
 			$("#commands").html("");
 			$("#commands").append("<button id = \"cmd_stopmeditate_button\">Stop meditating</button>");
 			$("#commands").append("\n<script>document.getElementById(\"cmd_stopmeditate_button\").addEventListener(\"click\", cmd_stopmeditate);\n</script>");
+		}
+
+		else if (self.mode == "equipchange") {
+			$("#commands").html("");
+			$("#commands").append("<button id = \"cmd_equipdone_button\">All done</button>");
+			$("#commands").append("\n<script>document.getElementById(\"cmd_equipdone_button\").addEventListener(\"click\", cmd_equipdone);\n</script>");
 		}
 
 		else if (self.mode == "crapfields_false") { // dummy battle mode, vestigial
