@@ -34,7 +34,7 @@ class Player {
 			statue: "none", 	// change effects of sigils, change dream effects
 			ring: "none" 		// increase focus, focus rate
 		};
-		this.inventory = []		// push items to it
+		this.inventory = []		// push items to it. could be an issue with passing by ref rather than value.
 	}
 
 	giveFocus(amt) {
@@ -75,12 +75,13 @@ INVENTORY MANAGEMENT
 			i = item;
 		}
 
-		console.log("added " + i.disp + " to player inventory.");
-
-		this.inventory.push(i);
-
 		if(i.type == "food") { // this must change, right now all food gets used immediately
-			effect_food(i);
+			this.useItem(i);
+		}
+
+		else {
+			console.log("added " + i.disp + " to player inventory.");
+			this.inventory.push(i);
 		}
 	}
 
@@ -91,7 +92,26 @@ INVENTORY MANAGEMENT
 		console.log("theoretically removed " + item + " from player inventory.");
 	}
 
-	equipItem(slot, item) {
+	useItem(item) {
+
+		let i = "";
+
+		if (typeof item == "string") {
+			i = GM.getItemByName(item);
+		}
+
+		else {
+			i = item;
+		}
+
+		effect_food(i);
+	}
+
+	equipItem(item, slot) {
+
+		if (slot == undefined) {
+			slot = GM.getItemByName(item).type;
+		}
 	
 		this.removeInventory(item);
 
@@ -107,6 +127,7 @@ INVENTORY MANAGEMENT
 		this.STR += normalizeStat(this.gear[slot].STR);
 		this.AGI += normalizeStat(this.gear[slot].AGI);
 		this.WIL += normalizeStat(this.gear[slot].WIL);
+		this.ABS += normalizeStat(this.gear[slot].ABS);
 		this.max_focus += normalizeStat(this.gear[slot].max_focus);
 
 		console.log("equipped " + this.gear[slot].name + " in equipment slot: " + slot);
@@ -123,6 +144,7 @@ INVENTORY MANAGEMENT
 			this.STR -= normalizeStat(this.gear[slot].STR);
 			this.AGI -= normalizeStat(this.gear[slot].AGI);
 			this.WIL -= normalizeStat(this.gear[slot].WIL);
+			this.ABS -= normalizeStat(this.gear[slot].ABS);
 			this.max_focus -= normalizeStat(this.gear[slot].max_focus);
 
 			this.gear[slot] = "none";
@@ -131,6 +153,10 @@ INVENTORY MANAGEMENT
 
 	physAtk() {
 		return rollRandom(3,1) + Math.floor(0.5 * this.STR);
+	}
+
+	physDef() {
+		return rollRandom(3,1) + Math.floor(0.25 * this.AGI) + Math.floor(0.25 + this.ABS);
 	}
 
 	meditateEnergy() {

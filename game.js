@@ -82,6 +82,7 @@ class Game {
 		"<ul><li><span class=\"stat\">TOOL</span> " + self.PC.gear.tool.disp + "</li>" + 
 									"<li><span class=\"stat\">BODY</span> " + self.PC.gear.body.disp + "</li>" +
 									"<li><span class=\"stat\">H.PHONES</span> " + self.PC.gear.music.disp + "</li>" + 
+									"<li><span class=\"stat\">RING</span> " + self.PC.gear.ring.disp + "</li>" + 
 									"</ul>");
 	}
 
@@ -105,13 +106,77 @@ class Game {
 		}
 
 		else if (self.mode == "equipchange") {
-			$("#stimuli").html("<p>Changing equipment. STR: " + self.PC.STR + " AGI: " + self.PC.AGI + " WIL: " + self.PC.WIL + " ABS: " + self.PC.ABS + "</p>");
+			$("#stimuli").html("<p>STR: " + self.PC.STR + " AGI: " + self.PC.AGI + " WIL: " + self.PC.WIL + " ABS: " + self.PC.ABS + "</p>");
+			self.generateEquipList();
 		}
 
 		else if (self.mode == "buying") {
 			self.SM.showStore();
 		}
 
+	}
+
+	generateEquipList() { // this should be refined at some point to use the enumerated constant for slot names to avoid issues down the road
+			let s_tool = "<h3>TOOLS</h3><ul class=equips><li><input type=\"radio\" name=\"newequip_tool\" value=\"nope\">No change</input></li>";
+			let s_body = "<h3>BODY</h3><ul class=equips><li><input type=\"radio\" name=\"newequip_body\" value=\"nope\">No change</input></li>";
+			let s_music = "<h3>HEADPHONES</h3><ul class=equips><li><input type=\"radio\" name=\"newequip_music\" value=\"nope\">No change</input></li>";
+			let s_ring = "<h3>RINGS</h3><ul class=equips><li><input type=\"radio\" name=\"newequip_ring\" value=\"nope\">No change</input></li>";
+			let s_pendant = "<h3>???</h3><ul class=equips><li><input type=\"radio\" name=\"newequip_pendant\" value=\"nope\">No change</input></li>";
+
+			for (var i of self.PC.inventory) {
+
+				let e = "";
+				if (i.eq_list != undefined) { e = i.eq_list; }
+
+				if (i.type == "tool") {
+					s_tool += "<li><input type=\"radio\" name=\"newequip_tool\" value=\"" + i.name + "\">"  + i.disp + " " + e + "</input></li>";				
+				}
+
+				else if (i.type == "body") {
+					s_body += "<li><input type=\"radio\" name=\"newequip_body\" value=\"" + i.name + "\">"  + i.disp + " " + e + "</input></li>";					
+				}
+
+				else if (i.type == "music") {
+					s_music += "<li><input type=\"radio\" name=\"newequip_music\" value=\"" + i.name + "\">"  + i.disp + " " + e + "</input></li>";					
+				}
+
+				else if (i.type == "ring") {
+					s_ring += "<li><input type=\"radio\" name=\"newequip_ring\" value=\"" + i.name + "\">"  + i.disp + " " + e + "</input></li>";					
+				}
+
+				else if (i.type == "pendant") {
+					s_pendant += "<li><input type=\"radio\" name=\"newequip_pendant\" value=\"" + i.name + "\">"  + i.disp + " " + e + "</input></li>";					
+				}
+
+
+			}
+
+			s_tool += "</ul>";
+			s_body += "</ul>";
+			s_music += "</ul>";
+			s_ring += "</ul>";
+			s_pendant += "</ul>";
+
+			$("#stimuli").append(s_tool + s_body + s_music + s_ring + s_pendant + 
+				"<input type=\"submit\" class=\"store_checkout\" value=\"Equip\">");
+			$("input.store_checkout").on('click', self.equipNewItems);
+	}
+
+	equipNewItems() {
+
+		for (let s in EQUIPSLOTS) {
+			let ne = $("input[name='newequip_" + EQUIPSLOTS[s] + "']:checked").val();
+			if (ne != undefined) {
+				console.log ("tried to equip " + ne);
+				let sl = GM.getItemByName(ne).slot;
+
+				self.PC.equipItem(ne, sl);
+			}
+		}
+
+		playerMessage("Looking sharp!");
+		self.displayCharSheet();
+		self.switchModes("normal");
 	}
 
 	generateButtons() {
@@ -216,6 +281,8 @@ class Game {
 ///////////////////////
 
 	gLoop() { 
+
+		if (self.PC.focus > self.PC.max_focus) { self.PC.focus = self.PC.max_focus; }
 
 		if (self.mode == "loading") {
 			self.setLoadMessage("Loading game...");

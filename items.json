@@ -4,6 +4,7 @@
 			"disp": "Rusty shovel",
 			"price": 20,
 			"type": "tool",
+			"eq_list": "(+5 STR)",
 			"STR": 5
 		},
 
@@ -12,6 +13,7 @@
 			"disp": "Strange ring",
 			"price": 1750,
 			"type": "ring",
+			"eq_list": "(???)",
 			"max_focus": 90
 		},
 
@@ -19,7 +21,9 @@
 			"name": "clothapron",
 			"disp": "Worn cloth apron",
 			"price": 50,
-			"type": "body"
+			"type": "body",
+			"eq_list": "(+2 ABSORB)",
+			"ABS": 2
 		},
 
 		{
@@ -27,6 +31,7 @@
 			"disp": "Frayed headphones",
 			"price": 10,
 			"type": "music",
+			"eq_list": "(+3 AGI)",
 			"max_focus": -5,
 			"AGI": 3
 		},

@@ -8,6 +8,7 @@ class Store {
 	constructor(store_id = 0) {
 		this.store = new Object;
 		this.products = [];
+		this.capital = 0;
 	}
 
 	addProduct(hnd) {
@@ -28,6 +29,7 @@ class Store {
 		this.store.id = GM.stores[store_id].id;
 		this.store.level = GM.stores[store_id].level;
 		this.store.stim = GM.stores[store_id].stim;
+		this.store.capital = GM.stores[store_id].capital;
 
 		this.store.level[GM.PC.creditlevel - 1].item.forEach(function (v,idx,array) {
 			console.log("testing addProduct with value " + v);

@@ -52,12 +52,12 @@ let cmd_meditate = function() {
 
 let cmd_equipchange = function() {
 	GM.switchModes("equipchange");
-	playerMessage("Began to look at all your cool equipment (which you can't put on yet.)");
+	playerMessage("Began to look at all your cool equipment.");
 };
 
 let cmd_equipdone = function() {
 	GM.switchModes("normal");
-	playerMessage("Stopped torturing yourself thinking about the cool equipment you can't yet use.");
+	playerMessage("Decided you were okay with the equipment you were already using.");
 }
 
 let cmd_sleep = function() {

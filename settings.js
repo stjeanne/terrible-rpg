@@ -10,4 +10,6 @@ const CRAPFIELDS_RATE = 3;
 
 const HARDWARE_ST = 0;
 const BODEGA_ST = 1;
-const OCCULT_ST = 2
+const OCCULT_ST = 2;
+
+const EQUIPSLOTS = ["tool", "body", "ring", "music", "pendant"];

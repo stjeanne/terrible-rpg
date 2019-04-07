@@ -13,6 +13,7 @@ class BattleManager {
 		this.monster.name = GM.monsters[battle_id].name;
 		this.monster.hp = GM.monsters[battle_id].hp;
 		this.monster.atk = GM.monsters[battle_id].atk;
+		this.monster.agi = GM.monsters[battle_id].agi;
 		this.monster.val = GM.monsters[battle_id].val;
 
 		GM.inbattle = true;
@@ -28,8 +29,11 @@ class BattleManager {
 
 	battleRound() {
 
-		let pDMG = GM.PC.physAtk();
-		let mDMG = this.monsterAtk();
+		let pDMG = GM.PC.physAtk() - this.monsterDef();
+		let mDMG = this.monsterAtk() - GM.PC.physDef();
+
+		if (pDMG < 0) { pDMG = 0; }
+		if (mDMG < 0) { mDMG = 0; }
 
 		console.log("attacking: PC does " + pDMG + ", monster does " + mDMG);
 
@@ -48,7 +52,7 @@ class BattleManager {
 			}
 
 			else {
-				playerMessage("You steadily work to dislodge the " + this.monster.disp + "...");
+				playerMessage("You steadily work to dislodge the " + this.monster.disp + "! (+ " + pDMG + " damage)");
 			}
 
 		}
@@ -56,7 +60,11 @@ class BattleManager {
 	}
 
 	monsterAtk() {
-		return Math.floor(Math.random() * this.monster.atk);
+		return Math.floor(rollRandom(3,1) + (.5 * this.monster.atk)); // so 1 ATK ranges from .5 + 1 to .5 + 3, or 1-3. Can be mitigated by ABS.
+	}
+
+	monsterDef() {
+		return Math.floor(rollRandom(3,1) + (.25 * this.monster.agi));
 	}
 
 }
