@@ -104,13 +104,11 @@ INVENTORY MANAGEMENT
 			this.gear[slot] = GM.getItemByName(item);
 		}
 
-		// right now stat giving is busted--ultimately should check that you have the correct properties
-/*
 		this.STR += normalizeStat(this.gear[slot].STR);
 		this.AGI += normalizeStat(this.gear[slot].AGI);
 		this.WIL += normalizeStat(this.gear[slot].WIL);
 		this.max_focus += normalizeStat(this.gear[slot].max_focus);
-*/
+
 		console.log("equipped " + this.gear[slot].name + " in equipment slot: " + slot);
 
 	}

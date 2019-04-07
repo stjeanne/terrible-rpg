@@ -2,6 +2,7 @@
 
 const CMD_PARSER = "&bull; ";
 const LOG_LENGTH = 10;
+const defaultLocation = "home"; 
 
 const PRICE_OF_EGGS = 15;
 const MEDITATE_RATE = 3;
