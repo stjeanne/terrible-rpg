@@ -74,7 +74,11 @@ class Store {
 
 		console.log("ringup total price: " + bill);
 
-		if (bill <= GM.PC.cash) { 
+		if (bill == 0) {
+			playerMessage("You stopped shopping.");
+		}
+
+		else if (bill <= GM.PC.cash) { 
 			playerMessage("You paid $" + bill +" to the store.");
 			GM.PC.cash -= bill;
 

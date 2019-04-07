@@ -105,30 +105,30 @@ INVENTORY MANAGEMENT
 		}
 
 		// right now stat giving is busted--ultimately should check that you have the correct properties
-
-		this.STR += this.gear[slot].STR;
-		this.AGI += this.gear[slot].AGI;
-		this.WIL += this.gear[slot].WIL;
-		this.max_focus += this.gear[slot].max_focus;
-
+/*
+		this.STR += normalizeStat(this.gear[slot].STR);
+		this.AGI += normalizeStat(this.gear[slot].AGI);
+		this.WIL += normalizeStat(this.gear[slot].WIL);
+		this.max_focus += normalizeStat(this.gear[slot].max_focus);
+*/
 		console.log("equipped " + this.gear[slot].name + " in equipment slot: " + slot);
 
 	}
 
 	unequipItem(slot) {	// pass in the actual inventory slot
-		console.log("unequipItem slot = " + slot + ", unequipping " + this.gear[slot].name);
+		console.log("unequipItem slot = " + slot);
 
-		this.STR -= this.gear[slot].STR;
-		this.AGI -= this.gear[slot].AGI;
-		this.WIL -= this.gear[slot].WIL;
-		this.max_focus -= this.gear[slot].max_focus;
 
-		this.addInventory(GM.getItemByName(this.gear[slot].name));
-		this.gear[slot] = "none";
-	}
+		if (this.gear[slot] != "none") {
+			this.addInventory(GM.getItemByName(this.gear[slot].name));
 
-	getEquipSlotByName(slot) {
+			this.STR -= normalizeStat(this.gear[slot].STR);
+			this.AGI -= normalizeStat(this.gear[slot].AGI);
+			this.WIL -= normalizeStat(this.gear[slot].WIL);
+			this.max_focus -= normalizeStat(this.gear[slot].max_focus);
 
+			this.gear[slot] = "none";
+		}
 	}
 
 	physAtk() {

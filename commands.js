@@ -85,14 +85,8 @@ let cmd_endbattle = function() {
 
 let cmd_ATM = function() {
 
-	if (GM.PC.bank >= 100) {
-		GM.PC.giveCash(100);
-		GM.PC.bank -= 100;
-		playerMessage("Took out $100 from the ATM.");
-	}
-
-	else if (GM.PC.bank > 0) {
-		playerMessage("You don't have $100 in the bank; took out what you had.");
+	if (GM.PC.bank > 0) {
+		playerMessage("Took all the cash from your bank account. You feel accomplished somehow.");
 		GM.PC.giveCash(GM.PC.bank);
 		GM.PC.bank = 0;
 	}

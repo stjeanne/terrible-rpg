@@ -204,15 +204,11 @@ class Game {
 // item management functions //
 
 	getItemByName(itm) { // right now this just iterates through the items. there must be a better way but w/e!
-		let r = null;
+		let r = GM.items.filter(function (i) {
+			return i.name == itm;
+		})
 
-		for (var i in GM.items) {
-			if (GM.items[i].name == itm) {
-				r = i;
-			}
-		}
-
-		return GM.items[r];
+		return r[0]; // assumes one item matches only
 	}
 
 ///////////////////////
@@ -293,3 +289,11 @@ let rollRandom = function(die, numdie) {
 	return result + 1;
 }
 
+let normalizeStat = function(n) {
+	let r = 0;
+	if (!isNaN(n)) {
+		r = n;
+	}
+
+	return r;
+}

@@ -143,7 +143,7 @@
 				},
 
 				{
-					"disp": "Hit up the ATM for $100",
+					"disp": "Hit up the ATM",
 					"cmd": "cmd_ATM"
 				}
 			]
