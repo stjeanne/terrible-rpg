@@ -23,11 +23,10 @@ class Player {
 		this.debt = plr.debt;
 		this.gear = {
 			tool: "none",		// damage dealer
-			body: "none",		// protect from damage (absorb)
+			body: "none",		// protect from damage (absorb) or psychic damage (dodge)
 			music: "none",		// increase speed (dodge), decrease focus faster
 			pendant: "none", 	// protect from psychic damage (absorb)
-			robe: "none",		// protect from psychic damage (dodge)
-			statue: "none", 	// change effects of sigils
+			statue: "none", 	// change effects of sigils, change dream effects
 			ring: "none" 		// increase focus, focus rate
 		};
 		this.inventory = {}		// push items to it
@@ -67,10 +66,12 @@ class Player {
 	}
 
 	unequipItem(slot) {	// pass in the actual inventory slot
-/*		let s = this.gear.filter( function(sname) {
+		let s = this.gear.filter( function(sname) {
 			return sname == slot;
-		});*/
+		});
 
+		console.log("unequipItem s = " + s[0]);
+/*
 		if (slot == "tool") {
 			if (this.gear.tool == "none") {
 				console.log("nothing to unequip from slot " + slot + "!")
@@ -81,7 +82,7 @@ class Player {
 				this.addInventory(this.gear.tool);
 				this.gear.tool = "none";
 			}
-		}
+		}*/
 	}
 
 	getEquipSlotByName(slot) {
