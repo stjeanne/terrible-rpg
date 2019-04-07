@@ -21,6 +21,16 @@ class Player {
 		this.creditlevel = plr.creditlevel;
 		this.credit_max = plr.credit_max;
 		this.debt = plr.debt;
+		this.gear = {
+			tool: "none",		// damage dealer
+			body: "none",		// protect from damage (absorb)
+			music: "none",		// increase speed (dodge), decrease focus faster
+			pendant: "none", 	// protect from psychic damage (absorb)
+			robe: "none",		// protect from psychic damage (dodge)
+			statue: "none", 	// change effects of sigils
+			ring: "none" 		// increase focus, focus rate
+		};
+		this.inventory = {}		// push items to it
 	}
 
 	giveFocus(amt) {
@@ -41,6 +51,41 @@ class Player {
 	giveBank(amt) {
 		console.log("bank account up by " + amt);
 		this.bank += amt;
+	}
+
+	equipItem(slot, item) {
+		if (slot == "tool") {
+			let i = GM.getItemByName(item);
+			this.unequipItem(slot);
+			this.gear.tool = i;
+			console.log("equipped " + i.disp + " as a tool.");
+		}
+
+		else {
+			console.log("equipItem called for mysterious purposes.");
+		}
+	}
+
+	unequipItem(slot) {	// pass in the actual inventory slot
+/*		let s = this.gear.filter( function(sname) {
+			return sname == slot;
+		});*/
+
+		if (slot == "tool") {
+			if (this.gear.tool == "none") {
+				console.log("nothing to unequip from slot " + slot + "!")
+			}
+
+			else {
+				console.log("unequipping " + this.gear.tool.name + " from tool slot.");
+				this.addInventory(this.gear.tool);
+				this.gear.tool = "none";
+			}
+		}
+	}
+
+	getEquipSlotByName(slot) {
+
 	}
 
 	physAtk() {

@@ -3,7 +3,7 @@
 			"name": "rustyshovel",
 			"disp": "Rusty shovel",
 			"price": 20,
-			"type": "p_tool"
+			"type": "tool"
 		},
 
 		{
@@ -17,7 +17,7 @@
 			"name": "clothapron",
 			"disp": "Worn cloth apron",
 			"price": 50,
-			"type": "p_arm"
+			"type": "body"
 		},
 
 		{
