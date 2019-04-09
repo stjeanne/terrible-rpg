@@ -12,6 +12,7 @@ class Game {
 		this.monsters = null;
 		this.gameLog = new Array;
 		this.mode = "loading";
+		this.numberLoans = 0;
 
 		this.activeBattle = false;
 		this.BM = new BattleManager;
@@ -294,6 +295,7 @@ class Game {
 	compoundDebt() {
 		self.PC.debt *= INTEREST_RATE;
 		self.PC.debt = Math.ceil(self.PC.debt);
+		playerMessage("Interest came due on your loan. Better be sure to pay it off at the bank...");
 		console.log("compound interest called around " + self.loop_count + " ticks, new debt = " + self.PC.debt);
 	}
 

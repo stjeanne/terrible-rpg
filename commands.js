@@ -49,9 +49,13 @@ let cmd_endshopping = function() {
 
 let cmd_applyforloan = function() {
 //	GM.switchModes("question");
-	playerMessage("You applied for a loan of " + INIT_LOAN + ", and got it!");
-	GM.PC.giveCash(INIT_LOAN);
-	GM.PC.giveDebt(INIT_LOAN);
+
+	let loanQty = Math.floor(INIT_LOAN * Math.pow(DEBT_SCALE, GM.numberLoans));
+
+	playerMessage("You applied for a loan of " + loanQty + ", and got it!");
+	GM.PC.giveCash(loanQty);
+	GM.PC.giveDebt(loanQty);
+	GM.numberLoans++;
 
 	if (GM.PC.loanstart == 0) { 
 		GM.PC.loanstart = GM.loop_count; 

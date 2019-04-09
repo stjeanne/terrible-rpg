@@ -31,7 +31,7 @@
 		"stim": "It smells of sandalwood and frankincense while you browse.",
 		"level": [
 			{
-				"item": ["initring"]
+				"item": ["initring", "crystalshovel"]
 			}
 		]
 	}

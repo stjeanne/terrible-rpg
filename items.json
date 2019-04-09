@@ -9,6 +9,16 @@
 		},
 
 		{
+			"name": "crystalshovel",
+			"disp": "Crystal aetheric shovel",
+			"price": 9000,
+			"type": "tool",
+			"eq_list": "(will solve your problems)",
+			"STR": 100,
+			"ABS": 10
+		},
+
+		{
 			"name": "initring",
 			"disp": "Strange ring",
 			"price": 1750,
