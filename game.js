@@ -292,7 +292,7 @@ class Game {
 // debt management functions //
 
 	compoundDebt() {
-		self.PC.debt *= DEBT_SCALE;
+		self.PC.debt *= INTEREST_RATE;
 		self.PC.debt = Math.ceil(self.PC.debt);
 		console.log("compound interest called around " + self.loop_count + " ticks, new debt = " + self.PC.debt);
 	}
@@ -317,6 +317,7 @@ class Game {
 
 		else if ((self.mode == "death") || self.PC.health <= 0) {
 			self.PC.health = 0;
+			self.displayCharSheet();
 			self.switchModes("death");
 		}
 

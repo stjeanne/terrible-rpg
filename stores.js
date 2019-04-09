@@ -81,7 +81,7 @@ class Store {
 		}
 
 		else if (bill <= GM.PC.cash) { 
-			playerMessage("You paid $" + bill +" to the store.");
+			playerMessage("You paid $" + bill +" to the store. (Remember, you can equip items at home!)");
 			GM.PC.cash -= bill;
 
 			for (var i of parcels) {

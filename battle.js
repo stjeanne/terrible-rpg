@@ -11,6 +11,7 @@ class BattleManager {
 		this.monster.art = GM.monsters[battle_id].art;
 		this.monster.disp = GM.monsters[battle_id].disp;
 		this.monster.name = GM.monsters[battle_id].name;
+		this.monster.attack_message = GM.monsters[battle_id].attack_message;
 		this.monster.hp = GM.monsters[battle_id].hp;
 		this.monster.atk = GM.monsters[battle_id].atk;
 		this.monster.agi = GM.monsters[battle_id].agi;
@@ -52,7 +53,8 @@ class BattleManager {
 			}
 
 			else {
-				playerMessage("You steadily work to dislodge the " + this.monster.disp + "! (+ " + pDMG + " damage)");
+				playerMessage("You steadily work to dislodge the " + this.monster.disp + "! (<span class=\"dmg\">" + pDMG + "</span> damage)");
+				playerMessage("The " + this.monster.disp + " " + this.monster.attack_message + " (<span class=\"dmg\">" + mDMG + "</span> damage)");
 			}
 
 		}

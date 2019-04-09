@@ -150,6 +150,11 @@
 				{
 					"disp": "Apply for loan",
 					"cmd": "cmd_applyforloan"
+				},
+
+				{
+					"disp": "Make loan payment",
+					"cmd": "cmd_temppayloan"
 				}
 			]
 		},

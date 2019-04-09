@@ -61,6 +61,40 @@ let cmd_applyforloan = function() {
 	GM.displayCharSheet();
 };
 
+let cmd_temppayloan = function() {
+
+	let debt_10per = Math.floor(GM.PC.debt * .1);
+
+	console.log("attempted to pay a debt.");
+
+	if (GM.PC.debt <= 0) {
+		playerMessage("You have no debts to pay. Walk free in this world!");
+	}
+
+	else if (GM.PC.cash >= GM.PC.debt) {
+		playerMessage("You paid off all your debt! Wow, go you!");
+		GM.PC.cash -= GM.PC.debt;
+		GM.PC.debt = 0;
+	}
+
+	else if (GM.PC.cash >= debt_10per) {
+		playerMessage("You made an installment payment of 10 percent on your debt. Responsible!");
+		GM.PC.cash -= debt_10per;
+		GM.PC.debt -= debt_10per;
+	}
+
+	else if (GM.PC.cash > 0) {
+		playerMessage("You gave the bank what you had toward your debt.");
+		GM.PC.debt -= GM.PC.cash;
+		GM.PC.cash = 0;
+	}
+
+	else {
+		playerMessage("You don't have any money to pay off your debts. You feel terrible.");
+		GM.PC.giveFocus(-1);
+	}
+}
+
 let cmd_meditate = function() {
 	GM.switchModes("meditate");
 	playerMessage("You enter a meditative state.");

@@ -6,7 +6,7 @@ const defaultLocation = "home";
 
 const INIT_LOAN = 50;
 const DEBT_SCALE = 1.4;
-const INTEREST_RATE = 8;
+const INTEREST_RATE = 1.15;
 const COMPOUND_RATE = 50;
 
 const PRICE_OF_EGGS = 15;

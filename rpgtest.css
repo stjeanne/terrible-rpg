@@ -126,6 +126,10 @@
 	margin-bottom: 8px;
 }
 
+#plr_log .dmg {
+	color: #CC0000;
+}
+
 #footer {
 	margin-top: 1em;
 	font-size: 10px;
