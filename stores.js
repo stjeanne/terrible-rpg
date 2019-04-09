@@ -70,7 +70,7 @@ class Store {
 			}
 
 			else {
-				console.log("testing: either " + tst + " is not checked or something else is a mess.");
+//				console.log("testing: either " + tst + " is not checked or something else is a mess.");
 			}
 		}
 

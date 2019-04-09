@@ -69,15 +69,23 @@ class Game {
 	displayCharSheet() {
 
 		let isbank = "";
+		let yesdebt = "";
 
 		if (self.PC.bank > 0) {
 			isbank = "+";
 		}
 
+		if (self.PC.debt > 0) {
+			yesdebt = "<li><span class=\"stat\">Debt</span> " + self.PC.debt + "</li>" +
+						'<li><span class=\"stat\">Cr. LV</span> ' + self.PC.creditlevel + '</li>';
+		}
+
 		$("#charsheet").html('<ul><li><span class=\"stat\">Health</span> ' + Math.floor(self.PC.health) + '</li>' +
 		'<li><span class=\"stat\">Focus</span> ' + self.PC.focus + '</li>' +
-		'<li><span class=\"stat\">Cash</span> ' + self.PC.cash + isbank + '</li></ul>' +
-//		'<li><span class=\"stat\">Credit</span> ' + self.PC.creditlevel + '</li>' +
+		'<li><span class=\"stat\">Cash</span> ' + self.PC.cash + isbank + '</li>' +
+		yesdebt +
+		'</ul>' +
+//		
 
 		"<ul><li><span class=\"stat\">TOOL</span> " + self.PC.gear.tool.disp + "</li>" + 
 									"<li><span class=\"stat\">BODY</span> " + self.PC.gear.body.disp + "</li>" +
@@ -114,14 +122,19 @@ class Game {
 			self.SM.showStore();
 		}
 
+		else if (self.mode == "message") {					// this mode shows interrupt messages. also shows MC questions maybe?
+			self.switchModes("normal");
+			console.log("Tried to display a message but NO DICE yet");
+		}
+
 	}
 
 	generateEquipList() { // this should be refined at some point to use the enumerated constant for slot names to avoid issues down the road
-			let s_tool = "<h3>TOOLS</h3><ul class=equips><li><input type=\"radio\" name=\"newequip_tool\" value=\"nope\">No change</input></li>";
-			let s_body = "<h3>BODY</h3><ul class=equips><li><input type=\"radio\" name=\"newequip_body\" value=\"nope\">No change</input></li>";
-			let s_music = "<h3>HEADPHONES</h3><ul class=equips><li><input type=\"radio\" name=\"newequip_music\" value=\"nope\">No change</input></li>";
-			let s_ring = "<h3>RINGS</h3><ul class=equips><li><input type=\"radio\" name=\"newequip_ring\" value=\"nope\">No change</input></li>";
-			let s_pendant = "<h3>???</h3><ul class=equips><li><input type=\"radio\" name=\"newequip_pendant\" value=\"nope\">No change</input></li>";
+			let s_tool = "<h3>TOOLS</h3><ul class=equips><li><input type=\"radio\" name=\"newequip_tool\" value=\"nope\" checked/>No change</input></li>";
+			let s_body = "<h3>BODY</h3><ul class=equips><li><input type=\"radio\" name=\"newequip_body\" value=\"nope\" checked/>No change</input></li>";
+			let s_music = "<h3>HEADPHONES</h3><ul class=equips><li><input type=\"radio\" name=\"newequip_music\" value=\"nope\" checked/>No change</input></li>";
+			let s_ring = "<h3>RINGS</h3><ul class=equips><li><input type=\"radio\" name=\"newequip_ring\" value=\"nope\" checked/>No change</input></li>";
+			let s_pendant = "<h3>???</h3><ul class=equips><li><input type=\"radio\" name=\"newequip_pendant\" value=\"nope\" checked/>No change</input></li>";
 
 			for (var i of self.PC.inventory) {
 
@@ -166,7 +179,7 @@ class Game {
 
 		for (let s in EQUIPSLOTS) {
 			let ne = $("input[name='newequip_" + EQUIPSLOTS[s] + "']:checked").val();
-			if (ne != undefined) {
+			if (ne != undefined && ne != "nope") {
 				console.log ("tried to equip " + ne);
 				let sl = GM.getItemByName(ne).slot;
 
@@ -276,11 +289,25 @@ class Game {
 		return r[0]; // assumes one item matches only
 	}
 
+// debt management functions //
+
+	compoundDebt() {
+		self.PC.debt *= DEBT_SCALE;
+		self.PC.debt = Math.ceil(self.PC.debt);
+		console.log("compound interest called around " + self.loop_count + " ticks, new debt = " + self.PC.debt);
+	}
+
 ///////////////////////
 // PRIMARY GAME LOOP // (most important method)
 ///////////////////////
 
 	gLoop() { 
+
+		if (!((self.loop_count - self.PC.loanstart) % COMPOUND_RATE)) {
+			if (self.loop_count != self.PC.loanstart) {
+				self.compoundDebt();
+			}
+		}
 
 		if (self.PC.focus > self.PC.max_focus) { self.PC.focus = self.PC.max_focus; }
 

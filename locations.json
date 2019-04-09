@@ -145,6 +145,11 @@
 				{
 					"disp": "Hit up the ATM",
 					"cmd": "cmd_ATM"
+				},
+
+				{
+					"disp": "Apply for loan",
+					"cmd": "cmd_applyforloan"
 				}
 			]
 		},

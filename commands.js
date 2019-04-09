@@ -45,6 +45,22 @@ let cmd_endshopping = function() {
 	playerMessage("You stopped shopping.");
 };
 
+// banking commands
+
+let cmd_applyforloan = function() {
+//	GM.switchModes("question");
+	playerMessage("You applied for a loan of " + INIT_LOAN + ", and got it!");
+	GM.PC.giveCash(INIT_LOAN);
+	GM.PC.giveDebt(INIT_LOAN);
+
+	if (GM.PC.loanstart == 0) { 
+		GM.PC.loanstart = GM.loop_count; 
+		console.log("player took on debt at " + GM.PC.loanstart);
+	}
+
+	GM.displayCharSheet();
+};
+
 let cmd_meditate = function() {
 	GM.switchModes("meditate");
 	playerMessage("You enter a meditative state.");

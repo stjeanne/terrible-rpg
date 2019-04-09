@@ -26,6 +26,7 @@ class Player {
 		this.creditlevel = plr.creditlevel;
 		this.credit_max = plr.credit_max;
 		this.debt = plr.debt;
+		this.loanstart = 0;
 		this.gear = {
 			tool: "none",		// damage dealer
 			body: "none",		// protect from damage (absorb) or psychic damage (dodge)
@@ -55,6 +56,11 @@ class Player {
 	giveBank(amt) {
 		console.log("bank account up by " + amt);
 		this.bank += amt;
+	}
+
+	giveDebt(amt) {
+		console.log("took on a new debt oh no: " + amt);
+		this.debt += amt;
 	}
 
 /**************************************
