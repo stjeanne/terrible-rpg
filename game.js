@@ -2,6 +2,7 @@
 
 class Game {
 	constructor(rate) {
+		this.version = GAME_VERSION;
 		this.rate = rate;
 		this.startTime = new Date();
 		this.loop_count = 0;
@@ -299,11 +300,25 @@ class Game {
 		console.log("compound interest called around " + self.loop_count + " ticks, new debt = " + self.PC.debt);
 	}
 
+// save/load functions //
+
+	autoSave() {
+		console.log("autosaving (does it work?)");
+
+		localStorage.setItem('testsave', JSON.stringify(self));
+		localStorage.setItem('saveexists', true);
+	}
+
+
 ///////////////////////
 // PRIMARY GAME LOOP // (most important method)
 ///////////////////////
 
 	gLoop() { 
+
+		if ((self.loop_count > AUTOSAVE_RATE) && !(self.loop_count % AUTOSAVE_RATE)) {
+			self.autoSave();
+		}
 
 		if (!((self.loop_count - self.PC.loanstart) % COMPOUND_RATE)) {
 			if (self.loop_count != self.PC.loanstart) {

@@ -1,5 +1,10 @@
 // all consts and junk live here now
 
+const MASTER_RATE = 1000;
+const GAME_VERSION = 0.1;
+const OLDEST_VERSION = 0.1;
+const AUTOSAVE_RATE = 15;
+
 const CMD_PARSER = "&bull; ";
 const LOG_LENGTH = 10;
 const defaultLocation = "home"; 
