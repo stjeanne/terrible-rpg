@@ -87,15 +87,37 @@ function startGame() {
 
 		console.log("loading GM from save. WILL IT WORK");
 
-		loadGameFromScratch();
+//		loadGameFromScratch();
 
-//		GM = new Game(MASTER_RATE);
-//		let o = localStorage.getItem('testsave');
+		GM = new Game(MASTER_RATE);
+		let o = JSON.parse(localStorage.getItem('testsave'));
+//		let s = JSON.parse(localStorage.getItem('smSave'));
+//		let b = JSON.parse(localStorage.getItem('bmSave'));
+//		let p = JSON.parse(localStorage.getItem('plSave'));
 
+		let s = o.SM;
+		let b = o.BM;
+		let p = o.PC;
+
+		GM = Object.assign(GM,o);
+
+		GM.SM = new Store;
+		Object.assign(GM.SM, s);
+
+		GM.BM = new BattleManager;
+		Object.assign(GM.BM, b);
+
+		GM.PC = new Player(p);
+//		Object.assign(GM.PC, p);
+
+
+		self = GM;
+		GM.timer = setInterval(self.gLoop, self.rate);
+		GM.gLoop();
 	}
 
 	else if (saveExists) {
-		// run version control functions, to be written
+		// run version control functions, to be written as required
 	}
 
 	else if (!saveExists) {		// okay all clear, totally new player

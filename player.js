@@ -7,35 +7,43 @@ class Player {
 		console.log ("testing what was passed to player constructor, which is:");
 		console.log(plr);
 
-		this.name = plr.name;
-		this.motto = plr.motto;
-		this.health = plr.health;
-		this.focus = plr.focus;
-		this.max_focus = plr.max_focus;
-		this.focus_rate = plr.focus_rate;
+		if(plr == undefined) {
+			console.log("going to the don't worry about it version of the constructor");
+		}
 
-		this.stamina = plr.stamina;
-		this.STR = plr.STR;
-		this.WIL = plr.WIL;
-		this.ABS = plr.ABS;	// absorb
-		this.AGI = plr.AGI;
+		else {
 
-		this.location = plr.location;
-		this.cash = plr.cash;
-		this.bank = plr.bank;
-		this.creditlevel = plr.creditlevel;
-		this.credit_max = plr.credit_max;
-		this.debt = plr.debt;
-		this.loanstart = 0;
-		this.gear = {
-			tool: "none",		// damage dealer
-			body: "none",		// protect from damage (absorb) or psychic damage (dodge)
-			music: "none",		// increase speed (dodge), decrease focus faster
-			pendant: "none", 	// protect from psychic damage (absorb)
-			statue: "none", 	// change effects of sigils, change dream effects
-			ring: "none" 		// increase focus, focus rate
-		};
-		this.inventory = []		// push items to it. could be an issue with passing by ref rather than value.
+			console.log("constructing from passed JSON object");
+			this.name = plr.name;
+			this.motto = plr.motto;
+			this.health = plr.health;
+			this.focus = plr.focus;
+			this.max_focus = plr.max_focus;
+			this.focus_rate = plr.focus_rate;
+
+			this.stamina = plr.stamina;
+			this.STR = plr.STR;
+			this.WIL = plr.WIL;
+			this.ABS = plr.ABS;	// absorb
+			this.AGI = plr.AGI;
+
+			this.location = plr.location;
+			this.cash = plr.cash;
+			this.bank = plr.bank;
+			this.creditlevel = plr.creditlevel;
+			this.credit_max = plr.credit_max;
+			this.debt = plr.debt;
+			this.loanstart = 0;
+			this.gear = {
+				tool: "none",		// damage dealer
+				body: "none",		// protect from damage (absorb) or psychic damage (dodge)
+				music: "none",		// increase speed (dodge), decrease focus faster
+				pendant: "none", 	// protect from psychic damage (absorb)
+				statue: "none", 	// change effects of sigils, change dream effects
+				ring: "none" 		// increase focus, focus rate
+			};
+			this.inventory = []		// push items to it. could be an issue with passing by ref rather than value.
+		}
 	}
 
 	giveFocus(amt) {

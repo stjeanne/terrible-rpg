@@ -200,8 +200,6 @@ class Game {
 
 			let cur = self.PC.location;
 
-//			console.log("testing commands for location cur = " + cur);
-
 			for (var key of self.locs[cur].commands) {
 
 				$("#commands").append("<button id = \"" + key.cmd + "_button\">" +
@@ -306,6 +304,9 @@ class Game {
 		console.log("autosaving (does it work?)");
 
 		localStorage.setItem('testsave', JSON.stringify(self));
+//		localStorage.setItem("smSave", JSON.stringify(self.SM));
+//		localStorage.setItem("bmSave", JSON.stringify(self.BM));
+//		localStorage.setItem("plSave", JSON.stringify(self.PC));
 		localStorage.setItem('saveexists', true);
 	}
 
@@ -321,8 +322,10 @@ class Game {
 		}
 
 		if (!((self.loop_count - self.PC.loanstart) % COMPOUND_RATE)) {
-			if (self.loop_count != self.PC.loanstart) {
-				self.compoundDebt();
+			if (self.loop_count != self.PC.loanstart) { 
+				if (self.debt > 0) {
+					self.compoundDebt();
+				}
 			}
 		}
 
