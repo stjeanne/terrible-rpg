@@ -204,6 +204,11 @@ class Game {
 		self.switchModes("normal");
 	}
 
+	addCustomCommand(cmd, text) {
+		$("#commands").append("<button id = \"" + cmd + "\">" + text + "</button>");
+		$("#commands").append("\n<script>document.getElementById(\"" + cmd + "\").addEventListener(\"click\", " + cmd + ");\n</script>");
+	}	
+
 	generateButtons() {
 		if (self.mode == "normal") {
 			$("#commands").html("");
@@ -224,26 +229,17 @@ class Game {
 
 		else if (self.mode == "meditate") {
 			$("#commands").html("");
-			$("#commands").append("<button id = \"cmd_stopmeditate_button\">Stop meditating</button>");
-			$("#commands").append("\n<script>document.getElementById(\"cmd_stopmeditate_button\").addEventListener(\"click\", cmd_stopmeditate);\n</script>");
+			self.addCustomCommand("cmd_stopmeditate", "Stop meditating");
 		}
 
 		else if (self.mode == "equipchange") {
 			$("#commands").html("");
-			$("#commands").append("<button id = \"cmd_equipdone_button\">All done</button>");
-			$("#commands").append("\n<script>document.getElementById(\"cmd_equipdone_button\").addEventListener(\"click\", cmd_equipdone);\n</script>");
-		}
-
-		else if (self.mode == "crapfields_false") { // dummy battle mode, vestigial
-			$("#commands").html("");
-			$("#commands").append("<button id = \"cmd_endbattle_button\">Stop working</button>");
-			$("#commands").append("\n<script>document.getElementById(\"cmd_endbattle_button\").addEventListener(\"click\", cmd_endbattle);\n</script>");
+			self.addCustomCommand("cmd_equipdone", "All done");
 		}
 
 		else if (self.mode == "crapfields") {
 			$("#commands").html("");
-			$("#commands").append("<button id = \"cmd_endbattle_button\">Stop working</button>");
-			$("#commands").append("\n<script>document.getElementById(\"cmd_endbattle_button\").addEventListener(\"click\", cmd_endbattle);\n</script>");
+			self.addCustomCommand("cmd_endbattle", "Stop working");
 		}
 
 		else if (self.mode == "buying") {
@@ -254,8 +250,10 @@ class Game {
 
 		else if (self.mode == "death") {
 			$("#commands").html("");
-			$("#commands").append("<button id=\"cmd_restartgame\">Try a new game?</button>");
-			$("#commands").append("\n<script>document.getElementById(\"cmd_restartgame\").addEventListener(\"click\", cmd_restartgame);\n</script>");
+			self.addCustomCommand("cmd_restartgame", "Try again?");
+
+//			$("#commands").append("<button id=\"cmd_restartgame\">Try a new game?</button>");
+//			$("#commands").append("\n<script>document.getElementById(\"cmd_restartgame\").addEventListener(\"click\", cmd_restartgame);\n</script>");
 		}
 	}
 
@@ -349,7 +347,10 @@ class Game {
 		else if ((self.mode == "death") || self.PC.health <= 0) {
 			self.PC.health = 0;
 			self.displayCharSheet();
-			self.switchModes("death");
+
+			if (self.mode != "death") {
+				self.switchModes("death");
+			}
 		}
 
 		else if ((self.mode == "meditate")) {

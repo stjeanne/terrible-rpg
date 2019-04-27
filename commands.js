@@ -34,6 +34,9 @@ let cmd_clean = function() {
 
 
 let cmd_restartgame = function() {
+
+	console.log("clicked restart button");
+
 	GM.switchModes("loading");
 	loadGameFromScratch();
 };
