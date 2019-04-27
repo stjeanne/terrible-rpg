@@ -33,6 +33,11 @@ let cmd_clean = function() {
 };
 
 
+let cmd_restartgame = function() {
+	GM.switchModes("loading");
+	loadGameFromScratch();
+};
+
 // buying commands
 
 let cmd_buygoods = function() { 

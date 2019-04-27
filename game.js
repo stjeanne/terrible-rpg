@@ -66,6 +66,9 @@ class Game {
 		self = this;
 		this.timer = 0;
 		this.timer = setInterval(this.gLoop, this.rate);
+		self.updateGUI();
+		self.switchModes(GM.mode);
+		playerMessage("Reloaded game from saved data.");
 	}
 
 	setLoadMessage(msg) {
@@ -251,6 +254,8 @@ class Game {
 
 		else if (self.mode == "death") {
 			$("#commands").html("");
+			$("#commands").append("<button id=\"cmd_restartgame\">Try a new game?</button>");
+			$("#commands").append("\n<script>document.getElementById(\"cmd_restartgame\").addEventListener(\"click\", cmd_restartgame);\n</script>");
 		}
 	}
 
@@ -308,7 +313,7 @@ class Game {
 // save/load functions //
 
 	autoSave() {
-		console.log("autosaving (does it work?)");
+		console.log("autosaving!");
 
 		localStorage.setItem('testsave', JSON.stringify(self));
 		localStorage.setItem('saveexists', true);
@@ -322,7 +327,7 @@ class Game {
 	gLoop() { 
 
 		if ((self.loop_count > AUTOSAVE_RATE) && !(self.loop_count % AUTOSAVE_RATE)) {
-			if (self.mode != "death") {
+			if ((self.mode != "death") && (self.mode != "battle")) { // don't save if we die or are in a fight
 				self.autoSave();
 			}
 		}
