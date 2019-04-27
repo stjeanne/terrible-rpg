@@ -1,6 +1,6 @@
 // initialization file and settings for weird game
 
-
+let currentlyLoading = false;
 
 // let GM = null;
 
@@ -26,9 +26,14 @@ function loadGameFromScratch() {
 
 		console.log("attempting to load a game from scratch");
 
-		GM = null;
-
 		GM = new Game(MASTER_RATE);
+
+		loadGameData(true);
+}
+
+function loadGameData(isThisANewGame) {
+
+		currentlyLoading = true;
 
 		$.getJSON('player.json', function(result) {
 			GM.generatePlayer(result);
@@ -62,11 +67,20 @@ function loadGameFromScratch() {
 					})
 				})
 
-				.done(function() {
-					GM.startLoop();
-				});
 
+				.done(function() {
+					if(isThisANewGame) {
+						GM.startLoop();
+						currentlyLoading = false;
+					}
+
+					else {
+						currentlyLoading = false;
+					}
+				});
 			});
+
+
 }
 
 function startGame() {
@@ -87,17 +101,22 @@ function startGame() {
 
 		console.log("loading GM from save. WILL IT WORK");
 
-//		loadGameFromScratch();
-
 		GM = new Game(MASTER_RATE);
 		let o = JSON.parse(localStorage.getItem('testsave'));
-//		let s = JSON.parse(localStorage.getItem('smSave'));
-//		let b = JSON.parse(localStorage.getItem('bmSave'));
-//		let p = JSON.parse(localStorage.getItem('plSave'));
-
 		let s = o.SM;
 		let b = o.BM;
 		let p = o.PC;
+
+		console.log("saved player data is : " + p);
+
+		currentlyLoading = true;
+
+		loadGameData(false);
+
+//		while(currentlyLoading) {
+//			console.log("still loading data");
+			// idle
+//		}
 
 		GM = Object.assign(GM,o);
 
@@ -107,13 +126,11 @@ function startGame() {
 		GM.BM = new BattleManager;
 		Object.assign(GM.BM, b);
 
-		GM.PC = new Player(p);
-//		Object.assign(GM.PC, p);
+		Object.assign(GM.PC, p);
 
 
 		self = GM;
-		GM.timer = setInterval(self.gLoop, self.rate);
-		GM.gLoop();
+		GM.resumeLoop();
 	}
 
 	else if (saveExists) {
@@ -123,5 +140,5 @@ function startGame() {
 	else if (!saveExists) {		// okay all clear, totally new player
 		loadGameFromScratch();
 	}
-} // startGame: initialize game data from json
+} 
 

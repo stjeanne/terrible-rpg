@@ -61,6 +61,13 @@ class Game {
 		this.gLoop(); // one last lil push
 	}
 
+	resumeLoop() {
+		console.log("initializing game loop for saved game at rate: " + this.rate);
+		self = this;
+		this.timer = 0;
+		this.timer = setInterval(this.gLoop, this.rate);
+	}
+
 	setLoadMessage(msg) {
 		$("stimuli").html("<p>" + msg + "</p>");
 	}
@@ -304,9 +311,6 @@ class Game {
 		console.log("autosaving (does it work?)");
 
 		localStorage.setItem('testsave', JSON.stringify(self));
-//		localStorage.setItem("smSave", JSON.stringify(self.SM));
-//		localStorage.setItem("bmSave", JSON.stringify(self.BM));
-//		localStorage.setItem("plSave", JSON.stringify(self.PC));
 		localStorage.setItem('saveexists', true);
 	}
 
@@ -318,7 +322,9 @@ class Game {
 	gLoop() { 
 
 		if ((self.loop_count > AUTOSAVE_RATE) && !(self.loop_count % AUTOSAVE_RATE)) {
-			self.autoSave();
+			if (self.mode != "death") {
+				self.autoSave();
+			}
 		}
 
 		if (!((self.loop_count - self.PC.loanstart) % COMPOUND_RATE)) {

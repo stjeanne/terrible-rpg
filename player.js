@@ -9,11 +9,42 @@ class Player {
 
 		if(plr == undefined) {
 			console.log("going to the don't worry about it version of the constructor");
+
+			this.name = null;
+			this.motto = null;
+			this.health = 99;
+			this.focus = null;
+			this.max_focus = null;
+			this.focus_rate = null;
+
+			this.stamina = null;
+			this.STR = null;
+			this.WIL = null;
+			this.ABS = null;	// absorb
+			this.AGI = null;
+
+			this.location = null;
+			this.cash = null;
+			this.bank = null;
+			this.creditlevel = null;
+			this.credit_max = null;
+			this.debt = null;
+			this.loanstart = 0;
+			this.gear = {
+				tool: "none",		// damage dealer
+				body: "none",		// protect from damage (absorb) or psychic damage (dodge)
+				music: "none",		// increase speed (dodge), decrease focus faster
+				pendant: "none", 	// protect from psychic damage (absorb)
+				statue: "none", 	// change effects of sigils, change dream effects
+				ring: "none" 		// increase focus, focus rate
+			};
+			this.inventory = []		// push items to it. could be an issue with passing by ref rather than value.
 		}
 
 		else {
 
 			console.log("constructing from passed JSON object");
+
 			this.name = plr.name;
 			this.motto = plr.motto;
 			this.health = plr.health;
