@@ -127,7 +127,30 @@ let cmd_advancetext = function() {
 
 let cmd_meditate = function() {
 	GM.switchModes("meditate");
+	GM.meditateStart = GM.loop_count;
 	playerMessage("You enter a meditative state.");
+};
+
+
+let cmd_stopmeditate = function() {
+	GM.turnOffFragileMeditate();
+	GM.switchModes("normal");
+	GM.adHocBox("Blinking, you return to awareness of your body.");
+	playerMessage("You stop meditating.");
+};
+
+let cmd_maxmeditate = function() {
+	GM.turnOffFragileMeditate();
+	GM.switchModes("normal");
+	GM.adHocBox("Your concentration starts to flicker. You may have reached the limit of your ability to meditate for now.");
+	playerMessage("You stop meditating.");
+};
+
+let cmd_breakmeditate = function() {
+	GM.turnOffFragileMeditate();
+	GM.switchModes("normal");
+	GM.adHocBox("Your thoughts began to wander, and your meditation ends.");
+	playerMessage("You lost concentration and stopped meditating.");
 };
 
 let cmd_equipchange = function() {
@@ -145,10 +168,6 @@ let cmd_sleep = function() {
 	GM.adHocBox("You sleep, and you have a strange dream.", "oh no");
 };
 
-let cmd_stopmeditate = function() {
-	GM.switchModes("normal");
-	playerMessage("You stop meditating.");
-};
 
 let cmd_fakebattle = function() {
 	GM.switchModes("crapfields_false");

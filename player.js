@@ -212,8 +212,7 @@ INVENTORY MANAGEMENT
 		if (this.focus >= this.max_focus) {
 			this.focus = this.max_focus;
 
-			playerMessage("Your mind is beginning to wander... you stop meditating.");
-			GM.switchModes("normal");
+			cmd_maxmeditate();
 		}
 	}
 

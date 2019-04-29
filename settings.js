@@ -16,6 +16,7 @@ const COMPOUND_RATE = 50;
 
 const PRICE_OF_EGGS = 15;
 const MEDITATE_RATE = 3;
+const MEDITATE_GRACE_PERIOD = 3;	// 3 cycles before it dings you for moving the mouse
 const CRAPFIELDS_RATE = 3;
 
 const HARDWARE_ST = 0;

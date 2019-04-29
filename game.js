@@ -21,6 +21,7 @@ class Game {
 		this.SM = new Store;
 
 
+		this.meditateStart = 0;
 		this.plotFlags = new Array;
 	}
 
@@ -336,13 +337,26 @@ class Game {
 		console.log("compound interest called around " + self.loop_count + " ticks, new debt = " + self.PC.debt);
 	}
 
+
+// meditation functions //
+
+	turnOnFragileMeditate() {
+		// adds an event listener to body: if the mouse moves, meditation breaks.
+	}
+
+	turnOffFragileMeditate() {
+		// removes the event listener for fragile meditation.
+	}
+
 // save/load functions //
 
 	autoSave() {
-		console.log("autosaving!");
 
-		localStorage.setItem('testsave', JSON.stringify(self));
-		localStorage.setItem('saveexists', true);
+		console.log("autosave disabled sorry");
+//		console.log("autosaving!");
+
+//		localStorage.setItem('testsave', JSON.stringify(self));
+//		localStorage.setItem('saveexists', true);
 	}
 
 	manualSave() {
@@ -389,6 +403,10 @@ class Game {
 		}
 
 		else if ((self.mode == "meditate")) {
+			if(GM.loop_count >= (GM.meditateStart + MEDITATE_GRACE_PERIOD)) {
+				self.turnOnFragileMeditate();
+			}
+
 			self.PC.meditateEnergy();
 			self.updateGUI();
 		}
