@@ -13,7 +13,7 @@ let playerMessage = function(msg) {
 		tempLog = GM.gameLog.slice(GM.gameLog.length - LOG_LENGTH - 1, GM.gameLog.length); // weird bug at 13
 	}
 
-	$("#statwindow").text("");
+	clearPlayerLog();
 
 	for (key of tempLog) {
 		$("#statwindow").prepend("<p>" + CMD_PARSER + key);
@@ -21,7 +21,7 @@ let playerMessage = function(msg) {
 }
 
 let clearPlayerLog = function() {
-	GM.gamelog = [];
+	$("#statwindow").text("");
 }
 
 // old test commands

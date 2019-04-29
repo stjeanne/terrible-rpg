@@ -330,7 +330,7 @@ class Game {
 	gLoop() { 
 
 		if ((self.loop_count > AUTOSAVE_RATE) && !(self.loop_count % AUTOSAVE_RATE)) {
-			if ((self.mode != "death") && (self.mode != "battle")) { // don't save if we die or are in a fight
+			if ((self.mode != "death") && (self.mode != "crapfields")) { // don't save if we die or are in a fight
 				self.autoSave();
 			}
 		}

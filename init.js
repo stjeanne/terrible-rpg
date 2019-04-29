@@ -33,13 +33,14 @@ function loadGameFromScratch() {
 		console.log("attempting to load a game from scratch");
 
 		GM = new Game(MASTER_RATE);
-
+		clearPlayerLog();
 		loadGameData(true);
 }
 
 function reloadButton() {
 
 	clearInterval(GM.timer);
+	clearPlayerLog();
 	playerMessage("Starting new game!");
 	loadGameFromScratch();
 }
