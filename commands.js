@@ -57,10 +57,13 @@ let cmd_endshopping = function() {
 	playerMessage("You stopped shopping.");
 };
 
+let cmd_storetalk = function() {
+	GM.adHocBox(GM.SM.store.convo);
+};
+
 // banking commands
 
 let cmd_applyforloan = function() {
-//	GM.switchModes("question");
 
 	let loanQty = Math.floor(INIT_LOAN * Math.pow(DEBT_SCALE, GM.numberLoans));
 
@@ -111,6 +114,17 @@ let cmd_temppayloan = function() {
 	}
 }
 
+// messaging commands //
+
+let cmd_advanceconvo = function() {
+
+};
+
+let cmd_advancetext = function() {
+	GM.switchModes(GM.prevmode);
+};
+
+
 let cmd_meditate = function() {
 	GM.switchModes("meditate");
 	playerMessage("You enter a meditative state.");
@@ -127,7 +141,8 @@ let cmd_equipdone = function() {
 }
 
 let cmd_sleep = function() {
-	playerMessage("You go to sleep (though it doesn't do anything yet.)");
+	playerMessage("You go to sleep...");
+	GM.adHocBox("You sleep, and you have a strange dream.", "oh no");
 };
 
 let cmd_stopmeditate = function() {
@@ -164,20 +179,6 @@ let cmd_ATM = function() {
 	GM.displayCharSheet();
 };
 
-let cmd_tempHeal = function() {
-	if (GM.PC.cash >= PRICE_OF_EGGS) {
-		GM.PC.giveCash(PRICE_OF_EGGS * -1);
-		GM.PC.giveHealth(2);
-		playerMessage("You bought food. It helps you feel a little better.");
-	}
-
-	else {
-		playerMessage("No such thing as a free lunch. You feel kind of bad.");
-		GM.PC.giveFocus(-1);
-	}
-
-	GM.displayCharSheet();
-};
 
 // LOCATION CHANGE FUNCTIONS. Eventually these may set specific game modes? //
 

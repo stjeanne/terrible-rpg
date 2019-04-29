@@ -30,6 +30,7 @@ class Store {
 		this.store.level = GM.stores[store_id].level;
 		this.store.stim = GM.stores[store_id].stim;
 		this.store.capital = GM.stores[store_id].capital;
+		this.store.convo = GM.stores[store_id].convo;
 
 		this.store.level[GM.PC.creditlevel - 1].item.forEach(function (v,idx,array) {
 			console.log("testing addProduct with value " + v);

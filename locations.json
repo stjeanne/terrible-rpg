@@ -105,6 +105,11 @@
 				{
 					"disp": "Browse the bodega",
 					"cmd": "cmd_buygoods"
+				},
+
+				{
+					"disp": "Talk to the clerk",
+					"cmd": "cmd_storetalk"
 				}
 			]
 		},
@@ -125,6 +130,11 @@
 				{
 					"disp": "Buy occult products",
 					"cmd": "cmd_buygoods"
+				},
+
+				{
+					"disp": "Talk to the clerk",
+					"cmd": "cmd_storetalk"
 				}
 			]
 		},
@@ -175,6 +185,11 @@
 				{
 					"disp": "Buy items",
 					"cmd": "cmd_buygoods"
+				},
+
+				{
+					"disp": "Talk to the clerk",
+					"cmd": "cmd_storetalk"
 				}
 			]
 		}

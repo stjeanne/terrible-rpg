@@ -1,7 +1,7 @@
 // all consts and junk live here now
 
 const MASTER_RATE = 1000;
-const GAME_VERSION = 0.1;
+const GAME_VERSION = 0.15;
 const OLDEST_VERSION = 0.1;
 const AUTOSAVE_RATE = 15;
 
@@ -23,3 +23,4 @@ const BODEGA_ST = 1;
 const OCCULT_ST = 2;
 
 const EQUIPSLOTS = ["tool", "body", "ring", "music", "pendant"];
+const GAMEMODES = ["normal", "loading", "message", "death", "buying", "crapfields", "meditate", "equipchange"];	//one day useful to have this enumerated

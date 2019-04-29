@@ -3,6 +3,7 @@
 	<title>capitalism zero: crisis in the stars</title>
 
 	<script src="jquery-3.3.1.min.js"></script>
+	<script src="story.js"></script>
 	<script src="settings.js"></script>
 	<script src="commands.js"></script>
 	<script src="effects.js"></script>
@@ -17,7 +18,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Overpass+Mono" rel="stylesheet">
 	<meta 
 		name="capitalism zero: crisis in the stars" 
-		description="a terrible rpg for learning purposes"
+		description="an rpg adventure about capitalism"
 		>
 	</head>
 
@@ -27,12 +28,8 @@
 				$("document").ready(function (){
 					$("#header").append("<h1>capitalism zero: crisis in the stars</h1>");
 					createMasterControls();
-//					$("#header").append("<input type=\"button\" id=\"restartgame\" onclick=\"loadGameFromScratch\">New Game</input>");
 					startGame();
 				});
-
-//				document.getElementById("restartgame").addEventListener("click", loadGameFromScratch);
-
 			</script>
 
 		<div id="wrapper">

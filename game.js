@@ -13,11 +13,15 @@ class Game {
 		this.monsters = null;
 		this.gameLog = new Array;
 		this.mode = "loading";
+		this.prevmode = null;
 		this.numberLoans = 0;
 
 		this.activeBattle = false;
 		this.BM = new BattleManager;
 		this.SM = new Store;
+
+
+		this.plotFlags = new Array;
 	}
 
 // LOAD DATA FROM JSON FILES //
@@ -115,6 +119,10 @@ class Game {
 			$("#stimuli").html("<p>" +			
 				self.locs[cur].inittext +
 				" </p>");			
+		}
+
+		else if (self.mode == "message") {
+			// does this need to do anything?
 		}
 
 		else if (self.mode == "meditate") {					// eventually this should be replaced by a lookup routine through a hypothetical meditate.json
@@ -228,6 +236,10 @@ class Game {
 			}
 		}
 
+		else if (self.mode == "message") {
+			// should handle this via messaging system itself. if it's a choice point, will add the appropriate commands.
+		}
+
 		else if (self.mode == "meditate") {
 			$("#commands").html("");
 			self.addCustomCommand("cmd_stopmeditate", "Stop meditating");
@@ -286,6 +298,24 @@ class Game {
 		self.BM.clearMonster();
 		self.activeBattle = false;
 	}
+
+// text box functions //
+
+	textBox(text) {		// takes a conversation lookup key
+
+	}
+
+	adHocBox(text, clrmsg = "Okay") {
+		self.prevmode = self.mode;				// permits us to drop in messages in the middle of any mode
+		self.switchModes("message");
+
+		$("#stimuli").html("");
+		$("#stimuli").append("<p>" + text + "</p>");
+
+		$("#commands").html("");
+		self.addCustomCommand("cmd_advancetext", clrmsg);	
+	}
+
 
 // item management functions //
 

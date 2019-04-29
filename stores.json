@@ -11,7 +11,8 @@
 				"item": ["initring"]
 			},
 			{}
-		]
+		],
+		"convo": "\"It can be dangerous out there. I'm glad I was assigned to the supply end of this work.\""
 	},
 
 	{
@@ -22,7 +23,8 @@
 			{
 				"item": ["bec","loosie","cheapphones"]
 			}
-		]
+		],
+		"convo": "\"I'm sorry I have to charge so much for sandwiches...it's this damn bank mortgage.\""
 	},
 
 	{
@@ -33,6 +35,7 @@
 			{
 				"item": ["initring", "crystalshovel"]
 			}
-		]
+		],
+		"convo": "The clerk is a bored-looking transfeminine person wearing a sword pendant. \"Whatever. Ask me again when you really need my help, okay?\""
 	}
 ]
