@@ -38,6 +38,19 @@
 	text-align: center;
 }
 
+#header button {
+	width: 100px;
+	border: none;
+	background-color: #9D9DFF;
+	color: #FFF;
+	font-family: 'Overpass Mono', monospace;
+	font-size: 10px;
+}
+
+#header button:hover {
+	background-color: #7575FD;
+}
+
 #leftcol {
 	width: 100px;
 	float: left;

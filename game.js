@@ -56,6 +56,7 @@ class Game {
 	startLoop() {
 		console.log("initializing game loop with setInterval at rate: " + this.rate);
 		self = this;
+		self.updateGUI();
 		self.switchModes("normal");
 		this.timer = setInterval(this.gLoop, this.rate);
 		this.gLoop(); // one last lil push
@@ -101,7 +102,7 @@ class Game {
 
 		"<ul><li><span class=\"stat\">TOOL</span> " + self.PC.gear.tool.disp + "</li>" + 
 									"<li><span class=\"stat\">BODY</span> " + self.PC.gear.body.disp + "</li>" +
-									"<li><span class=\"stat\">H.PHONES</span> " + self.PC.gear.music.disp + "</li>" + 
+									"<li><span class=\"stat\">PHONES</span> " + self.PC.gear.music.disp + "</li>" + 
 									"<li><span class=\"stat\">RING</span> " + self.PC.gear.ring.disp + "</li>" + 
 									"</ul>");
 	}
@@ -251,9 +252,6 @@ class Game {
 		else if (self.mode == "death") {
 			$("#commands").html("");
 			self.addCustomCommand("cmd_restartgame", "Try again?");
-
-//			$("#commands").append("<button id=\"cmd_restartgame\">Try a new game?</button>");
-//			$("#commands").append("\n<script>document.getElementById(\"cmd_restartgame\").addEventListener(\"click\", cmd_restartgame);\n</script>");
 		}
 	}
 
@@ -312,6 +310,13 @@ class Game {
 
 	autoSave() {
 		console.log("autosaving!");
+
+		localStorage.setItem('testsave', JSON.stringify(self));
+		localStorage.setItem('saveexists', true);
+	}
+
+	manualSave() {
+		console.log("manual save!");
 
 		localStorage.setItem('testsave', JSON.stringify(self));
 		localStorage.setItem('saveexists', true);

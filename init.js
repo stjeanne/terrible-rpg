@@ -22,6 +22,12 @@ let isVersionOkay = function() { // are we on or above the oldest supported vers
 
 };
 
+let createMasterControls = function() { //eventually this will have both saving, loading from save file, and restarting. 
+
+	$('#header').append("<button id=\"master_reload\">Start New Game</button>");
+	$('#header').append("\n<script>document.getElementById(\"master_reload\").addEventListener(\"click\", reloadButton);</script>")
+};
+
 function loadGameFromScratch() {
 
 		console.log("attempting to load a game from scratch");
@@ -29,6 +35,13 @@ function loadGameFromScratch() {
 		GM = new Game(MASTER_RATE);
 
 		loadGameData(true);
+}
+
+function reloadButton() {
+
+	clearInterval(GM.timer);
+	playerMessage("Starting new game!");
+	loadGameFromScratch();
 }
 
 function loadGameData(isThisANewGame) {

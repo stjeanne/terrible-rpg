@@ -20,6 +20,9 @@ let playerMessage = function(msg) {
 	}
 }
 
+let clearPlayerLog = function() {
+	GM.gamelog = [];
+}
 
 // old test commands
 
@@ -38,6 +41,7 @@ let cmd_restartgame = function() {
 	console.log("clicked restart button");
 
 	GM.switchModes("loading");
+	playerMessage("Trying again...better luck this time.");
 	loadGameFromScratch();
 };
 
