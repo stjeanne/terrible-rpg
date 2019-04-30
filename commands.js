@@ -125,6 +125,8 @@ let cmd_advancetext = function() {
 };
 
 
+// meditate commands //
+
 let cmd_meditate = function() {
 	GM.switchModes("meditate");
 	GM.meditateStart = GM.loop_count;
@@ -153,6 +155,8 @@ let cmd_breakmeditate = function() {
 	playerMessage("You lost concentration and stopped meditating.");
 };
 
+// equipment commands //
+
 let cmd_equipchange = function() {
 	GM.switchModes("equipchange");
 	playerMessage("Began to look at all your cool equipment.");
@@ -161,18 +165,35 @@ let cmd_equipchange = function() {
 let cmd_equipdone = function() {
 	GM.switchModes("normal");
 	playerMessage("Decided you were okay with the equipment you were already using.");
-}
+};
+
+let cmd_decorate = function() {
+	GM.switchModes("decorate");
+	playerMessage("You begin to rearrange your meditation area.");
+};
+
+let cmd_enddecorate = function() {
+	GM.switchModes("normal");
+	playerMessage("Rearranged.");
+};
 
 let cmd_sleep = function() {
-	playerMessage("You go to sleep...");
-	GM.adHocBox("You sleep, and you have a strange dream.", "oh no");
+
+	if(GM.PC.tired == true) {
+		playerMessage("Exhausted, you fall asleep easily...");
+		GM.adHocBox(selectDream(), "oh no");
+		GM.PC.tired = false;
+	}
+
+	else {
+		playerMessage("You tried to sleep, but you aren't tired yet.");
+		GM.adHocBox("You lie on the couch a long time, tossing and turning, but you can't make yourself fall asleep. Eventually, you get up. You'll sleep when you're tired.");
+	}
+
 };
 
 
-let cmd_fakebattle = function() {
-	GM.switchModes("crapfields_false");
-	playerMessage("You begin working...");
-};
+// battle entering //
 
 let cmd_realcrapbattle = function() {
 	GM.switchModes("crapfields");
@@ -237,4 +258,11 @@ let cmd_occult = function() {
 let cmd_bank = function() {
 	playerMessage("Went to the bank. Your account is: " + GM.PC.bank);
 	GM.changeLocation("bank");
+};
+
+// vestigial functions, consider removing //
+
+let cmd_fakebattle = function() {
+	GM.switchModes("crapfields_false");
+	playerMessage("You begin working...");
 };

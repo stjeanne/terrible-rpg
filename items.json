@@ -41,9 +41,35 @@
 			"disp": "Frayed headphones",
 			"price": 10,
 			"type": "music",
-			"eq_list": "(+3 AGI)",
+			"eq_list": "(+2 AGI)",
 			"max_focus": -5,
-			"AGI": 3
+			"AGI": 2
+		},
+
+		{
+			"name": "primophones",
+			"disp": "Premium earbeats",
+			"price": 200,
+			"type": "music",
+			"eq_list": "(+4 AGI)",
+			"max_focus": -20,
+			"AGI": 4
+		},
+
+		{
+			"name": "weaverstatue",
+			"disp": "Statue of woman",
+			"price": 500,
+			"type": "statue",
+			"eq_list": "A woman sitting on a rock, knitting with long needles."
+		},
+
+		{
+			"name": "incense_FR",
+			"disp": "frankincense stick",
+			"price": 5,
+			"type": "incense",
+			"eff": "It smells calm: you think of an old church."
 		},
 
 		{
@@ -53,6 +79,24 @@
 			"type": "food",
 			"pwr": 8,
 			"eff": "You feel a rush of delicious protein energy!"
+		},
+
+		{
+			"name": "abec",
+			"disp": "Premium BEC with avocado",
+			"price": 30,
+			"type": "food",
+			"pwr": 18,
+			"eff": "The avocado is a good blend both in texture and nutrition."
+		},
+
+		{
+			"name": "sleepaid",
+			"disp": "Melatonin+",
+			"price": 15,
+			"type": "food",
+			"pwr": 1,
+			"eff": "You feel sleepy (though not in a way that has gameplay consequences yet.)"
 		},
 
 		{

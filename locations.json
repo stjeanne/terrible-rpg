@@ -13,13 +13,18 @@
 					},
 
 					{
+						"disp": "Go to sleep",
+						"cmd": "cmd_sleep"
+					},
+
+					{
 						"disp": "Change equipment",
 						"cmd": "cmd_equipchange"
 					},
 
 					{
-						"disp": "Go to sleep",
-						"cmd": "cmd_sleep"
+						"disp": "Rearrange furniture",
+						"cmd": "cmd_decorate"
 					},
 
 					{

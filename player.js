@@ -75,6 +75,8 @@ class Player {
 			};
 			this.inventory = []		// push items to it. could be an issue with passing by ref rather than value.
 		}
+
+		this.tired = false;
 	}
 
 	giveFocus(amt) {

@@ -63,7 +63,9 @@ class Game {
 		self = this;
 		self.updateGUI();
 		self.switchModes("normal");
+		playerMessage("Welcome to CAPITALISM ZERO WORLD.");
 		this.timer = setInterval(this.gLoop, this.rate);
+		self.updateGUI();
 		this.gLoop(); // one last lil push
 	}
 
@@ -126,6 +128,11 @@ class Game {
 			// does this need to do anything?
 		}
 
+		else if (self.mode == "decorate") {
+			$("#stimuli").html("<p>What elements should go where?</p>");
+			self.generateDecorList();
+		}
+
 		else if (self.mode == "meditate") {					// eventually this should be replaced by a lookup routine through a hypothetical meditate.json
 			$("#stimuli").html("<p>Meditating...</p>");
 		}
@@ -149,6 +156,21 @@ class Game {
 			console.log("Tried to display a message but NO DICE yet");
 		}
 
+	}
+
+	generateDecorList() {
+
+		// filter inventory list for only statue items
+		// generate radio buttons for each
+		// generate a "none" button
+
+		// filter inventory list for only incense items
+		// generate radio buttons for each
+		// generate a none button
+
+		// generate a "change" button
+
+		$('#stimuli').append("<li><input type=\"radio\">You can't think of anything to do yet</input></li>");
 	}
 
 	generateEquipList() { // this should be refined at some point to use the enumerated constant for slot names to avoid issues down the road
@@ -246,6 +268,11 @@ class Game {
 			self.addCustomCommand("cmd_stopmeditate", "Stop meditating");
 		}
 
+		else if (self.mode == "decorate") {
+			$("#commands").html("");
+			self.addCustomCommand("cmd_enddecorate", "Looks good as it is");
+		}
+
 		else if (self.mode == "equipchange") {
 			$("#commands").html("");
 			self.addCustomCommand("cmd_equipdone", "All done");
@@ -297,6 +324,11 @@ class Game {
 	endBattle() {
 		self.PC.bank += self.BM.monster.val;
 		self.BM.clearMonster();
+
+		if (self.PC.tired == false) {
+			self.PC.tired = true;
+			playerMessage("You're exhausted--you could fall asleep any minute. But you should wait until you get home.");
+		}
 		self.activeBattle = false;
 	}
 
@@ -400,6 +432,10 @@ class Game {
 			if (self.mode != "death") {
 				self.switchModes("death");
 			}
+		}
+
+		else if (self.mode == "decorate") {
+			self.updateGUI();
 		}
 
 		else if ((self.mode == "meditate")) {

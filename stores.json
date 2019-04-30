@@ -21,7 +21,7 @@
 		"stim": "The bodega cat rubs your leg as you browse.",
 		"level": [
 			{
-				"item": ["bec","loosie","cheapphones"]
+				"item": ["bec","abec","loosie","sleepaid","cheapphones","primophones"]
 			}
 		],
 		"convo": "\"I'm sorry I have to charge so much for sandwiches...it's this damn bank mortgage.\""
@@ -33,7 +33,7 @@
 		"stim": "It smells of sandalwood and frankincense while you browse.",
 		"level": [
 			{
-				"item": ["initring", "crystalshovel"]
+				"item": ["incense_FR","initring", "weaverstatue","crystalshovel"]
 			}
 		],
 		"convo": "The clerk is a bored-looking transfeminine person wearing a sword pendant. \"Whatever. Ask me again when you really need my help, okay?\""
