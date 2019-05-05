@@ -199,6 +199,7 @@ INVENTORY MANAGEMENT
 	}
 
 	physAtk() {
+		GM.BM.PCcounter += BATTLE_MAX_ENERGY;
 		return rollRandom(3,1) + Math.floor(0.5 * this.STR);
 	}
 

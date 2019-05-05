@@ -1,9 +1,9 @@
 // all consts and junk live here now
 
 const MASTER_RATE = 1000;
-const GAME_VERSION = 0.15;
+const GAME_VERSION = 0.18;
 const OLDEST_VERSION = 0.1;
-const AUTOSAVE_RATE = 15;
+const AUTOSAVE_RATE = 50;
 
 const CMD_PARSER = "&bull; ";
 const LOG_LENGTH = 10;
@@ -19,9 +19,13 @@ const MEDITATE_RATE = 3;
 const MEDITATE_GRACE_PERIOD = 3;	// 3 cycles before it dings you for moving the mouse
 const CRAPFIELDS_RATE = 3;
 
+const BATTLE_MAX_ENERGY = 100;	// constant for a standard turn
+const INIT_C = 50;			// phase of initiation
+const TURN_ENERGY = 25;	// baseline deduction of initiative energy per turn
+
 const HARDWARE_ST = 0;
 const BODEGA_ST = 1;
 const OCCULT_ST = 2;
 
-const EQUIPSLOTS = ["tool", "body", "ring", "music", "pendant"];
+const EQUIPSLOTS = ["tool", "body", "ring", "music", "pendant", "statue"];
 const GAMEMODES = ["normal", "loading", "message", "death", "buying", "crapfields", "meditate", "equipchange"];	//one day useful to have this enumerated

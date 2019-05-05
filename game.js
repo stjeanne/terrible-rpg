@@ -505,6 +505,10 @@ let rollRandom = function(die, numdie) {
 	return result + 1;
 }
 
+let randomRange = function(min, max) {
+	return Math.floor((Math.random() * (max - min)) + min);
+}
+
 let normalizeStat = function(n) {
 	let r = 0;
 	if (!isNaN(n)) {
