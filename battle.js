@@ -51,6 +51,7 @@ class BattleManager {
 
 			console.log("player's turn arrives, player does " + pDMG + ". Monster's HP: " + this.monster.hp);
 
+			playerMessage("You steadily work to dislodge the " + this.monster.disp + "! (<span class=\"pdmg\">" + pDMG + "</span> damage)");
 
 				if (this.monster.hp <= 0) {
 					playerMessage("Success! You've cleared out the " + this.monster.disp + ".");
@@ -59,7 +60,7 @@ class BattleManager {
 				}
 
 				else {
-					playerMessage("You steadily work to dislodge the " + this.monster.disp + "! (<span class=\"pdmg\">" + pDMG + "</span> damage)");
+
 				}
 
 		}
@@ -106,6 +107,6 @@ class BattleManager {
 
 
 	rollInit() {
-		return INIT_C + Math.floor(Math.random() * 10) - 5;
+		return Math.floor(INIT_C / 3) + Math.floor(Math.random() * 10) - 5;
 	}
 }

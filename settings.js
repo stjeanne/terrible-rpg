@@ -1,9 +1,10 @@
 // all consts and junk live here now
 
 const MASTER_RATE = 1000;
-const GAME_VERSION = 0.18;
-const OLDEST_VERSION = 0.1;
+const GAME_VERSION = 0.2001;		// 0.2: introduces meditation systems.
+const OLDEST_VERSION = 0.2;
 const AUTOSAVE_RATE = 50;
+const MEDITATION_IS_LIVE = false;
 
 const CMD_PARSER = "&bull; ";
 const LOG_LENGTH = 10;
@@ -18,6 +19,7 @@ const PRICE_OF_EGGS = 15;
 const MEDITATE_RATE = 3;
 const MEDITATE_GRACE_PERIOD = 3;	// 3 cycles before it dings you for moving the mouse
 const CRAPFIELDS_RATE = 3;
+const MEDITATION_DEPTH = 20;		// 20 ticks to get all the way down with meditation.
 
 const BATTLE_MAX_ENERGY = 100;	// constant for a standard turn
 const INIT_C = 50;			// phase of initiation
@@ -29,3 +31,11 @@ const OCCULT_ST = 2;
 
 const EQUIPSLOTS = ["tool", "body", "ring", "music", "pendant", "statue"];
 const GAMEMODES = ["normal", "loading", "message", "death", "buying", "crapfields", "meditate", "equipchange"];	//one day useful to have this enumerated
+
+
+let CSS_STIMBASE = [202,202,255];
+let CSS_BUTTONBASE = [157,157,255];
+let CSS_BUTTONHOVER = [117,117,253];
+let CSS_BUTTONTEXT = [255,255,255];
+let CSS_REDTEXT = [153,0,0];
+let CSS_TEXT = [0,0,0];

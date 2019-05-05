@@ -22,6 +22,7 @@ class Game {
 
 
 		this.meditateStart = 0;
+		this.tranceDepth = 0;
 		this.plotFlags = new Array;
 	}
 
@@ -135,6 +136,8 @@ class Game {
 
 		else if (self.mode == "meditate") {					// eventually this should be replaced by a lookup routine through a hypothetical meditate.json
 			$("#stimuli").html("<p>Meditating...</p>");
+
+			self.processMeditationState();
 		}
 
 		else if (self.mode == "death") {
@@ -372,6 +375,28 @@ class Game {
 
 // meditation functions //
 
+	processMeditationState() {
+		console.log("process meditation state: current trance depth is " + self.tranceDepth);
+
+		if(MEDITATION_IS_LIVE) {
+			let i = MEDITATION_DEPTH - (MEDITATION_DEPTH - MEDITATE_GRACE_PERIOD);	// should be 3 with init constants
+
+			if (self.tranceDepth > MEDITATION_DEPTH) {
+				cmd_maxmeditate();
+			}
+
+			else if (!(self.tranceDepth % MEDITATE_RATE) && (self.tranceDepth > i) && (self.tranceDepth <= MEDITATION_DEPTH)) {
+				loadOverworldColors(1 - (self.tranceDepth / MEDITATION_DEPTH));
+			}
+		}
+	}
+
+	resetMeditate() {
+		self.tranceDepth = 0;
+		self.turnOffFragileMeditate();
+		loadOverworldColors();
+	}
+
 	turnOnFragileMeditate() {
 		// adds an event listener to body: if the mouse moves, meditation breaks.
 	}
@@ -444,6 +469,7 @@ class Game {
 			}
 
 			self.PC.meditateEnergy();
+			self.tranceDepth++;
 			self.updateGUI();
 		}
 

@@ -40,6 +40,7 @@ let cmd_restartgame = function() {
 
 	console.log("clicked restart button");
 
+	clearInterval(GM.timer);
 	GM.switchModes("loading");
 	playerMessage("Trying again...better luck this time.");
 	loadGameFromScratch();
@@ -130,26 +131,28 @@ let cmd_advancetext = function() {
 let cmd_meditate = function() {
 	GM.switchModes("meditate");
 	GM.meditateStart = GM.loop_count;
+	GM.tranceDepth = 0;
 	playerMessage("You enter a meditative state.");
 };
 
 
 let cmd_stopmeditate = function() {
-	GM.turnOffFragileMeditate();
+	GM.resetMeditate();
 	GM.switchModes("normal");
+
 	GM.adHocBox("Blinking, you return to awareness of your body.");
 	playerMessage("You stop meditating.");
 };
 
 let cmd_maxmeditate = function() {
-	GM.turnOffFragileMeditate();
+	GM.resetMeditate();
 	GM.switchModes("normal");
 	GM.adHocBox("Your concentration starts to flicker. You may have reached the limit of your ability to meditate for now.");
 	playerMessage("You stop meditating.");
 };
 
 let cmd_breakmeditate = function() {
-	GM.turnOffFragileMeditate();
+	GM.resetMeditate();
 	GM.switchModes("normal");
 	GM.adHocBox("Your thoughts began to wander, and your meditation ends.");
 	playerMessage("You lost concentration and stopped meditating.");
@@ -180,14 +183,17 @@ let cmd_enddecorate = function() {
 let cmd_sleep = function() {
 
 	if(GM.PC.tired == true) {
+		GM.PC.focus = 1;
 		playerMessage("Exhausted, you fall asleep easily...");
 		GM.adHocBox(selectDream(), "oh no");
 		GM.PC.tired = false;
 	}
 
 	else {
+		GM.PC.focus = 1;
 		playerMessage("You tried to sleep, but you aren't tired yet.");
 		GM.adHocBox("You lie on the couch a long time, tossing and turning, but you can't make yourself fall asleep. Eventually, you get up. You'll sleep when you're tired.");
+		GM.updateGUI();
 	}
 
 };

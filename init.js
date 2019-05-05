@@ -32,6 +32,7 @@ function loadGameFromScratch() {
 
 		console.log("attempting to load a game from scratch");
 
+
 		GM = new Game(MASTER_RATE);
 		clearPlayerLog();
 		loadGameData(true);
@@ -48,6 +49,8 @@ function reloadButton() {
 function loadGameData(isThisANewGame) {
 
 		currentlyLoading = true;
+
+		loadOverworldColors();
 
 		$.getJSON('player.json', function(result) {
 			GM.generatePlayer(result);
@@ -96,6 +99,29 @@ function loadGameData(isThisANewGame) {
 
 
 }
+
+function parseColor(r, intense = 1) {	
+	return "rgb(" + (r[0] * intense) + "," + (r[1] * intense) + "," + (r[2] * intense) + ")";
+}
+
+
+function loadOverworldColors(i = 1) {
+	$('body').css("background-color", parseColor(CSS_BUTTONTEXT, i));
+	$('#wrapper').css("color", parseColor(CSS_TEXT, i));
+	$('#wrapper').css("background-color", parseColor(CSS_BUTTONTEXT, i));
+	$('#rightcol').css("background-color", parseColor(CSS_STIMBASE, i));
+
+	$('#commands button').css("color", parseColor(CSS_TEXT, i));
+	$('#commands button').css("background-color", parseColor(CSS_BUTTONBASE, i));
+	$('#commands button:hover').css("background-color", parseColor(CSS_BUTTONHOVER, i));
+
+	$('#charsheet .stat').css("color", parseColor(CSS_BUTTONBASE, i));
+
+	$('#header button').css("color", parseColor(CSS_TEXT, i));
+	$('#header button').css("background-color", parseColor(CSS_BUTTONBASE, i));
+	$('#header button:hover').css("background-color", parseColor(CSS_BUTTONHOVER, i));
+}
+
 
 function startGame() {
 
