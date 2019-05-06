@@ -82,13 +82,13 @@
 			"commands":
 			[
 				{
-					"disp": "Oh no, get out of here",
-					"cmd": "cmd_town"
+					"disp": "Clean endless trash",
+					"cmd": "cmd_realcrapbattle"
 				},
 
 				{
-					"disp": "Clean endless trash",
-					"cmd": "cmd_realcrapbattle"
+					"disp": "Oh no, get out of here",
+					"cmd": "cmd_town"
 				}
 			],
 			"inittext": "The smell is a thousand smells, old smells from which all the virtue has been taken by other, better people. Opportunities for labor abound."

@@ -372,7 +372,6 @@ class Game {
 		console.log("compound interest called around " + self.loop_count + " ticks, new debt = " + self.PC.debt);
 	}
 
-
 // meditation functions //
 
 	processMeditationState() {

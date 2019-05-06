@@ -29,6 +29,9 @@ const HARDWARE_ST = 0;
 const BODEGA_ST = 1;
 const OCCULT_ST = 2;
 
+const DEFAULT_MAPW = 16;
+const DEFAULT_MAPH = 16;
+
 const EQUIPSLOTS = ["tool", "body", "ring", "music", "pendant", "statue"];
 const GAMEMODES = ["normal", "loading", "message", "death", "buying", "crapfields", "meditate", "equipchange"];	//one day useful to have this enumerated
 
