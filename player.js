@@ -28,6 +28,7 @@ class Player {
 			this.bank = null;
 			this.creditlevel = null;
 			this.credit_max = null;
+			this.cxp = 0;
 			this.debt = null;
 			this.loanstart = 0;
 			this.gear = {
@@ -63,6 +64,7 @@ class Player {
 			this.bank = plr.bank;
 			this.creditlevel = plr.creditlevel;
 			this.credit_max = plr.credit_max;
+			this.cxp = plr.cxp;
 			this.debt = plr.debt;
 			this.loanstart = 0;
 			this.gear = {
@@ -102,6 +104,23 @@ class Player {
 	giveDebt(amt) {
 		console.log("took on a new debt oh no: " + amt);
 		this.debt += amt;
+	}
+
+	giveCXP(amt) {
+		console.log("gained CXP: " + amt);
+		this.cxp += amt;
+		let s = this;
+
+		if (this.cxp >= CXP_NEEDED[this.creditlevel]) {
+			s.CLevelUp();
+		}
+	}
+
+	CLevelUp() {
+		console.log("gained a credit level!");
+		this.creditlevel++;
+		GM.updateGUI();
+		GM.adHocBox("Congratulations! Through responsible and regular payment, your credit level has gone up!");
 	}
 
 /**************************************
@@ -198,14 +217,6 @@ INVENTORY MANAGEMENT
 		}
 	}
 
-	physAtk() {
-		GM.BM.PCcounter += BATTLE_MAX_ENERGY;
-		return rollRandom(3,1) + Math.floor(0.5 * this.STR);
-	}
-
-	physDef() {
-		return rollRandom(3,1) + Math.floor(0.25 * this.AGI) + Math.floor(0.25 + this.ABS);
-	}
 
 	meditateEnergy() {
 		if (!(GM.loop_count % MEDITATE_RATE)) {
@@ -218,6 +229,4 @@ INVENTORY MANAGEMENT
 			cmd_maxmeditate();
 		}
 	}
-
-
 }

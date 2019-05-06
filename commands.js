@@ -66,19 +66,31 @@ let cmd_storetalk = function() {
 
 let cmd_applyforloan = function() {
 
-	let loanQty = Math.floor(INIT_LOAN * Math.pow(DEBT_SCALE, GM.numberLoans));
+	let loanQty = 0;
 
-	playerMessage("You applied for a loan of " + loanQty + ", and got it!");
-	GM.PC.giveCash(loanQty);
-	GM.PC.giveDebt(loanQty);
-	GM.numberLoans++;
-
-	if (GM.PC.loanstart == 0) { 
-		GM.PC.loanstart = GM.loop_count; 
-		console.log("player took on debt at " + GM.PC.loanstart);
+	if (GM.PC.debt > CREDITLEVELS[GM.PC.creditlevel - 1]) {
+		playerMessage("The bank rejected your loan application.");
+		GM.adHocBox("The holographic loan assistant looks at you sympathetically. \"I'd like to help, but how do we know you'd pay it back?\"");
 	}
 
-	GM.displayCharSheet();
+	else {
+
+		loanQty = Math.floor(INIT_LOAN * Math.pow(DEBT_SCALE, GM.numberLoans));
+
+		playerMessage("You applied for a loan of " + loanQty + ", and got it!");
+		GM.PC.giveCash(loanQty);
+		GM.PC.giveDebt(loanQty);
+		GM.numberLoans++;
+
+		if (GM.PC.loanstart == 0) { 
+			GM.PC.loanstart = GM.loop_count; 
+			console.log("player took on debt at " + GM.PC.loanstart);
+		}
+
+		GM.displayCharSheet();
+		GM.adHocBox("The holographic loan assistant beams at you as your cash is loaded into your RAM. \"Congratulations! Remember to make payments regularly to prove you're honest, and to boost your credit.\"");
+	}
+
 };
 
 let cmd_temppayloan = function() {
@@ -94,6 +106,7 @@ let cmd_temppayloan = function() {
 	else if (GM.PC.cash >= GM.PC.debt) {
 		playerMessage("You paid off all your debt! Wow, go you!");
 		GM.PC.cash -= GM.PC.debt;
+		GM.PC.giveCXP(GM.PC.debt);
 		GM.PC.debt = 0;
 	}
 
@@ -101,6 +114,7 @@ let cmd_temppayloan = function() {
 		playerMessage("You made an installment payment of 10 percent on your debt. Responsible!");
 		GM.PC.cash -= debt_10per;
 		GM.PC.debt -= debt_10per;
+		GM.PC.giveCXP(debt_10per);
 	}
 
 	else if (GM.PC.cash > 0) {

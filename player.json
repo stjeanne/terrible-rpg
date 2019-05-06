@@ -19,6 +19,7 @@
 		"creditlevel": 1,
 		"debt": null,
 		"credit_max": null,
+		"cxp": 0,
 
 		"location": "home",
 		"real": true
