@@ -152,3 +152,14 @@
 	font-size: 10px;
 	clear: both;
 }
+
+#editor {
+	display: none;
+	position: absolute;
+	left: 1px;
+	top: 1px;
+	width: 600;
+	height: 600;
+	background-color: #DDD;
+	z-index: 999;
+}

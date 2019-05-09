@@ -1,0 +1,52 @@
+// writing the definition of a map here look out //
+
+{
+	"name": "test map",
+	"width": 3,
+	"height": 3,
+	"map": [
+				[
+					{
+						"pass": 0
+					},
+
+					{
+						"pass": 0
+					},
+
+					{
+						"pass": 0
+					}
+				],
+
+				[
+					{
+						"pass": 0
+					},
+
+					{
+						"pass": 1
+					},
+
+					{
+						"pass": 0
+					}
+				],
+
+				[
+					{
+						"pass": 0
+					},
+
+					{
+						"pass": 0
+					},
+
+					{
+						"pass": 0
+					}
+				],
+			]
+}
+
+// if i'm right this would create a map that you could access like Level.map[0][0].pass ?

@@ -154,9 +154,9 @@ class Game {
 			self.SM.showStore();
 		}
 
-		else if (self.mode == "message") {					// this mode shows interrupt messages. also shows MC questions maybe?
-			self.switchModes("normal");
-			console.log("Tried to display a message but NO DICE yet");
+		else if (self.mode == "editing") {
+			$("#stimuli").html("<p>Editing the map! Press E again to stop.</p>");
+			console.log("Map editor activated!");
 		}
 
 	}
@@ -295,6 +295,11 @@ class Game {
 		else if (self.mode == "death") {
 			$("#commands").html("");
 			self.addCustomCommand("cmd_restartgame", "Try again?");
+		}
+
+		else if (self.mode == "editing") {
+			$("#commands").html("");
+			//pause game logic
 		}
 	}
 

@@ -26,6 +26,16 @@ let createMasterControls = function() { //eventually this will have both saving,
 
 	$('#header').append("<button id=\"master_reload\">Start New Game</button>");
 	$('#header').append("\n<script>document.getElementById(\"master_reload\").addEventListener(\"click\", reloadButton);</script>")
+
+	// secretly we add the map editor functionality here, for now. probably makes sense to refine this a lot later
+
+	$(window).keypress(function (k) {
+		let keycode = k.key;
+		
+		if (keycode == 'e') {
+			key_editorkey();
+		}
+	})
 };
 
 function loadGameFromScratch() {

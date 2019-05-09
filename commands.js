@@ -286,3 +286,19 @@ let cmd_fakebattle = function() {
 	GM.switchModes("crapfields_false");
 	playerMessage("You begin working...");
 };
+
+
+// virtual controls -- possibly move to a different file
+
+let key_editorkey = function() {
+
+		if (GM.mode == "editing") {
+			console.log("whoa you pressed e to close the editor");
+//			turnEditorOff();
+		}
+
+		else {
+			console.log("whoa you pressed e to open the editor (disabled for public release)");
+//			turnEditorOn();
+		}
+};
