@@ -441,10 +441,9 @@ class Game {
 		}
 
 		if (!((self.loop_count - self.PC.loanstart) % COMPOUND_RATE)) {
-			if (self.loop_count != self.PC.loanstart) { 
-				if (self.debt > 0) {
+
+			if ((self.loop_count > self.PC.loanstart) && (self.PC.debt > 0)) { 
 					self.compoundDebt();
-				}
 			}
 		}
 
