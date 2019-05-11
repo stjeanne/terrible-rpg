@@ -144,6 +144,7 @@ let cmd_advancetext = function() {
 
 let cmd_meditate = function() {
 	GM.switchModes("meditate");
+	GM.PC.energylevel = "normal";
 	GM.meditateStart = GM.loop_count;
 	GM.tranceDepth = 0;
 	playerMessage("You enter a meditative state.");
@@ -196,11 +197,11 @@ let cmd_enddecorate = function() {
 
 let cmd_sleep = function() {
 
-	if(GM.PC.tired == true) {
+	if(GM.PC.energylevel == "tired") {
 		GM.PC.focus = 1;
 		playerMessage("Exhausted, you fall asleep easily...");
 		GM.adHocBox(selectDream(), "oh no");
-		GM.PC.tired = false;
+		GM.PC.energylevel = "rested";
 	}
 
 	else {
@@ -294,11 +295,25 @@ let key_editorkey = function() {
 
 		if (GM.mode == "editing") {
 			console.log("whoa you pressed e to close the editor");
-//			turnEditorOff();
+			turnEditorOff();
 		}
 
 		else {
 			console.log("whoa you pressed e to open the editor (disabled for public release)");
-//			turnEditorOn();
+			if (DEBUG_MODE) {	turnEditorOn(); }
 		}
+};
+
+let key_debugkey = function() {
+	DEBUG_MODE = !DEBUG_MODE;
+
+	console.log("debug mode is now " + DEBUG_MODE);
+};
+
+let debugGiveLotsOfStuff = function() {
+	if (DEBUG_MODE) {
+		console.log("DEBUG: giving lots of free stuff");
+		GM.PC.giveCash(99999);
+		GM.PC.giveHealth(999);
+	}
 };

@@ -4,7 +4,8 @@ const MASTER_RATE = 1000;
 const GAME_VERSION = 0.2001;		// 0.2: introduces meditation systems.
 const OLDEST_VERSION = 0.2;
 const AUTOSAVE_RATE = 50;
-const MEDITATION_IS_LIVE = false;
+let MEDITATION_IS_LIVE = false;
+let DEBUG_MODE = false;
 
 const CMD_PARSER = "&bull; ";
 const LOG_LENGTH = 10;

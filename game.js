@@ -104,6 +104,7 @@ class Game {
 		$("#charsheet").html('<ul><li><span class=\"stat\">Health</span> ' + Math.floor(self.PC.health) + '</li>' +
 		'<li><span class=\"stat\">Focus</span> ' + self.PC.focus + '</li>' +
 		'<li><span class=\"stat\">Cash</span> ' + self.PC.cash + isbank + '</li>' +
+		'<li><span class=\"stat\">Energy</span> ' + self.PC.energylevel + '</li>' + 
 		yesdebt +
 		'</ul>' +
 //		
@@ -333,8 +334,8 @@ class Game {
 		self.PC.bank += self.BM.monster.val;
 		self.BM.clearMonster();
 
-		if (self.PC.tired == false) {
-			self.PC.tired = true;
+		if (self.PC.energylevel != "tired") {
+			self.PC.energylevel = "tired";
 			playerMessage("You're exhausted--you could fall asleep any minute. But you should wait until you get home.");
 		}
 		self.activeBattle = false;

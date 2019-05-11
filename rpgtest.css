@@ -154,12 +154,30 @@
 }
 
 #editor {
-	display: none;
+	display: block;
 	position: absolute;
-	left: 1px;
-	top: 1px;
-	width: 600;
+	left: 0px;
+	top: 0px;
+	width: 3000;
+	height: 2000;
+	background-color: #222C;
+	z-index: 99;
+}
+
+#editor .e_map {
+	position: relative;
+	top: 10px;
+	left: 10px;
 	height: 600;
-	background-color: #DDD;
-	z-index: 999;
+	width: 600;
+	z-index: 100;
+}
+
+#editor .e_tool {
+	position: relative;
+	left: 10px;
+	top: 10px;
+	height: 600;
+	width: 200;
+	z-index: 100;
 }

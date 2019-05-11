@@ -23,6 +23,8 @@ class Player {
 			this.ABS = null;	// absorb
 			this.AGI = null;
 
+			this.energylevel = null;
+
 			this.location = null;
 			this.cash = null;
 			this.bank = null;
@@ -58,6 +60,8 @@ class Player {
 			this.WIL = plr.WIL;
 			this.ABS = plr.ABS;	// absorb
 			this.AGI = plr.AGI;
+
+			this.energylevel = plr.energylevel;
 
 			this.location = plr.location;
 			this.cash = plr.cash;

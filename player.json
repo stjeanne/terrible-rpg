@@ -13,6 +13,8 @@
 		"AGI": 2,
 		"ABS": 0,
 
+		"energylevel": "normal",
+
 		"cash": 5,
 		"bank": 0,
 

@@ -35,6 +35,14 @@ let createMasterControls = function() { //eventually this will have both saving,
 		if (keycode == 'e') {
 			key_editorkey();
 		}
+
+		else if (keycode == '`') {
+			key_debugkey();
+		}
+
+		else if (keycode == '1') {
+			debugGiveLotsOfStuff();
+		}
 	})
 };
 
