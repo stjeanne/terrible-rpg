@@ -9,7 +9,9 @@ class Level {
 		this.mapname = lev.mapname;
 		this.width = lev.width;
 		this.height = lev.height;
-		this.rooms = new Array();	// need to build it from here.
+		this.rooms = new Array();
+
+		lev.rooms.forEach(r => this.rooms.push(r)); 
 	}
 }
 

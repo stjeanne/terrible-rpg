@@ -15,7 +15,7 @@ const TOOLH = 600;
 class Editor {
 	constructor(defaultmap = 'testmap.json') {		
 			this.curmap = defaultmap;
-			this.level = null;		// replace by a constructed level to which the active level object is copied.
+			this.level = null;	
 			this.timer = null;
 			this.canvasID = null;
 			this.divID = null;
@@ -25,6 +25,9 @@ class Editor {
 			this.t = null;	// canvas context
 
 			this.redraw = false;
+
+			this.roomsize = 8;	// default value
+			this.roomborder = 2;
 
 			this.prevmode = null;
 
@@ -55,6 +58,18 @@ class Editor {
 			this.toolID.height = TOOLH;
 			this.divID.appendChild(this.toolID);
 			this.t = this.canvasID.getContext("2d");
+
+			$('#editor').append("<button id=\"GUI_save\">Save Current Map</button>");
+			$('#editor').append("<button id=\"GUI_saveAs\">Save As</button>");
+			$('#editor').append("<button id=\"GUI_load\">Load Map</button>");
+			$('#editor').append("<button id=\"GUI_new\">New Map</button>");
+
+			$('#GUI_save').on("click", () => this.saveCurrentLevel());
+			$('#GUI_saveAs').on("click", () => this.saveCurrentLevelAs());
+			$('#GUI_load').on("click", () => this.loadLevel());
+			$('#GUI_new').on("click", () => this.createNewLevel());
+
+			$(this.divID).after()
 
 			this.loadLevel(this.curmap);
 
@@ -93,6 +108,15 @@ class Editor {
 		this.m.font = '8px Overpass Mono';
 		this.m.fillStyle = 'red';
 		this.m.fillText("current map: " + this.level.mapname, 0, 6);
+
+		// code to iterate through the rooms array drawing each appropriately
+
+	}
+
+	drawNullRooms() {
+
+
+
 	}
 
 	drawToolPane() {					// doesn't work rn
@@ -104,30 +128,62 @@ class Editor {
 
 
 
-	loadLevel(levelname) {
+	loadLevel(levelname = prompt("Load which level?")) {
 		console.log("trying to load " + 'maps/' + levelname);
 
 		$.getJSON('maps/' + levelname, lev => console.log("loaded " + lev))
 
 		.done(lev => { 
 			this.level = new Level(lev);
+
+			this.setUpCanvasRoomLayout();
+
 			this.redraw = true; 
-			console.log("in the done section");
 		})
 
-		.fail(() => console.log("wasn't able to load the level :("));
+		.fail(() => alert("wasn't able to load the level :("));
 
+	}
+
+	setUpCanvasRoomLayout() {
+		// based on the width of the level: 
+		// width of the level should be room dimension (default 8, borders 2) * width
+	}
+
+	saveCurrentLevel(maptarg = this.curmap) {
+		console.log("saving current level to " + maptarg);
+
+		$.ajax({
+			type: "POST",
+			url: "savemap.php",
+			dataType: "json",
+			async: false,
+			data: {
+				data: JSON.stringify(this.level),
+				targ: "maps/" + maptarg
+			},
+			success: () => { console.log("should have saved file!")},
+			failure: () => { console.log("oh no something went wrong with the save file")}
+		});
+	}
+
+	saveCurrentLevelAs(fname) {
+		console.log("save as current level");
+
+		// eventually prompts for a file name then calls saveCurrentLevel, to avoid Issues
+
+	}
+
+	createNewLevel() {
+		console.log("creating a blank level");
+		alert("Can't create new levels yet, be patient!");
 	}
 }
 
 
-// create map
-
 // switch map
 
 // delete map
-
-// save map
 
 // write map to JSON file
 
