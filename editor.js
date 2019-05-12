@@ -1,11 +1,20 @@
 // Level editor for Cap 0 maps //
 
 let ED = null;	// global variable for editor yeah yeah yeah
-let eref = null;
+let eref = null; // yeah yeah yeah yeah
+
+// screen layouts //
+
+
+const MAPW = 600;
+const MAPH = 600;
+
+const TOOLW = 200;
+const TOOLH = 600;
 
 class Editor {
-	constructor(mapname = null) {
-			this.mapname = mapname;
+	constructor(defaultmap = 'testmap.json') {		
+			this.curmap = defaultmap;
 			this.level = null;		// replace by a constructed level to which the active level object is copied.
 			this.timer = null;
 			this.canvasID = null;
@@ -14,11 +23,6 @@ class Editor {
 
 			this.m = null;	// canvas context
 			this.t = null;	// canvas context
-
-			this.mapw = null;
-			this.maph = null;
-			this.toolw = null;
-			this.toolh = null;
 
 			this.redraw = false;
 
@@ -40,34 +44,32 @@ class Editor {
 
 			this.canvasID = document.createElement('canvas');
 			this.canvasID.className = "e_map";
+			this.canvasID.width = MAPW;
+			this.canvasID.height = MAPH;
 			this.divID.appendChild(this.canvasID);
 			this.m = this.canvasID.getContext("2d");
-			this.mapw = $('.e_map').css('width');
-			this.maph = $('.e_map').css('height');
-
-			$('.e_map').css('width=' + this.mapw + ' height=' + this.maph);	// i know this is stupid but this fixes the coordinate system
-
+			
 			this.toolID = document.createElement('canvas');
 			this.toolID.className = "e_tool";
+			this.toolID.width = TOOLW;
+			this.toolID.height = TOOLH;
 			this.divID.appendChild(this.toolID);
 			this.t = this.canvasID.getContext("2d");
-			this.toolw = $('.e_tool').css('width');
-			this.toolh = $('.e_tool').css('height');
 
-			$('.e_tool').css('width=' + this.toolw + ' height=' + this.toolh);
+			this.loadLevel(this.curmap);
 
-			this.redraw = true;
-
-			this.timer = setInterval(this.editLoop(), MASTER_RATE);
+			this.timer = setInterval(this.editLoop, 10);
+			this.editLoop();
 	}
 
 	editLoop() {
-			if(this.redraw) {
-				console.log("set to redraw the blank map layer");
+			if(eref.redraw) {
 				eref.drawBlankMap();
+//				eref.drawToolPane();		// for now this lives here, move it eventually to a more logical place
+				eref.drawMapLayout();
+				eref.redraw = false;
 			}
 
-//			console.log("the map editor loop is active!");
 	}
 
 	endEditor() {
@@ -80,11 +82,41 @@ class Editor {
 
 
 	drawBlankMap() {
-		this.m.fillStyle = "green";
-		this.m.font = 'bold 50px';
-		this.m.fillText("Editor exists but is so busted",10,10);
-//		this.m.fillRect(10,10, eref.mapw, eref.maph);
-		this.redraw = false;
+		this.m.fillStyle = "white";
+		this.m.font = 'bold 8px';
+		this.m.beginPath();
+		this.m.rect(0,0, MAPW, MAPH)
+		this.m.fill();
+	}
+
+	drawMapLayout() {
+		this.m.font = '8px Overpass Mono';
+		this.m.fillStyle = 'red';
+		this.m.fillText("current map: " + this.level.mapname, 0, 6);
+	}
+
+	drawToolPane() {					// doesn't work rn
+		this.t.fillStyle = "gray";
+		this.t.beginPath();
+		this.t.rect(0,0,TOOLW,TOOLH);
+		this.t.fill();
+	}
+
+
+
+	loadLevel(levelname) {
+		console.log("trying to load " + 'maps/' + levelname);
+
+		$.getJSON('maps/' + levelname, lev => console.log("loaded " + lev))
+
+		.done(lev => { 
+			this.level = new Level(lev);
+			this.redraw = true; 
+			console.log("in the done section");
+		})
+
+		.fail(() => console.log("wasn't able to load the level :("));
+
 	}
 }
 
