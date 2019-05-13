@@ -9,7 +9,7 @@ class Level {
 		this.mapname = lev.mapname;
 		this.width = lev.width;
 		this.height = lev.height;
-		this.rooms = new Array();
+		this.rooms = new Array;
 
 		lev.rooms.forEach(r => this.rooms.push(r)); 
 	}
@@ -21,6 +21,7 @@ class Room {
 		this.x = r.x;
 		this.y = r.y;
 		this.pass = r.pass;
+		this.id = null;		// this is a reference for a div
 	}
 
 }

@@ -6,11 +6,14 @@ let eref = null; // yeah yeah yeah yeah
 // screen layouts //
 
 
-const MAPW = 600;
-const MAPH = 600;
+const MAPW = 800;
+const MAPH = 800;
 
-const TOOLW = 200;
-const TOOLH = 600;
+const TOOLW = 64;
+const TOOLH = 800;
+
+const ED_DEFAULTROOMSIZE = 32;
+const ED_DEFAULTBORDER = 8;
 
 class Editor {
 	constructor(defaultmap = 'testmap.json') {		
@@ -21,13 +24,17 @@ class Editor {
 			this.divID = null;
 			this.toolID = null;
 
+			this.roomCoords = new Array;	// room coordinates for canvas
+
 			this.m = null;	// canvas context
 			this.t = null;	// canvas context
+			this.mleft = null;
+			this.mtop = null;
 
 			this.redraw = false;
 
-			this.roomsize = 8;	// default value
-			this.roomborder = 2;
+			this.roomsize = ED_DEFAULTROOMSIZE;	// default value
+			this.wallsize = ED_DEFAULTBORDER;
 
 			this.prevmode = null;
 
@@ -57,7 +64,7 @@ class Editor {
 			this.toolID.width = TOOLW;
 			this.toolID.height = TOOLH;
 			this.divID.appendChild(this.toolID);
-			this.t = this.canvasID.getContext("2d");
+			this.t = this.toolID.getContext("2d");
 
 			$('#editor').append("<button id=\"GUI_save\">Save Current Map</button>");
 			$('#editor').append("<button id=\"GUI_saveAs\">Save As</button>");
@@ -73,18 +80,17 @@ class Editor {
 
 			this.loadLevel(this.curmap);
 
+			$('.e_map').on("click", () => this.calcMousePos(event.offsetX, event.offsetY));
+
 			this.timer = setInterval(this.editLoop, 10);
 			this.editLoop();
 	}
 
 	editLoop() {
-			if(eref.redraw) {
-				eref.drawBlankMap();
-//				eref.drawToolPane();		// for now this lives here, move it eventually to a more logical place
-				eref.drawMapLayout();
-				eref.redraw = false;
-			}
-
+			if(eref.redraw) { 
+				eref.drawWholeDangMap(); 
+				eref.drawToolPane();
+			}			
 	}
 
 	endEditor() {
@@ -95,6 +101,21 @@ class Editor {
 
 	}
 
+// draw the map
+
+	drawWholeDangMap() {
+				let p = new Promise((resolve, reject) => {
+					this.drawBlankMap();
+					resolve();
+
+				})
+
+				p.then(() => this.drawMapLayout())
+				.then(() => this.drawAllNullRooms())
+				.then(() => this.drawAllActiveRooms())
+				.then(() => { this.redraw = false; })
+	}
+	
 
 	drawBlankMap() {
 		this.m.fillStyle = "white";
@@ -102,53 +123,102 @@ class Editor {
 		this.m.beginPath();
 		this.m.rect(0,0, MAPW, MAPH)
 		this.m.fill();
+		return true;
 	}
 
 	drawMapLayout() {
-		this.m.font = '8px Overpass Mono';
+		this.m.font = '12px Overpass Mono';
 		this.m.fillStyle = 'red';
-		this.m.fillText("current map: " + this.level.mapname, 0, 6);
-
-		// code to iterate through the rooms array drawing each appropriately
-
+		this.m.fillText("current map: " + this.level.mapname, 0, 12);
+		return true;
 	}
 
-	drawNullRooms() {
+	drawAllNullRooms() {
+		this.roomCoords.forEach(r => {
+			for(let j = 0; j < this.level.width; j++) { this.drawNullRoom(r,this.roomCoords[j])	}
+		})
+		return true;
+	}
 
+	drawAllActiveRooms() {
 
-
+		this.level.rooms.forEach(r => {
+			this.drawActiveRoom(r.x, r.y, r.pass);
+		})
+		return true;
 	}
 
 	drawToolPane() {					// doesn't work rn
-		this.t.fillStyle = "gray";
+		this.t.fillStyle = "#DDD";
 		this.t.beginPath();
 		this.t.rect(0,0,TOOLW,TOOLH);
 		this.t.fill();
 	}
 
+	drawNullRoom(x,y) {
+		console.log("drawing null space at " + x + ", " + y);
+		this.m.fillStyle = "#DDD";
 
+		let offs = Math.floor(this.roomsize / 2);
 
-	loadLevel(levelname = prompt("Load which level?")) {
-		console.log("trying to load " + 'maps/' + levelname);
+		this.m.fillRect(offs+x-1, offs+y-1, 3, 3);
+	}
 
-		$.getJSON('maps/' + levelname, lev => console.log("loaded " + lev))
+	drawActiveRoom(x,y,p) {	// passability not used yet
 
-		.done(lev => { 
-			this.level = new Level(lev);
+		console.log("drawing LIVE room at " + x + ", " + y);
 
-			this.setUpCanvasRoomLayout();
-
-			this.redraw = true; 
-		})
-
-		.fail(() => alert("wasn't able to load the level :("));
-
+		this.m.fillStyle = "black";
+		this.m.fillRect(this.roomCoords[x],this.roomCoords[y],this.roomsize,this.roomsize);
 	}
 
 	setUpCanvasRoomLayout() {
-		// based on the width of the level: 
-		// width of the level should be room dimension (default 8, borders 2) * width
+
+		console.log("initial setup of canvas room layout");
+		let lw = this.level.width * this.roomsize + (this.wallsize * (this.level.width + 1));
+		let lh = lw;
+
+		this.mleft = Math.floor(MAPW / 2) - Math.floor(lw / 2);
+		this.mtop = Math.floor(MAPH / 2) - Math.floor(lh / 2);
+
+		console.log("why don't we know room coords: " + this.roomCoords);
+
+		for(let i = 0; i < this.level.width; i++) {
+			this.roomCoords.push(this.mleft + (i * this.roomsize) + (i+1 * this.wallsize));
+			console.log("pushed to room coordinates: " + this.roomCoords[i]);
+		}
+
 	}
+
+	calcMousePos(x,y) {
+
+		console.log("mouse click on map at " + x + " " + y);
+
+		// subtract the left edge to get 
+
+		// update a variable showing which room or wall we're targeting, based on the roomCoords
+		// 
+
+	}
+
+
+// tool palette
+
+	toggleRoom() {
+
+		// adds or removes a room at the current position: either pushes it on the stack of rooms or removes it from the stack.
+		// does call screen redraw.
+		// if the room contains properties, query.
+
+	}
+
+	focusRoom() {
+
+		// focus on a room's param list to make changes as needed (esp to event/effects scripts, wall textures, enemy codes, etc.)
+
+	}
+
+// CRUD stuff
 
 	saveCurrentLevel(maptarg = this.curmap) {
 		console.log("saving current level to " + maptarg);
@@ -167,26 +237,39 @@ class Editor {
 		});
 	}
 
-	saveCurrentLevelAs(fname) {
-		console.log("save as current level");
-
-		// eventually prompts for a file name then calls saveCurrentLevel, to avoid Issues
-
+	saveCurrentLevelAs(fname = prompt("Enter filename to save as (must include extension):")) {
+		this.saveCurrentLevel(fname);
 	}
 
 	createNewLevel() {
 		console.log("creating a blank level");
+
 		alert("Can't create new levels yet, be patient!");
 	}
+
+	loadLevel(levelname = prompt("Load which level?")) {
+		console.log("trying to load " + 'maps/' + levelname);
+
+		$.getJSON('maps/' + levelname, lev => console.log("loaded " + lev))
+
+		.done(lev => { 
+
+			this.level = new Level(lev);
+			this.roomCoords = new Array;
+			this.curmap = levelname;
+			this.setUpCanvasRoomLayout();
+			this.redraw = true; 
+		})
+
+		.fail(() => alert("wasn't able to load the level :("));
+
+	}
+
 }
 
-
-// switch map
-
-// delete map
-
-// write map to JSON file
-
+////////////////////////////////
+// CLASS DEFINITION ENDS HERE //
+////////////////////////////////
 
 let turnEditorOn = function() {
 	ED = new Editor;
