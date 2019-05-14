@@ -6,14 +6,16 @@ let eref = null; // yeah yeah yeah yeah
 // screen layouts //
 
 
-const MAPW = 800;
-const MAPH = 800;
+const MAPW = 600;
+const MAPH = 600;
+
+const TOOLS = ["toggle", "add", "erase", "focus"];
 
 const TOOLW = 64;
-const TOOLH = 800;
+const TOOLH = 600;
 
 const ED_DEFAULTROOMSIZE = 32;
-const ED_DEFAULTBORDER = 8;
+const ED_DEFAULTBORDER = 4;
 
 class Editor {
 	constructor(defaultmap = 'testmap.json') {		
@@ -24,12 +26,21 @@ class Editor {
 			this.divID = null;
 			this.toolID = null;
 
+			this.activetool = "focus";
+
 			this.roomCoords = new Array;	// room coordinates for canvas
 
 			this.m = null;	// canvas context
 			this.t = null;	// canvas context
+
 			this.mleft = null;
 			this.mtop = null;
+			this.mright = null;
+			this.mbottom = null;
+
+			this.targx = null;
+			this.targy = null;
+			this.realtarg = false;
 
 			this.redraw = false;
 
@@ -80,7 +91,8 @@ class Editor {
 
 			this.loadLevel(this.curmap);
 
-			$('.e_map').on("click", () => this.calcMousePos(event.offsetX, event.offsetY));
+			$('.e_map').on("mousemove", () => this.calcMousePos(event.offsetX, event.offsetY));
+			$('.e_map').on("click", () => this.applyTool());
 
 			this.timer = setInterval(this.editLoop, 10);
 			this.editLoop();
@@ -101,7 +113,7 @@ class Editor {
 
 	}
 
-// draw the map
+// draw functions
 
 	drawWholeDangMap() {
 				let p = new Promise((resolve, reject) => {
@@ -172,6 +184,8 @@ class Editor {
 		this.m.fillRect(this.roomCoords[x],this.roomCoords[y],this.roomsize,this.roomsize);
 	}
 
+// coordinate functions
+
 	setUpCanvasRoomLayout() {
 
 		console.log("initial setup of canvas room layout");
@@ -180,6 +194,8 @@ class Editor {
 
 		this.mleft = Math.floor(MAPW / 2) - Math.floor(lw / 2);
 		this.mtop = Math.floor(MAPH / 2) - Math.floor(lh / 2);
+		this.mright = this.mleft + (this.roomsize * this.level.width) + (this.wallsize * (this.level.width - 1));
+		this.mbottom = this.mtop + (this.roomsize * this.level.height) + (this.wallsize * (this.level.height - 1));
 
 		console.log("why don't we know room coords: " + this.roomCoords);
 
@@ -192,29 +208,71 @@ class Editor {
 
 	calcMousePos(x,y) {
 
-		console.log("mouse click on map at " + x + " " + y);
+		if (x < (this.mleft - this.wallsize) || 
+			x > (this.mright + this.wallsize) || 
+			y < (this.mtop - this.wallsize) ||
+			y > (this.mbottom + this.wallsize)) {
 
-		// subtract the left edge to get 
+			this.targx = null;
+			this.targy = null;
+			this.realtarg = false;
+		}
 
-		// update a variable showing which room or wall we're targeting, based on the roomCoords
-		// 
+		else {
 
+			this.targx = Math.floor((x - this.mleft) / this.roomsize);	// right now this starts to break down w larger maps.
+			this.targy = Math.floor((y - this.mtop) / this.roomsize);	// right now this starts to break down w larger maps.
+			this.realtarg = true;
+		}
 	}
 
 
+	getRoom(x, y) {	// takes an x y coordinate. if we're on a room, returns a reference to the room we're on. if not, returns false;
+
+		return this.level.rooms.filter(r => (x == r.x) && (y == r.y));
+
+	}
+
 // tool palette
+
+	applyTool() {
+
+		console.log("clicked map at " + this.targx + " " + this.targy);
+
+		switch(this.activetool) {
+			case "toggle": this.toggleRoom(); break;
+			case "focus": this.focusRoom(); break;
+			default: 
+		}
+	}
 
 	toggleRoom() {
 
-		// adds or removes a room at the current position: either pushes it on the stack of rooms or removes it from the stack.
-		// does call screen redraw.
-		// if the room contains properties, query.
+
+
+		// if whichTile returns a reference: 
+			// if the room has properties: check first, then remove that room from the array. 
+			// else just remove it.
+		// if whichTile doesn't return a reference: create a blank room with default passability and push it to the array.
+
+		// toggle screen redrawing
 
 	}
 
 	focusRoom() {
-
+		console.log("called focus room tool at target " + this.targx + ", " + this.targy);
 		// focus on a room's param list to make changes as needed (esp to event/effects scripts, wall textures, enemy codes, etc.)
+
+		if (this.realtarg) {
+			console.log("focusing on room at target " + this.targx + ", " + this.targy + ", is it a room? " + this.getRoom(this.targx,this.targy));
+		}
+	}
+
+	addRoom() {
+
+	}
+
+	eraseRoom() {
 
 	}
 
