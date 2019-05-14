@@ -26,7 +26,7 @@ class Editor {
 			this.divID = null;
 			this.toolID = null;
 
-			this.activetool = "focus";
+			this.activetool = "toggle";
 
 			this.roomCoords = new Array;	// room coordinates for canvas
 
@@ -92,7 +92,7 @@ class Editor {
 			this.loadLevel(this.curmap);
 
 			$('.e_map').on("mousemove", () => this.calcMousePos(event.offsetX, event.offsetY));
-			$('.e_map').on("click", () => this.applyTool());
+			$('.e_map').on("click", () => this.applyTool(this.targx,this.targy));
 
 			this.timer = setInterval(this.editLoop, 10);
 			this.editLoop();
@@ -168,7 +168,6 @@ class Editor {
 	}
 
 	drawNullRoom(x,y) {
-		console.log("drawing null space at " + x + ", " + y);
 		this.m.fillStyle = "#DDD";
 
 		let offs = Math.floor(this.roomsize / 2);
@@ -235,45 +234,43 @@ class Editor {
 
 // tool palette
 
-	applyTool() {
+	applyTool(x, y) {
 
-		console.log("clicked map at " + this.targx + " " + this.targy);
+		console.log("clicked map at " + x + " " + y);
 
 		switch(this.activetool) {
-			case "toggle": this.toggleRoom(); break;
-			case "focus": this.focusRoom(); break;
+			case "toggle": this.toggleRoom(x,y); break;
+			case "focus": this.focusRoom(x,y); break;
 			default: 
 		}
 	}
 
-	toggleRoom() {
+	toggleRoom(x,y) {
 
+		let r = this.getRoom(x,y);
 
+		if (Array.isArray(r) && r.length == 1) {	// will fail if we're in more than one room.
+			console.log("in a room, attempting to erase");
 
-		// if whichTile returns a reference: 
-			// if the room has properties: check first, then remove that room from the array. 
-			// else just remove it.
-		// if whichTile doesn't return a reference: create a blank room with default passability and push it to the array.
+			eref.level.eraseRoom(x,y);
+			eref.redraw = true;
+		}
 
-		// toggle screen redrawing
+		else {			
+			console.log("we are not in a room! attempting to add");
 
+			eref.level.addRoom(x,y);
+			eref.redraw = true;
+		}
 	}
 
-	focusRoom() {
+	focusRoom(x,y) {
 		console.log("called focus room tool at target " + this.targx + ", " + this.targy);
 		// focus on a room's param list to make changes as needed (esp to event/effects scripts, wall textures, enemy codes, etc.)
 
 		if (this.realtarg) {
 			console.log("focusing on room at target " + this.targx + ", " + this.targy + ", is it a room? " + this.getRoom(this.targx,this.targy));
 		}
-	}
-
-	addRoom() {
-
-	}
-
-	eraseRoom() {
-
 	}
 
 // CRUD stuff
