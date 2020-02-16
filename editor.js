@@ -293,7 +293,9 @@ class Editor {
 	}
 
 	saveCurrentLevelAs(fname = prompt("Enter filename to save as (must include extension):")) {
-		this.saveCurrentLevel(fname);
+		if (fname != null) {
+			this.saveCurrentLevel(fname);		
+		}
 	}
 
 	createNewLevel() {

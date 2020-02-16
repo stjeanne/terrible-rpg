@@ -1,1 +1,1 @@
-{"mapname":"test map","width":3,"height":3,"rooms":[{"x":1,"y":0},{"x":2,"y":0},{"x":1,"y":1,"pass":"empty","id":null},{"x":1,"y":2,"pass":"empty","id":null},{"x":0,"y":1,"pass":"empty","id":null},{"x":2,"y":1,"pass":"empty","id":null}]}
+{"mapname":"test map","width":3,"height":3,"rooms":[{"x":1,"y":0},{"x":1,"y":1,"pass":"empty","id":null},{"x":1,"y":2,"pass":"empty","id":null},{"x":0,"y":1,"pass":"empty","id":null},{"x":2,"y":1,"pass":"empty","id":null}]}
