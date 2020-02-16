@@ -32,7 +32,9 @@ class Store {
 		this.store.capital = GM.stores[store_id].capital;
 		this.store.convo = GM.stores[store_id].convo;
 
-		this.store.level[GM.PC.creditlevel - 1].item.forEach(function (v,idx,array) {
+		this.store.level[0].item.forEach(function (v,idx,array) { // this is a crude default for now!
+
+//		this.store.level[GM.PC.creditlevel - 1].item.forEach(function (v,idx,array) {  // this is the eventual behavior but it's not implemented yet.
 			console.log("testing addProduct with value " + v);
 			thiz.addProduct(v);
 		})
