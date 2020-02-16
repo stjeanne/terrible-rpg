@@ -14,7 +14,7 @@ const TOOLS = ["toggle", "add", "erase", "focus"];
 const TOOLW = 64;
 const TOOLH = 600;
 
-const ED_DEFAULTROOMSIZE = 32;
+const ED_DEFAULTROOMSIZE = 24;
 const ED_DEFAULTBORDER = 4;
 
 class Editor {
@@ -188,10 +188,10 @@ class Editor {
 	setUpCanvasRoomLayout() {
 
 		console.log("initial setup of canvas room layout");
-		let lw = this.level.width * this.roomsize + (this.wallsize * (this.level.width + 1));
+		let lw = this.level.width * this.roomsize + (this.wallsize * (this.level.width + 1) / 2);
 		let lh = lw;
 
-		this.mleft = Math.floor(MAPW / 2) - Math.floor(lw / 2);
+		this.mleft = Math.floor(MAPW / 2) - Math.floor(lw / 2); 
 		this.mtop = Math.floor(MAPH / 2) - Math.floor(lh / 2);
 		this.mright = this.mleft + (this.roomsize * this.level.width) + (this.wallsize * (this.level.width - 1));
 		this.mbottom = this.mtop + (this.roomsize * this.level.height) + (this.wallsize * (this.level.height - 1));
@@ -294,14 +294,41 @@ class Editor {
 
 	saveCurrentLevelAs(fname = prompt("Enter filename to save as (must include extension):")) {
 		if (fname != null) {
-			this.saveCurrentLevel(fname);		
+			this.saveCurrentLevel(fname);
+			this.curmap = fname;		
 		}
 	}
 
-	createNewLevel() {
-		console.log("creating a blank level");
+	createNewLevel(levelsquare = prompt("Creating new level. What size square? (1-12)")) {
 
-		alert("Can't create new levels yet, be patient!");
+		console.log(Number(levelsquare));
+
+		if (typeof Number(levelsquare) == 'number') {
+			if ((levelsquare > 0) && (levelsquare <= 12)) {
+				console.log("loading a blank map.");
+
+				$.getJSON('maps/blankmap.json', lev => console.log("loaded " + lev))
+
+				.done(lev => {
+					this.level = new Level(lev);
+					this.level.width = levelsquare;
+					this.level.height = levelsquare;
+					this.roomCoords = new Array;
+
+					this.saveCurrentLevelAs();
+					this.setUpCanvasRoomLayout();
+					this.redraw = true;
+				})
+
+				.fail(() => alert("couldn't load the blank map."));
+			}
+
+			console.log("failed to create new level: size outside of range.")
+		}
+
+		else {
+			console.log("failed: issue with typeof");
+		}
 	}
 
 	loadLevel(levelname = prompt("Load which level?")) {
