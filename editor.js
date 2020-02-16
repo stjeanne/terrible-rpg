@@ -180,7 +180,7 @@ class Editor {
 		console.log("drawing LIVE room at " + x + ", " + y);
 
 		this.m.fillStyle = "black";
-		this.m.fillRect(this.roomCoords[x],this.roomCoords[y],this.roomsize,this.roomsize);
+		this.m.fillRect(this.roomCoords[x], this.roomCoords[y], this.roomsize, this.roomsize);
 	}
 
 // coordinate functions
@@ -188,18 +188,18 @@ class Editor {
 	setUpCanvasRoomLayout() {
 
 		console.log("initial setup of canvas room layout");
-		let lw = this.level.width * this.roomsize + (this.wallsize * (this.level.width + 1) / 2);
+		let lw = this.level.width * this.roomsize + (this.wallsize * (this.level.width - 1));
 		let lh = lw;
 
 		this.mleft = Math.floor(MAPW / 2) - Math.floor(lw / 2); 
 		this.mtop = Math.floor(MAPH / 2) - Math.floor(lh / 2);
-		this.mright = this.mleft + (this.roomsize * this.level.width) + (this.wallsize * (this.level.width - 1));
-		this.mbottom = this.mtop + (this.roomsize * this.level.height) + (this.wallsize * (this.level.height - 1));
+		this.mright = this.mleft + (this.roomsize * (this.level.width - 1)) + (this.wallsize * (this.level.width - 1));
+		this.mbottom = this.mtop + (this.roomsize * (this.level.height - 1)) + (this.wallsize * (this.level.height - 1));
 
 		console.log("why don't we know room coords: " + this.roomCoords);
 
 		for(let i = 0; i < this.level.width; i++) {
-			this.roomCoords.push(this.mleft + (i * this.roomsize) + (i+1 * this.wallsize));
+			this.roomCoords.push(this.mleft + (i * this.roomsize) + (i * this.wallsize));
 			console.log("pushed to room coordinates: " + this.roomCoords[i]);
 		}
 
@@ -207,10 +207,10 @@ class Editor {
 
 	calcMousePos(x,y) {
 
-		if (x < (this.mleft - this.wallsize) || 
-			x > (this.mright + this.wallsize) || 
-			y < (this.mtop - this.wallsize) ||
-			y > (this.mbottom + this.wallsize)) {
+		if (x < (this.mleft) || 
+			x > (this.mright + this.roomsize) || 
+			y < (this.mtop) ||
+			y > (this.mbottom + this.roomsize)) {
 
 			this.targx = null;
 			this.targy = null;
@@ -219,17 +219,31 @@ class Editor {
 
 		else {
 
-			this.targx = Math.floor((x - this.mleft) / this.roomsize);	// right now this starts to break down w larger maps.
-			this.targy = Math.floor((y - this.mtop) / this.roomsize);	// right now this starts to break down w larger maps.
+			// normalize x and y from here
+
+			x -= this.mleft;
+			y -= this.mtop;
+
+			// this still breaks down with larger maps although it's closer. The basic idea:
+
+			// we first have to calculate the ballpark region we're in: x divided by the size of a room. that gives us the rough
+			// number of wall offsets.
+			// we then add back the number of wall offsets and then divide by the room size. there's certainly a better way to do this.
+
+			let xzone = Math.floor(x / this.roomsize);	
+			let yzone = Math.floor(y / this.roomsize);	
+
+			this.targx = Math.floor((x - (this.wallsize * xzone)) / this.roomsize);
+			this.targy = Math.floor((y - (this.wallsize * yzone)) / this.roomsize);
+
 			this.realtarg = true;
+
 		}
 	}
 
 
 	getRoom(x, y) {	// takes an x y coordinate. if we're on a room, returns a reference to the room we're on. if not, returns false;
-
 		return this.level.rooms.filter(r => (x == r.x) && (y == r.y));
-
 	}
 
 // tool palette
@@ -254,6 +268,14 @@ class Editor {
 
 			eref.level.eraseRoom(x,y);
 			eref.redraw = true;
+		}
+
+		else if ((x >= eref.level.width) || (y >= eref.level.height) ) {
+			console.log("clicked outside bounds of the map. doing nothing");
+		}
+
+		else if ((x == null) || (y == null)) {
+			console.log("x and or y are null which seems like bad news");
 		}
 
 		else {			
