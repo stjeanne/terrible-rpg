@@ -179,3 +179,8 @@
 	width: 64;
 	z-index: 100;
 }
+
+#editor .e_tool button {
+	height: 32;
+	width: 32;
+}

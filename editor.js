@@ -255,6 +255,7 @@ class Editor {
 		switch(this.activetool) {
 			case "toggle": this.toggleRoom(x,y); break;
 			case "focus": this.focusRoom(x,y); break;
+			case "playerstart": this.movePlayerStart(x,y); break;
 			default: 
 		}
 	}
@@ -309,12 +310,12 @@ class Editor {
 				data: JSON.stringify(this.level),
 				targ: "maps/" + maptarg
 			},
-			success: () => { console.log("should have saved file!")},
+			success: () => { console.log("saved file!")},
 			failure: () => { console.log("oh no something went wrong with the save file")}
 		});
 	}
 
-	saveCurrentLevelAs(fname = prompt("Enter filename to save as (must include extension):")) {
+	saveCurrentLevelAs(fname = prompt("Enter filename to save as (must include .map extension):")) {
 		if (fname != null) {
 			this.saveCurrentLevel(fname);
 			this.curmap = fname;		
@@ -345,7 +346,7 @@ class Editor {
 				.fail(() => alert("couldn't load the blank map."));
 			}
 
-			console.log("failed to create new level: size outside of range.")
+			alert("failed to create new level: size outside of range.")
 		}
 
 		else {
