@@ -9,10 +9,11 @@ let eref = null; // yeah yeah yeah yeah
 const MAPW = 600;
 const MAPH = 600;
 
-const TOOLS = ["toggle", "add", "erase", "focus"];
+const TOOLS = ["toggle", "add", "erase", "focus", "playerstart"];
 
 const TOOLW = 64;
 const TOOLH = 600;
+const TOOLSIZE = 24;
 
 const ED_DEFAULTROOMSIZE = 24;
 const ED_DEFAULTBORDER = 4;
@@ -49,6 +50,9 @@ class Editor {
 
 			this.prevmode = null;
 
+			this.toolList = new Array; // blank array of tools
+			this.numTools = 0;
+
 			eref = this;
 	}
 
@@ -77,6 +81,43 @@ class Editor {
 			this.divID.appendChild(this.toolID);
 			this.t = this.toolID.getContext("2d");
 
+			this.setTool("toggle");
+
+			this.AddTool("toggle");
+			this.AddTool("playerstart");
+			this.AddTool("focus");
+
+			this.PrepGUI();
+
+
+			$(this.divID).after()
+
+			this.loadLevel(this.curmap);
+
+
+			$('.e_map').on("mousemove", () => this.calcMousePos(event.offsetX, event.offsetY));
+			$('.e_map').on("click", () => this.applyTool(this.targx,this.targy));
+
+			$('.e_tool').on("click", () => console.log("clicked the tool palette!"));
+
+
+			this.timer = setInterval(this.editLoop, 10);
+			this.editLoop();
+	}
+
+	AddTool(tool) {
+		this.toolList.push(tool);
+		this.numTools++;
+
+		$('#editor').append("<button id=\"TOOL_" + tool + "\">" + tool + "</button>");
+		$('#TOOL_' + tool).on("click", () => this.setTool(tool));
+
+
+		console.log("added " + tool + " to the tool list, number of tools is now " + this.numTools);
+
+	}
+
+	PrepGUI() { // make this better later
 			$('#editor').append("<button id=\"GUI_save\">Save Current Map</button>");
 			$('#editor').append("<button id=\"GUI_saveAs\">Save As</button>");
 			$('#editor').append("<button id=\"GUI_load\">Load Map</button>");
@@ -87,15 +128,14 @@ class Editor {
 			$('#GUI_load').on("click", () => this.loadLevel());
 			$('#GUI_new').on("click", () => this.createNewLevel());
 
-			$(this.divID).after()
+			let s = "";
 
-			this.loadLevel(this.curmap);
+			this.toolList.forEach(tool => {
+				s += "<option value=\"" + tool + "\">" + tool + "</option>";
+			});
 
-			$('.e_map').on("mousemove", () => this.calcMousePos(event.offsetX, event.offsetY));
-			$('.e_map').on("click", () => this.applyTool(this.targx,this.targy));
+			$('#editor').append("<select id=\"GUI_adhoctools\">" + s + "</select>");
 
-			this.timer = setInterval(this.editLoop, 10);
-			this.editLoop();
 	}
 
 	editLoop() {
@@ -161,10 +201,27 @@ class Editor {
 	}
 
 	drawToolPane() {					// doesn't work rn
-		this.t.fillStyle = "#DDD";
+		this.t.fillStyle = "#DDC";
 		this.t.beginPath();
 		this.t.rect(0,0,TOOLW,TOOLH);
 		this.t.fill();
+
+		let i = 0;
+
+		this.toolList.forEach(tool => {
+
+			this.t.fillStyle = "#F00";
+			this.t.fillRect(4, (4 * (i + 1)) + (TOOLSIZE * i), TOOLSIZE, TOOLSIZE);
+			i++;
+
+			console.log("drawing button for " + tool);
+		})
+		/*
+
+			so ideally we add certain tools to the pane
+			and we draw the art for each tool that we have.
+
+		*/
 	}
 
 	drawNullRoom(x,y) {
@@ -179,7 +236,7 @@ class Editor {
 
 		console.log("drawing LIVE room at " + x + ", " + y);
 
-		this.m.fillStyle = "black";
+		this.m.fillStyle = "#DDC";
 		this.m.fillRect(this.roomCoords[x], this.roomCoords[y], this.roomsize, this.roomsize);
 	}
 
@@ -248,6 +305,11 @@ class Editor {
 
 // tool palette
 
+	setTool(tool) {
+		this.activetool = tool;
+		console.log("changed active tool to " + tool);
+	}
+
 	applyTool(x, y) {
 
 		console.log("clicked map at " + x + " " + y);
@@ -294,6 +356,10 @@ class Editor {
 		if (this.realtarg) {
 			console.log("focusing on room at target " + this.targx + ", " + this.targy + ", is it a room? " + this.getRoom(this.targx,this.targy));
 		}
+	}
+
+	movePlayerStart(x,y) {
+		console.log("asked to move player start to " + x + ", " + y + ", but doesn't work yet!");
 	}
 
 // CRUD stuff
