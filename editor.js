@@ -196,6 +196,9 @@ class Editor {
 
 		this.level.rooms.forEach(r => {
 			this.drawActiveRoom(r.x, r.y, r.pass);
+			if (r.playerStart == true) {
+				this.drawPlayerStart(r.x,r.y);
+			}
 		})
 		return true;
 	}
@@ -237,6 +240,12 @@ class Editor {
 		console.log("drawing LIVE room at " + x + ", " + y);
 
 		this.m.fillStyle = "#776";
+		this.m.fillRect(this.roomCoords[x], this.roomCoords[y], this.roomsize, this.roomsize);
+	}
+
+	drawPlayerStart(x,y) {
+		console.log("drawing player start");
+		this.m.fillStyle = "#0A0";
 		this.m.fillRect(this.roomCoords[x], this.roomCoords[y], this.roomsize, this.roomsize);
 	}
 
@@ -359,7 +368,21 @@ class Editor {
 	}
 
 	movePlayerStart(x,y) {
-		alert("asked to move player start to " + x + ", " + y + ", but doesn't work yet!");
+		let r = this.getRoom(x,y);
+
+		eref = this;
+
+		if (Array.isArray(r) && r.length == 1) {	// if we're in the array and if we only grabbed one room
+
+			eref.level.rooms.forEach(room => room.playerStart = false);	// get rid of the current player start location
+
+			r[0].playerStart = true;
+
+			console.log("moved player start to " + x + ", " + y + "!");
+
+			eref.redraw = true;
+		}
+
 	}
 
 // CRUD stuff
