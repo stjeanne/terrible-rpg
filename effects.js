@@ -10,5 +10,5 @@ let effect_sleep = function(i) {
 	GM.PC.tired = true;
 	GM.displayCharSheet();
 	playerMessage("Bought " + i.disp + ": " + i.eff);
-}
+};
 

@@ -236,7 +236,7 @@ class Editor {
 
 		console.log("drawing LIVE room at " + x + ", " + y);
 
-		this.m.fillStyle = "#DDC";
+		this.m.fillStyle = "#776";
 		this.m.fillRect(this.roomCoords[x], this.roomCoords[y], this.roomsize, this.roomsize);
 	}
 
@@ -354,12 +354,12 @@ class Editor {
 		// focus on a room's param list to make changes as needed (esp to event/effects scripts, wall textures, enemy codes, etc.)
 
 		if (this.realtarg) {
-			console.log("focusing on room at target " + this.targx + ", " + this.targy + ", is it a room? " + this.getRoom(this.targx,this.targy));
+			alert("FOCUS on the room at " + this.targx + ", " + this.targy + ": " + this.getRoom(this.targx,this.targy));
 		}
 	}
 
 	movePlayerStart(x,y) {
-		console.log("asked to move player start to " + x + ", " + y + ", but doesn't work yet!");
+		alert("asked to move player start to " + x + ", " + y + ", but doesn't work yet!");
 	}
 
 // CRUD stuff

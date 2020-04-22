@@ -35,6 +35,16 @@ class Level {
 
 		console.log("removed room at " + x + ", " + y + " (UNSAFELY~!)");
 	}
+
+// NOTE: right now these just truncate anything not in their range which is surely not a great move. They also add new width without centering the old rooms.
+
+	changeWidth(w) {
+		this.width = w;
+	}
+
+	changeHeight(h) {
+		this.height = h;
+	}
 }
 
 class Room {
@@ -45,6 +55,7 @@ class Room {
 			this.y = r.y;
 			this.pass = r.pass;
 			this.id = null;		// this is a reference for a div
+			this.playerStart = r.playerStart;
 		}
 
 		else {
@@ -52,6 +63,7 @@ class Room {
 			this.y = null;
 			this.pass = PASSCODES[0];	// default to empty
 			this.id = null;
+			this.playerStart = false; // defaults to not being the player start point
 		}
 	}
 
