@@ -68,3 +68,22 @@ class Room {
 	}
 
 }
+
+
+/* 
+	PSYCHICVOYAGE is the manager class for traveling into the dream realm.
+
+	We'll start by making it possible to launch as a test from the editor. (Nothing from the main game as yet.)
+
+
+
+*/
+
+
+
+class PsychicVoyage {
+
+
+
+
+}
