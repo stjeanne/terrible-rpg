@@ -157,9 +157,12 @@ class Game {
 
 		else if (self.mode == "editing") {
 			$("#stimuli").html("<p>Editing the map! Press E again to stop.</p>");
-			console.log("Map editor activated!");
+			console.log("Changing game mode to editing.");
 		}
 
+		else if (self.moade == "testing") {
+			console.log("game mode changed: testing the map from within the editor.");
+		}
 	}
 
 	generateDecorList() {

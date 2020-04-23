@@ -42,6 +42,11 @@ class Player {
 				ring: "none" 		// increase focus, focus rate
 			};
 			this.inventory = []		// push items to it. could be an issue with passing by ref rather than value.
+
+				// variables related to the maze content. ideally these are just reflected here and are changed by methods in maze.js.
+
+			this.maze_x = null;
+			this.maze_y = null;
 		}
 
 		else {
@@ -159,7 +164,7 @@ INVENTORY MANAGEMENT
 
 		// this will need to be built
 
-		console.log("theoretically removed " + item + " from player inventory.");
+		console.log("theoretically removed " + item + " from player inventory; doesn\'t work yet");
 	}
 
 	useItem(item) {

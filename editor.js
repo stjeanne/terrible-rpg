@@ -19,7 +19,7 @@ const ED_DEFAULTROOMSIZE = 24;
 const ED_DEFAULTBORDER = 4;
 
 class Editor {
-	constructor(defaultmap = 'testmap.json') {		
+	constructor(defaultmap = 'blank.map') {		
 			this.curmap = defaultmap;
 			this.level = null;	
 			this.timer = null;
@@ -122,11 +122,14 @@ class Editor {
 			$('#editor').append("<button id=\"GUI_saveAs\">Save As</button>");
 			$('#editor').append("<button id=\"GUI_load\">Load Map</button>");
 			$('#editor').append("<button id=\"GUI_new\">New Map</button>");
+			$('#editor').append("<button id=\"GUI_test\">TEST</button>");
+
 
 			$('#GUI_save').on("click", () => this.saveCurrentLevel());
 			$('#GUI_saveAs').on("click", () => this.saveCurrentLevelAs());
 			$('#GUI_load').on("click", () => this.loadLevel());
 			$('#GUI_new').on("click", () => this.createNewLevel());
+			$('#GUI_test').on("click", () => this.testLevel());
 
 			let s = "";
 
@@ -143,6 +146,15 @@ class Editor {
 				eref.drawWholeDangMap(); 
 				eref.drawToolPane();
 			}			
+	}
+
+	pauseEditor() {
+		console.log("stub, pausing the editor!");
+	}
+
+	unpauseEditor() {
+		console.log("stub, unpausing the editor!");
+		GM.switchModes("editing");
 	}
 
 	endEditor() {
@@ -459,6 +471,22 @@ class Editor {
 
 		.fail(() => alert("wasn't able to load the level :("));
 
+	}
+
+	testLevel() {
+		console.log("testing level " + this.curmap + ", hold onto yr butts");
+
+		// need to think about this.
+
+		this.pauseEditor(); 		// we make the editor invisible. (happens in pause editor.)
+		GM.switchModes("testing");
+		// - we initiate the psychic voyage with the current level data.
+		// - we change the editor mode away from editing, but leave the editor active. (We do make sure to hide the editor in CSS so we can't click.)
+		// - when the psychic vision is over, it will know to call the restore editor method to resume from where we were. (How? makes a call from the end vision method.)
+
+		let PV = new PsychicVoyage(this.curmap); 		// - we spawn a new psychic voyage.
+
+		PV.beginVoyage();
 	}
 
 }
