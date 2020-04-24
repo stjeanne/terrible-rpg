@@ -1,7 +1,7 @@
 // MAZE.js -- implementation of the FOCUS mazes. //
 
 const PASSCODES = ["empty", "solid"];
-const MAZE_VERSION = 0.2
+const MAZE_VERSION = 0.21; 	// added flavor text. woopty freakin doo
 
 class Level {
 
@@ -64,6 +64,7 @@ class Room {
 			this.id = null;		// this is a reference for a div
 			this.playerStart = r.playerStart;
 			this.playerIsHere = r.playerIsHere;
+			this.flavor = r.flavor
 		}
 
 		else {
@@ -73,6 +74,7 @@ class Room {
 			this.id = null;
 			this.playerStart = false; // defaults to not being the player start point
 			this.playerIsHere = false; // defaults to the player not being here
+			this.flavor = null;
 		}
 	}
 

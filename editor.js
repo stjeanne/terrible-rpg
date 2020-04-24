@@ -321,7 +321,7 @@ class Editor {
 
 
 	getRoom(x, y) {	// takes an x y coordinate. if we're on a room, returns a reference to the room we're on. if not, returns false;
-		return this.level.rooms.filter(r => (x == r.x) && (y == r.y));
+		return this.level.rooms.filter(r => (x == r.x) && (y == r.y))[0];
 	}
 
 // tool palette
@@ -347,7 +347,9 @@ class Editor {
 
 		let r = this.getRoom(x,y);
 
-		if (Array.isArray(r) && r.length == 1) {	// will fail if we're in more than one room.
+//		if (r ==Array.isArray(r) && r.length == 1) {	// will fail if we're in more than one room. (VESTIGIAL, assumes an array from getRoom, no longer true)
+
+		if (r != undefined) {	// i think this works but maybe i don't understand anything
 			console.log("in a room, attempting to erase");
 
 			eref.level.eraseRoom(x,y);
@@ -358,11 +360,11 @@ class Editor {
 			console.log("clicked outside bounds of the map. doing nothing");
 		}
 
-		else if ((x == null) || (y == null)) {
+/*		else if ((x == null) || (y == null)) {
 			console.log("x and or y are null which seems like bad news");
-		}
+		}*/
 
-		else {			
+		else if (r == undefined) {			
 			console.log("we are not in a room! attempting to add");
 
 			eref.level.addRoom(x,y);
@@ -375,7 +377,16 @@ class Editor {
 		// focus on a room's param list to make changes as needed (esp to event/effects scripts, wall textures, enemy codes, etc.)
 
 		if (this.realtarg) {
-			alert("FOCUS on the room at " + this.targx + ", " + this.targy + ": " + this.getRoom(this.targx,this.targy));
+
+			let fr = eref.getRoom(eref.targx,eref.targy);
+
+			if (fr != undefined) {
+				alert("FOCUS on the room at " + this.targx + ", " + this.targy + ": " + this.getRoom(this.targx,this.targy).flavor);				
+			}
+
+			else {
+				console.log("nothing to focus on.");
+			}
 		}
 	}
 
@@ -384,11 +395,11 @@ class Editor {
 
 		eref = this;
 
-		if (Array.isArray(r) && r.length == 1) {	// if we're in the array and if we only grabbed one room
+		if (r != undefined) {	// if we got a legit room
 
 			eref.level.rooms.forEach(room => room.playerStart = false);	// get rid of the current player start location
 
-			r[0].playerStart = true;
+			r.playerStart = true;
 
 			console.log("moved player start to " + x + ", " + y + "!");
 
