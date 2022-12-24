@@ -44,7 +44,7 @@
 			"commands":
 			[
 				{
-					"disp": "Leave for the Crap Fields",
+					"disp": "Go to the Crap Fields",
 					"cmd": "cmd_crapfields"
 				},
 
