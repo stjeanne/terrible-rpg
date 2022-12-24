@@ -164,6 +164,20 @@
 	z-index: 99;
 }
 
+#editor .e_window {
+	width: 1024px;
+}
+
+#editor .e_main {
+	float: left;
+	width: 724px;
+}
+
+#editor .e_properties {
+	float: right;
+	width: 300px;
+}
+
 #editor .e_map {
 	margin-top: 10;
 	margin-left: 10;
@@ -180,7 +194,7 @@
 }
 
 #editor .e_tool button {
-	height: 24;
-	width: 24;
+	height: 32;
+	width: 32;
 	margin-bottom: 8px;
 }

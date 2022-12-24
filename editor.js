@@ -13,7 +13,7 @@ const TOOLS = ["toggle", "add", "erase", "focus", "playerstart"];
 
 const TOOLW = 64;
 const TOOLH = 600;
-const TOOLSIZE = 24;
+const TOOLSIZE = 32;
 
 const ED_DEFAULTROOMSIZE = 24;
 const ED_DEFAULTBORDER = 4;
@@ -67,6 +67,25 @@ class Editor {
 			this.divID.id = "editor";
 			$('#wrapper').prepend(this.divID);
 
+/*
+
+			Revise how this works:
+
+				After we create the editor element,
+				Use jquery to create e_window
+					within it e_main and e_properties.
+					create e_titlebar
+					create e_GUI
+					create <div> e_tools
+					create <div> e_test
+*/
+
+
+//			(Why doesn't the below work? Issue with working directly in DOM vs jquery)
+
+			$(this.divID).append("<div class=\"e_window\"><div class=\"e_main\">");
+//			$(this.divID).append("<div class=\"e_main\">");
+
 			this.canvasID = document.createElement('canvas');
 			this.canvasID.className = "e_map";
 			this.canvasID.width = MAPW;
@@ -81,11 +100,16 @@ class Editor {
 			this.divID.appendChild(this.toolID);
 			this.t = this.toolID.getContext("2d");
 
+			$(this.divID).append("</div></div>");
+
+			$(this.divID).append("<p>");
 			this.setTool("toggle");
 
 			this.AddTool("toggle");
 			this.AddTool("playerstart");
 			this.AddTool("focus");
+			this.AddTool("entityAdd");
+			this.AddTool("entityFocus");
 
 			this.PrepGUI();
 
@@ -117,7 +141,8 @@ class Editor {
 
 	}
 
-	PrepGUI() { // make this better later
+	PrepGUI() { // make this better later -- create this in the e_main div after the canvas
+			$('#editor').append("<p>");
 			$('#editor').append("<button id=\"GUI_save\">Save Current Map</button>");
 			$('#editor').append("<button id=\"GUI_saveAs\">Save As</button>");
 			$('#editor').append("<button id=\"GUI_load\">Load Map</button>");
@@ -191,9 +216,9 @@ class Editor {
 	}
 
 	drawMapLayout() {
-		this.m.font = '12px Overpass Mono';
+		this.m.font = '16px Overpass Mono';
 		this.m.fillStyle = 'red';
-		this.m.fillText("current map: " + this.level.mapname, 0, 12);
+		this.m.fillText("current map: " + this.level.mapname, 8, 20);
 		return true;
 	}
 
@@ -339,6 +364,8 @@ class Editor {
 			case "toggle": this.toggleRoom(x,y); break;
 			case "focus": this.focusRoom(x,y); break;
 			case "playerstart": this.movePlayerStart(x,y); break;
+			case "addEntity": this.addEntity(x,y); break;
+			case "entityFocus": this.entityFocus(x,y); break;
 			default: 
 		}
 	}
@@ -406,6 +433,14 @@ class Editor {
 			eref.redraw = true;
 		}
 
+	}
+
+	addEntity(x,y) {
+		console.log("adding entity tool at " + x + " " + y);
+	}
+
+	entityFocus(x,y) {
+		console.log("focusing on the entity at " + x + " " + y);
 	}
 
 // CRUD stuff
