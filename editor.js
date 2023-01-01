@@ -80,10 +80,15 @@ class Editor {
 					create <div> e_test
 */
 
+/*
+			(Revise the below: once all the elements are designed,
+			 create all the divs (which will also close them),
+			 add the canvas into them using a createElement call to the correct element,
+			 add other content functionally into each div element.
 
-//			(Why doesn't the below work? Issue with working directly in DOM vs jquery)
+*/
 
-			$(this.divID).append("<div class=\"e_window\"><div class=\"e_main\">");
+//			$(this.divID).append("<div class=\"e_window\">");
 //			$(this.divID).append("<div class=\"e_main\">");
 
 			this.canvasID = document.createElement('canvas');

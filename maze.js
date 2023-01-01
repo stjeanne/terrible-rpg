@@ -87,7 +87,9 @@ class Room {
 	We'll start by making it possible to launch as a test from the editor. (Nothing from the main game as yet.)
 
 
-
+	args:
+		0: right now it's the name of the map. Later it'll be a reconstructed map object using the passed param.
+		1: "testing" -- if present, do it in test mode (use the defaults for things.)
 */
 
 
@@ -109,22 +111,41 @@ class PsychicVoyage {
 		// changeLevel method: calls loadLevel at a higher level of abstraction. based on a mapname plus x and y, loads the new level into memory and moves the player to it.
 			// if x and y aren't defined, set them to the map start.
 
+		voyageLoop() {
+			/*
+				time passes.
+				check the command stack + execute any extant commands.
+				check whether anything has triggered a redraw:
+					and if so, redraw it.
+				check whether anything has broken the loop: 
+					if not, return to the voyage loop.
+			*/
+		}
+
 		beginVoyage() {
 			// load the current level
 			alert("the psychic voyage BEGINS");
 
-				// check whether we're in a live game. if we are, load the maze mode.
+/* 
 
-				/* else if we're in testing, 
-					for now just load the minimap. (eventually will load some kind of live view.)
+					load any resources we might need.
 
-						load the player at the map's start position.
-						load the minimap as the maze mode. 
-						load the test controls.
-							initially just "back to editor"
-							WASD turn/forward/back tank controls. eventually these overload to the live controls plus the debut GUI.
-							eventually: jump player to different locations. unclip player.
+					build the maze layout first as a separate function.
+						canvas overlay
+						left and right stat windows
+						left and right HUDs
+						player message box
 
+					set up where the player is + facing.
+					wire up the player controls.
+						WASD - move
+						E - execute (make sure this isn't overloaded bc of editor mode)
+						C - menu
+						Esc - end test (if testing)
+
+					load any initial commands onto the stack.
+
+					when done, initiate the loop!
 */
 			this.endVoyage();		// this will move to its own event once the tester controls are in.
 		}
