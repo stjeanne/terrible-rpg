@@ -9,6 +9,7 @@ class Level {
 
 		console.log("loading map " + lev.mapname);
 
+		this.filename = lev.filename;
 		this.mapname = lev.mapname;
 		this.width = lev.width;
 		this.height = lev.height;
@@ -101,8 +102,9 @@ class PsychicVoyage {
 				// for now let's assume this never happens. one voyage at a time!
 			}
 
-			else {
-				this.level = null; // will assign a new Level to this
+			else if (args[0] instanceof Level) {
+				this.levelName = args[0].curmap;
+				this.level = new Level(args[0]); // will assign a new Level to this
 				this.PC = null; // will assign the player copy to this for purposes of updating location
 			}
 		}
@@ -124,7 +126,8 @@ class PsychicVoyage {
 
 		beginVoyage() {
 			// load the current level
-			alert("the psychic voyage BEGINS");
+			alert("the psychic voyage BEGINS, exploring " + this.levelName);
+
 
 /* 
 
@@ -163,7 +166,7 @@ class PsychicVoyage {
 			}
 		}
 
-		loadLevel(lname,x,y) {
+		prepareLevel(lname,x,y) {
 			console.log("trying to load " + 'maps/' + lname);
 
 			$.getJSON('maps/' + lname, lev => console.log("loaded " + lname + " into a PSYCHIC VOYAGE"))

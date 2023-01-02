@@ -79,7 +79,7 @@ function loadGameData(isThisANewGame) {
 					console.log("locations file is: ");
 					console.log(result);
 					GM.generateLocations(result);
-			})
+				})
 
 				.done(function() {
 					$.getJSON('items.json', function(result) {
@@ -102,6 +102,9 @@ function loadGameData(isThisANewGame) {
 					})
 				})
 
+				.done(function() {
+					WORKING_LEVELS.forEach(l => GM.addLevel(l));	
+				})
 
 				.done(function() {
 					if(isThisANewGame) {

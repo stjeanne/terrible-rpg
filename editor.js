@@ -18,8 +18,10 @@ const TOOLSIZE = 32;
 const ED_DEFAULTROOMSIZE = 24;
 const ED_DEFAULTBORDER = 4;
 
+const DEFAULT_START_MAP = "debug.map";
+
 class Editor {
-	constructor(defaultmap = 'blank.map') {		
+	constructor(defaultmap = DEFAULT_START_MAP) {		
 			this.curmap = defaultmap;
 			this.level = null;	
 			this.timer = null;
@@ -121,7 +123,7 @@ class Editor {
 
 			$(this.divID).after()
 
-			this.loadLevel(this.curmap);
+			this.loadLevelForEditingFromFile(this.curmap);
 
 
 			$('.e_map').on("mousemove", () => this.calcMousePos(event.offsetX, event.offsetY));
@@ -157,7 +159,7 @@ class Editor {
 
 			$('#GUI_save').on("click", () => this.saveCurrentLevel());
 			$('#GUI_saveAs').on("click", () => this.saveCurrentLevelAs());
-			$('#GUI_load').on("click", () => this.loadLevel());
+			$('#GUI_load').on("click", () => this.loadLevelForEditingFromFile());
 			$('#GUI_new').on("click", () => this.createNewLevel());
 			$('#GUI_test').on("click", () => this.testLevel());
 
@@ -506,10 +508,10 @@ class Editor {
 		}
 	}
 
-	loadLevel(levelname = prompt("Load which level?")) {
-		console.log("trying to load " + 'maps/' + levelname);
+	loadLevelForEditingFromFile(levelname = prompt("Load which level?")) {
+		console.log("trying to load " + MAPS_PATH + levelname);
 
-		$.getJSON('maps/' + levelname, lev => console.log("loaded " + lev))
+		$.getJSON(MAPS_PATH + levelname, lev => console.log("loaded " + lev))
 
 		.done(lev => { 
 
@@ -535,7 +537,7 @@ class Editor {
 		// - we change the editor mode away from editing, but leave the editor active. (We do make sure to hide the editor in CSS so we can't click.)
 		// - when the psychic vision is over, it will know to call the restore editor method to resume from where we were. (How? makes a call from the end vision method.)
 
-		let PV = new PsychicVoyage(this.curmap); 		// - we spawn a new psychic voyage.
+		let PV = new PsychicVoyage(this.curmap, "test"); 		// - we spawn a new psychic voyage
 
 		PV.beginVoyage();
 	}

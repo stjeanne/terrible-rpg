@@ -24,6 +24,8 @@ class Game {
 		this.meditateStart = 0;
 		this.tranceDepth = 0;
 		this.plotFlags = new Array;
+
+		this.allLevels = new Array;
 	}
 
 // LOAD DATA FROM JSON FILES //
@@ -55,6 +57,23 @@ class Game {
 		this.stores = str;
 		console.log("generate stores as follows:");
 		console.log(this.stores);
+	}
+
+	addLevel(levelFileName) {		// takes a string filename and uses it as an input to LoadLevel. Pushes the result to the array of levels in the game manager.
+
+		console.log("trying to add the level from file " + MAPS_PATH + levelFileName);
+
+		self = this;
+
+		$.getJSON(MAPS_PATH + levelFileName, function(result) {
+
+//				console.log("here's what we got from addLevel: ");
+//				console.log(result);
+				let l = new Level(result);
+//				console.log("here's the value of l: ");
+//				console.log(l);
+				self.allLevels.push(l);
+			})
 	}
 
 // TURN THE KEY FUNCTION //

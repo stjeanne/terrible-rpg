@@ -34,7 +34,7 @@ const DEFAULT_MAPW = 16;
 const DEFAULT_MAPH = 16;
 
 const EQUIPSLOTS = ["tool", "body", "ring", "music", "pendant", "statue"];
-const GAMEMODES = ["normal", "loading", "message", "death", "buying", "crapfields", "meditate", "equipchange"];	//one day useful to have this enumerated
+const GAMEMODES = ["normal", "loading", "message", "death", "buying", "crapfields", "meditate", "equipchange", "testing"];	//one day useful to have this enumerated
 
 const CREDITLEVELS = [100, 500, 2500, 10000, 65535, 700000];
 const CXP_NEEDED = [0, 10, 100, 1000, 10000, 100000];	// obviously needs revision
@@ -45,3 +45,6 @@ let CSS_BUTTONHOVER = [117,117,253];
 let CSS_BUTTONTEXT = [255,255,255];
 let CSS_REDTEXT = [153,0,0];
 let CSS_TEXT = [0,0,0];
+
+const WORKING_LEVELS = ["debug.map"]; // an array of all levels in the active game
+const MAPS_PATH = "maps/";
