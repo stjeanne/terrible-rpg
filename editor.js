@@ -15,10 +15,19 @@ const TOOLW = 64;
 const TOOLH = 600;
 const TOOLSIZE = 32;
 
-const ED_DEFAULTROOMSIZE = 24;
-const ED_DEFAULTBORDER = 4;
+const ED_DEFAULTROOMSIZE = 20;
+const ED_DEFAULTBORDER = 2;
 
 const DEFAULT_START_MAP = "debug.map";
+
+
+
+
+
+
+/////////////////////
+// CLASS DEFINITION
+
 
 class Editor {
 	constructor(defaultmap = DEFAULT_START_MAP) {		
@@ -152,14 +161,16 @@ class Editor {
 			$('#editor').append("<p>");
 			$('#editor').append("<button id=\"GUI_save\">Save Current Map</button>");
 			$('#editor').append("<button id=\"GUI_saveAs\">Save As</button>");
-			$('#editor').append("<button id=\"GUI_load\">Load Map</button>");
+			$('#editor').append("<button id=\"GUI_loadfile\">Load Map From File</button>");
+			$('#editor').append("<button id=\"GUI_load\">Load Live Map</button>");
 			$('#editor').append("<button id=\"GUI_new\">New Map</button>");
 			$('#editor').append("<button id=\"GUI_test\">TEST</button>");
 
 
 			$('#GUI_save').on("click", () => this.saveCurrentLevel());
 			$('#GUI_saveAs').on("click", () => this.saveCurrentLevelAs());
-			$('#GUI_load').on("click", () => this.loadLevelForEditingFromFile());
+			$('#GUI_loadfile').on("click", () => this.loadLevelForEditingFromFile());
+			$('#GUI_load').on("click", () => this.requestLevelForEditing());
 			$('#GUI_new').on("click", () => this.createNewLevel());
 			$('#GUI_test').on("click", () => this.testLevel());
 
@@ -197,6 +208,18 @@ class Editor {
 
 	}
 
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////
 // draw functions
 
 	drawWholeDangMap() {
@@ -293,6 +316,13 @@ class Editor {
 		this.m.fillRect(this.roomCoords[x], this.roomCoords[y], this.roomsize, this.roomsize);
 	}
 
+
+
+
+
+
+
+//////////////////////////
 // coordinate functions
 
 	setUpCanvasRoomLayout() {
@@ -356,7 +386,14 @@ class Editor {
 		return this.level.rooms.filter(r => (x == r.x) && (y == r.y))[0];
 	}
 
-// tool palette
+
+
+
+
+
+/////////////////
+// tool palette //
+//////////////////
 
 	setTool(tool) {
 		this.activetool = tool;
@@ -471,23 +508,25 @@ class Editor {
 
 	saveCurrentLevelAs(fname = prompt("Enter filename to save as (must include .map extension):")) {
 		if (fname != null) {
+			this.level.filename = fname;		// eventually control whether we're using a .map here to avoid issues
 			this.saveCurrentLevel(fname);
 			this.curmap = fname;		
 		}
 	}
 
-	createNewLevel(levelsquare = prompt("Creating new level. What size square? (1-12)")) {
+	createNewLevel(levelsquare = prompt("Creating new level. What size square? (1-" + MAXIMUM_MAZE_SIZE + ")")) {
 
 		console.log(Number(levelsquare));
 
 		if (typeof Number(levelsquare) == 'number') {
-			if ((levelsquare > 0) && (levelsquare <= 12)) {
+			if ((levelsquare > 0) && (levelsquare <= MAXIMUM_MAZE_SIZE)) {
 				console.log("loading a blank map.");
 
 				$.getJSON('maps/blankmap.json', lev => console.log("loaded " + lev))
 
 				.done(lev => {
 					this.level = new Level(lev);
+					this.level.filename = "BLANK.map";
 					this.level.width = levelsquare;
 					this.level.height = levelsquare;
 					this.roomCoords = new Array;
@@ -526,18 +565,27 @@ class Editor {
 
 	}
 
+	requestLevelForEditing(levelname = prompt("Load which level (from options: )" + WORKING_LEVELS + "?")) {
+
+		console.log("editor requested " + levelname + " for editing from the game manager.");
+
+		this.level = GM.getLevel(levelname);
+		this.curmap = levelname;
+	}
+
 	testLevel() {
 		console.log("testing level " + this.curmap + ", hold onto yr butts");
 
 		// need to think about this.
 
 		this.pauseEditor(); 		// we make the editor invisible. (happens in pause editor.)
-		GM.switchModes("testing");
+
+
 		// - we initiate the psychic voyage with the current level data.
 		// - we change the editor mode away from editing, but leave the editor active. (We do make sure to hide the editor in CSS so we can't click.)
 		// - when the psychic vision is over, it will know to call the restore editor method to resume from where we were. (How? makes a call from the end vision method.)
 
-		let PV = new PsychicVoyage(this.curmap, "test"); 		// - we spawn a new psychic voyage
+		let PV = new PsychicVoyage(this.level, "test"); 		// - we spawn a new psychic voyage
 
 		PV.beginVoyage();
 	}

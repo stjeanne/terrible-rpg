@@ -26,6 +26,8 @@ class Game {
 		this.plotFlags = new Array;
 
 		this.allLevels = new Array;
+
+		this.testingFromEditor = false;
 	}
 
 // LOAD DATA FROM JSON FILES //
@@ -76,6 +78,34 @@ class Game {
 			})
 	}
 
+
+
+
+
+
+
+////////////////////////
+// ACCESSOR FUNCTIONS //
+////////////////////////
+
+	getLevel(levelFileName) {
+
+		console.log("requested the level with filename " + levelFileName);
+
+		return this.allLevels.filter(i => i.filename == levelFileName);
+	}
+
+	isThisAnEditorTest() { return this.testingFromEditor; }
+
+	setTestingFlag() { this.testingFromEditor = true; }
+
+	unsetTestingFlag() { this.testingFromEditor = false; }
+
+
+
+
+
+///////////////////////////
 // TURN THE KEY FUNCTION //
 
 	startLoop() {
@@ -104,6 +134,10 @@ class Game {
 	}
 
 
+
+
+
+/////////////////////////////
 // SCREEN UPDATE FUNCTIONS //
 
 	displayCharSheet() {
@@ -179,7 +213,7 @@ class Game {
 			console.log("Changing game mode to editing.");
 		}
 
-		else if (self.moade == "testing") {
+		else if (self.mode == "testing") {
 			console.log("game mode changed: testing the map from within the editor.");
 		}
 	}

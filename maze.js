@@ -1,7 +1,7 @@
 // MAZE.js -- implementation of the FOCUS mazes. //
 
 const PASSCODES = ["empty", "solid"];
-const MAZE_VERSION = 0.21; 	// added flavor text. woopty freakin doo
+const MAZE_VERSION = 0.25; 	// now levels contain their own filenames
 
 class Level {
 
@@ -14,7 +14,7 @@ class Level {
 		this.width = lev.width;
 		this.height = lev.height;
 		this.rooms = new Array;
-		this.version - MAZE_VERSION;		// investigate this--every time you open the map it updates the version. i think this makes sense.
+		this.version = MAZE_VERSION;		// investigate this--every time you open the map it updates the version. i think this makes sense.
 
 		lev.rooms.forEach(r => this.rooms.push(r)); 
 	}
@@ -98,15 +98,13 @@ class PsychicVoyage {
 
 		constructor(...args) {
 
-			if (args[0] instanceof PsychicVoyage) {
-				// for now let's assume this never happens. one voyage at a time!
-			}
-
-			else if (args[0] instanceof Level) {
-				this.levelName = args[0].curmap;
+			if (args[0] instanceof Level) {
+				console.log("it seems you are trying to do a psychic voyage by taking in a LEVEL");
 				this.level = new Level(args[0]); // will assign a new Level to this
 				this.PC = null; // will assign the player copy to this for purposes of updating location
 			}
+
+			if (args[1] == "test") { GM.setTestingFlag(); }
 		}
 
 		// loadLevel method: pulls level data from JSON and includes it in a Level object.
@@ -126,7 +124,7 @@ class PsychicVoyage {
 
 		beginVoyage() {
 			// load the current level
-			alert("the psychic voyage BEGINS, exploring " + this.levelName);
+			alert("the psychic voyage BEGINS, exploring " + this.level.filename);
 
 
 /* 
@@ -157,7 +155,8 @@ class PsychicVoyage {
 			//clean up yr act
 			alert("the psychic voyage ENDS");
 
-			if(GM.mode == "testing") {
+			if(GM.isThisAnEditorTest()) {
+				GM.unsetTestingFlag();
 				ED.unpauseEditor();
 			}
 
