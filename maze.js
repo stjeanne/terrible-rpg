@@ -65,7 +65,7 @@ class Room {
 			this.id = null;		// this is a reference for a div
 			this.playerStart = r.playerStart;
 			this.playerIsHere = r.playerIsHere;
-			this.flavor = r.flavor
+			this.flavor = r.flavor;
 		}
 
 		else {
@@ -99,61 +99,105 @@ class PsychicVoyage {
 		constructor(...args) {
 
 			if (args[0] instanceof Level) {
-				console.log("it seems you are trying to do a psychic voyage by taking in a LEVEL");
 				this.level = new Level(args[0]); // will assign a new Level to this
 				this.PC = null; // will assign the player copy to this for purposes of updating location
 			}
+		
 
-			if (args[1] == "test") { GM.setTestingFlag(); }
+			this.commandStack = new Array;
+			this.loopIsBroken = true;
+			this.duration = 0;
+			this.redraw = false;
+
+			this.gfxLayer = null;
+
 		}
 
 		// loadLevel method: pulls level data from JSON and includes it in a Level object.
 		// changeLevel method: calls loadLevel at a higher level of abstraction. based on a mapname plus x and y, loads the new level into memory and moves the player to it.
 			// if x and y aren't defined, set them to the map start.
 
+
+
+
+
+/////////////////////////
+// PRIMARY MAZE MODE LOOP METHODS
+////////////////////////////
+
+
+
 		voyageLoop() {
+
+			let voy = this;
+
+			voy.timePasses();
 			/*
-				time passes.
 				check the command stack + execute any extant commands.
 				check whether anything has triggered a redraw:
 					and if so, redraw it.
 				check whether anything has broken the loop: 
 					if not, return to the voyage loop.
 			*/
+
+//			if (voy.duration > 100) { voy.loopIsBroken = true; }
+
+			console.log("looping in a psychic voyage, you better wait! ha ha ha! iteration " + voy.duration + ", loopIsBroken is " + voy.loopIsBroken);
+
+			if (!voy.loopIsBroken) {
+				setTimeout(() => voy.voyageLoop(), MAZE_LOOP_TIME)
+			}
+
+			else { voy.endVoyage(); }
 		}
 
+		timePasses() {
+			this.duration++;
+		}
+
+
 		beginVoyage() {
-			// load the current level
-			alert("the psychic voyage BEGINS, exploring " + this.level.filename);
+			console.log("the psychic voyage BEGINS, exploring " + this.level.filename);
+
+			let p = new Promise((resolve,reject) => resolve()) // we don't know what fancy gfx/sounds we may need
+
+			.then(() => this.loadAnyResources())
+			.then(() => this.setUpCanvasRoomLayout())			// build the maze layout in the DOM
+			.then(() => this.setUpPlayerVariables())			// set up where the player is and is facing
+			.then(() => this.setUpInitialMapState())			// load any initial commands into the stack
+			.then(() => {
+
+				this.loopIsBroken = false;
+				this.duration = 0;
+				this.voyageLoop();
+			})
+
+
 
 
 /* 
+			CHAIN OF PROMISES
 
 					load any resources we might need.
 
-					build the maze layout first as a separate function.
-						canvas overlay
-						left and right stat windows
-						left and right HUDs
-						player message box
+					p.setUpCanvasRoomLayout(); build the maze layout first as a separate function.
+
 
 					set up where the player is + facing.
-					wire up the player controls.
-						WASD - move
-						E - execute (make sure this isn't overloaded bc of editor mode)
-						C - menu
-						Esc - end test (if testing)
-
+					
 					load any initial commands onto the stack.
 
 					when done, initiate the loop!
 */
-			this.endVoyage();		// this will move to its own event once the tester controls are in.
 		}
 
 		endVoyage() {
+
 			//clean up yr act
-			alert("the psychic voyage ENDS");
+
+			console.log("the psychic voyage ENDS");
+
+			this.clearUpGFX();	//eventually do this in a promise; for right now i'm tired
 
 			if(GM.isThisAnEditorTest()) {
 				GM.unsetTestingFlag();
@@ -161,11 +205,21 @@ class PsychicVoyage {
 			}
 
 			else {
-				console.log("something weird happened: voyage ended not from the testing path.");
+				console.log("something weird happened: voyage ended not from the testing path; shouldn't be possible yet");
 			}
 		}
 
-		prepareLevel(lname,x,y) {
+
+		emergencyExit()  {// for debug purposes: asks for an end to the voyage immediately. 
+			console.log("call to emergencyExit; asking to end the psychic voyage");
+			this.loopIsBroken = true;
+		}
+
+		switchLevel(lname,x,y) { // method for switching between levels. Should in practice never call anything not in the list of vetted game levels--needs behavior to cover that case
+
+		}
+
+/*		prepareLevel(lname,x,y) {
 			console.log("trying to load " + 'maps/' + lname);
 
 			$.getJSON('maps/' + lname, lev => console.log("loaded " + lname + " into a PSYCHIC VOYAGE"))
@@ -183,6 +237,66 @@ class PsychicVoyage {
 
 			.fail(() => alert("wasn't able to load the level :("));
 
+		} */
+
+
+///////////
+// GRAPHICS RELATED
+///
+
+		loadAnyResources(resolve,reject) {
+
+			console.log("loading any resources we need");
+
+			return new Promise(function(resolve,reject) {
+				resolve();
+			})
 		}
 
+		setUpCanvasRoomLayout() {
+
+			let p = this;
+
+			console.log("setting up the canvas");
+
+			return new Promise(function(resolve,reject) {
+
+				p.gfxLayer = document.createElement("div");
+				p.gfxLayer.id = "psychicvoyage";
+
+				resolve();
+
+			})
+
+
+//			return function(resolve);
+//						canvas overlay
+//						left and right stat windows
+//						left and right HUDs
+//						player message box
+
+		}
+
+		clearUpGFX() {
+			$("#psychicvoyage").remove();
+			this.gfxLayer = null;
+		}
+
+		setUpPlayerVariables() {
+			console.log("setting up the player's vars");
+			return new Promise(function(resolve,reject) {
+
+				resolve();
+
+			})
+		}
+
+		setUpInitialMapState() {
+			console.log("setting up the initial map state");
+			return new Promise(function(resolve,reject) {
+
+				resolve();
+
+			})
+		}
 }

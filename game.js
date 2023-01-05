@@ -19,6 +19,7 @@ class Game {
 		this.activeBattle = false;
 		this.BM = new BattleManager;
 		this.SM = new Store;
+		this.PV = null;					// will hold the PsychicVoyage manager
 
 
 		this.meditateStart = 0;
@@ -28,6 +29,8 @@ class Game {
 		this.allLevels = new Array;
 
 		this.testingFromEditor = false;
+
+		this.commandStack = new Array;
 	}
 
 // LOAD DATA FROM JSON FILES //
@@ -102,6 +105,18 @@ class Game {
 	unsetTestingFlag() { this.testingFromEditor = false; }
 
 
+	enqueueCommand(c) {
+		console.log("requested to add " + c + " to GM's command stack");
+		this.commandStack.enqueue(c);
+	}
+
+	dequeueCommand() {
+
+		let d = this.commandStack.dequeue();
+		console.log("requested to remove " + d + " from GM's command stack");
+		return d;
+	}
+
 
 
 
@@ -133,6 +148,74 @@ class Game {
 		$("stimuli").html("<p>" + msg + "</p>");
 	}
 
+
+
+
+///////////////////////
+// CONTROL FUNCTIONS //
+
+
+
+	wireUpControls() {
+		console.log("wiring up new controls for mode " + self.mode);
+
+		// first unbind old control
+
+		$(window).off('keydown');
+
+		if (self.mode == "voyaging") {
+
+			$(window).keydown(k => {
+
+				switch(k.key) {
+					case 'w': console.log("walked forward in a psychic voyage.");
+					break;
+
+					case 'a': console.log("turned left in a psychic voyage.");
+					break;
+
+					case 'd': console.log("turned right in a psychic voyage.");
+					break;
+
+					case 's': console.log("stepped backward in a psychic voyage.");
+					break;
+
+					case 'q': console.log("strafed left in a psychic voyage."); 
+					break;
+
+					case 'e': console.log("strafed right in a psychic voyage.");
+					break;
+
+					case " ": console.log("pressed spacebar in a psychic voyage.");
+					break;
+
+					case "Escape": 
+						console.log("pressed escape in a psychic voyage.");
+//						self.enqueueCommand("PV_escape");
+						self.PV.emergencyExit();
+						break;
+				}
+
+			})
+
+		}
+
+		else { 
+
+			$(window).keydown(k => {
+
+//					console.log("pressed key: ");
+//					console.log(k);
+
+				if (k.key == '`') { key_debugkey(); }
+				else if (k.key == 'e') { key_editorkey(); }
+				else if (k.key == '1') { debugGiveLotsOfStuff(); }
+			});
+
+				// if we ever need it for some reason, a keyup listener could also go here to give us some logic around whether we're holding down keys?
+
+		}
+	}
 
 
 
@@ -213,8 +296,8 @@ class Game {
 			console.log("Changing game mode to editing.");
 		}
 
-		else if (self.mode == "testing") {
-			console.log("game mode changed: testing the map from within the editor.");
+		else if (self.mode == "voyaging") {
+			console.log("going into the psychic voyage mode.");
 		}
 	}
 
@@ -358,6 +441,11 @@ class Game {
 			$("#commands").html("");
 			//pause game logic
 		}
+
+		else if (self.mode == "voyaging") {
+			$("#commands").html("");
+
+		}
 	}
 
 	incrementClock (x = undefined) {
@@ -376,8 +464,37 @@ class Game {
 		self.mode = newmode;
 		self.updateStimuli();
 		self.generateButtons();
+		self.wireUpControls();
 	}
 
+
+
+
+
+
+
+
+///////////////////
+// PSYCHIC VOYAGE //
+
+	beginAPsychicVoyage(level) {
+
+		self.switchModes("voyaging");
+
+		this.PV = new PsychicVoyage(level);
+		this.PV.beginVoyage();
+
+	}
+
+
+
+
+
+
+
+
+
+/////////////////////////////////
 // battle management functions //
 
 	initBattle() {
@@ -397,6 +514,10 @@ class Game {
 		self.activeBattle = false;
 	}
 
+
+
+
+////////////////////////
 // text box functions //
 
 	textBox(text) {		// takes a conversation lookup key
@@ -415,6 +536,10 @@ class Game {
 	}
 
 
+
+
+
+///////////////////////////////
 // item management functions //
 
 	getItemByName(itm) { // right now this just iterates through the items. there must be a better way but w/e!
@@ -425,6 +550,10 @@ class Game {
 		return r[0]; // assumes one item matches only
 	}
 
+
+
+
+///////////////////////////////
 // debt management functions //
 
 	compoundDebt() {
@@ -434,6 +563,13 @@ class Game {
 		console.log("compound interest called around " + self.loop_count + " ticks, new debt = " + self.PC.debt);
 	}
 
+
+
+
+
+
+
+//////////////////////////
 // meditation functions //
 
 	processMeditationState() {
@@ -466,6 +602,15 @@ class Game {
 		// removes the event listener for fragile meditation.
 	}
 
+
+
+
+
+
+
+
+
+
 // save/load functions //
 
 	autoSave() {
@@ -483,6 +628,10 @@ class Game {
 		localStorage.setItem('testsave', JSON.stringify(self));
 		localStorage.setItem('saveexists', true);
 	}
+
+
+
+
 
 
 ///////////////////////

@@ -22,28 +22,13 @@ let isVersionOkay = function() { // are we on or above the oldest supported vers
 
 };
 
-let createMasterControls = function() { //eventually this will have both saving, loading from save file, and restarting. 
+let createMasterControls = function() { //eventually this will have both saving, loading from save file, and restarting. the file name is kind of weird rn
 
 	$('#header').append("<button id=\"master_reload\">Start New Game</button>");
 	$('#header').append("\n<script>document.getElementById(\"master_reload\").addEventListener(\"click\", reloadButton);</script>")
 
 	// secretly we add the map editor functionality here, for now. probably makes sense to refine this a lot later
 
-	$(window).keypress(function (k) {
-		let keycode = k.key;
-		
-		if (keycode == 'e') {
-			key_editorkey();
-		}
-
-		else if (keycode == '`') {
-			key_debugkey();
-		}
-
-		else if (keycode == '1') {
-			debugGiveLotsOfStuff();
-		}
-	})
 };
 
 function loadGameFromScratch() {

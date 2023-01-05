@@ -198,3 +198,13 @@
 	width: 32;
 	margin-bottom: 8px;
 }
+
+#psychicvoyage {
+	position: absolute;
+	display: block;
+	left: 0px;
+	top: 0px;
+	width:1024px;
+	height: 768px;
+	z-index: 100;
+}

@@ -585,9 +585,14 @@ class Editor {
 		// - we change the editor mode away from editing, but leave the editor active. (We do make sure to hide the editor in CSS so we can't click.)
 		// - when the psychic vision is over, it will know to call the restore editor method to resume from where we were. (How? makes a call from the end vision method.)
 
+		GM.setTestingFlag();
+		GM.beginAPsychicVoyage(this.level);
+/*
 		let PV = new PsychicVoyage(this.level, "test"); 		// - we spawn a new psychic voyage
 
 		PV.beginVoyage();
+
+*/
 	}
 
 }

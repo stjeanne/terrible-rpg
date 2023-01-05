@@ -49,3 +49,4 @@ let CSS_TEXT = [0,0,0];
 const WORKING_LEVELS = ["debug.map"]; // an array of all levels in the active game
 const MAPS_PATH = "maps/";
 const MAXIMUM_MAZE_SIZE = 12;
+const MAZE_LOOP_TIME = 2500; // 2.5 seconds between calling the update loop in PV

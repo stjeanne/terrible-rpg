@@ -47,6 +47,7 @@ class Player {
 
 			this.maze_x = null;
 			this.maze_y = null;
+			this.maze_f = null;
 		}
 
 		else {
@@ -131,6 +132,32 @@ class Player {
 		GM.updateGUI();
 		GM.adHocBox("Congratulations! Through responsible and regular payment, your credit level has gone up!");
 	}
+
+
+
+
+///////////////////////////////////////
+// MAZE MANAGEMENT
+//
+
+	setMazePosition(x,y) {
+		this.maze_x = x;
+		this.maze_y = y;
+	}
+
+	setMazeFacing(f) {
+		this.maze_f = f;
+	}
+
+	turnLeft() {
+
+	}
+
+	turnRight() {
+		
+	}
+
+
 
 /**************************************
 
