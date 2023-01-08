@@ -181,15 +181,19 @@ class Game {
 					break;
 
 					case MAZE_BACK: console.log("stepped backward in a psychic voyage.");
+						self.PC.walkBackward();
 					break;
 
 					case 'q': console.log("strafed left in a psychic voyage."); 
+						self.PC.strafeLeft();
 					break;
 
 					case 'e': console.log("strafed right in a psychic voyage.");
+						self.PC.strafeRight();
 					break;
 
 					case " ": console.log("pressed spacebar in a psychic voyage.");
+						self.PC.activateSomething();
 					break;
 
 					case "Escape": 
