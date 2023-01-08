@@ -4,7 +4,8 @@ const PASSCODES = ["empty", "solid"];
 const MAZE_VERSION = 0.25; 	// now levels contain their own filenames
 
 
-const MM_SIZE_OF_PLAYER = 24;
+const MM_SIZE_OF_PLAYER = 20;
+const MM_ROOM_SIZE = 24;
 
 class Level {
 
@@ -20,7 +21,14 @@ class Level {
 		this.version = MAZE_VERSION;		// investigate this--every time you open the map it updates the version. i think this makes sense.
 
 		lev.rooms.forEach(r => this.rooms.push(r)); 
+
 	}
+
+
+//////////////////
+// MODIFIERS 
+/////////////////
+
 
 	addRoom(x,y) {
 		let r = new Room();
@@ -50,6 +58,29 @@ class Level {
 
 	changeHeight(h) {
 		this.height = h;
+	}
+
+
+/////////////////////
+// ACCESSORS
+////////////////////
+
+	getRoom(x,y) { return this.rooms.filter(rm => (rm.x == x) && (rm.y == y))[0]; }		// returns a room. if there's more than one somehow with same x/y, returns the first.
+
+	roomExists(x,y) {
+
+		let lev = this;
+
+		return (lev.getRoom(x,y) != undefined);
+
+	}
+
+
+	findPlayerStart() {
+
+		let r = this.rooms.filter(rm => rm.playerStart == true)[0];
+
+		return [r.x, r.y];
 	}
 }
 
@@ -114,10 +145,13 @@ class PsychicVoyage {
 
 			this.gfxLayer = null;
 			this.mm = null;				// drawing context for the minimap
+			this.mmCanvas = null;
 
 			this.playerX = 0;			// we'll echo these three whenever the player moves, and set up initially based on map data.
 			this.playerY = 0;			//
 			this.playerF = MAZE_NORTH;	//
+
+			this.miniMapObjects = new Array;			// being a little quickref for stuff immediately around the player.
 
 		}
 
@@ -140,9 +174,6 @@ class PsychicVoyage {
 			this.timePasses();
 			/*
 				check the command stack + execute any extant commands.
-				check whether anything has triggered a redraw:
-					and if so, redraw it.
-
 			*/
 
 			let voy = this;				// so we don't miss out on any changes made during the command executions
@@ -153,7 +184,7 @@ class PsychicVoyage {
 			}
 
 
-			if (!(voy.duration % 5)) { console.log("looping in a psychic voyage. ESC to emergency exit. iteration " + voy.duration); }
+			if (!(voy.duration % 25)) { console.log("looping in a psychic voyage. ESC to emergency exit. iteration " + voy.duration); }
 
 			if (!voy.loopIsBroken) {
 				setTimeout(() => voy.voyageLoop(), MAZE_LOOP_TIME)
@@ -286,6 +317,8 @@ class PsychicVoyage {
 				p.gfxLayer.id = "psychicvoyage";
 				p.mmCanvas = document.createElement("canvas");
 				p.mmCanvas.id = "minimapCanvas";
+				p.mmCanvas.setAttribute('width', '150');
+				p.mmCanvas.setAttribute('height', '150');
 				p.mm = p.mmCanvas.getContext("2d");
 
 				$("#wrapper").prepend(p.gfxLayer);
@@ -316,8 +349,8 @@ class PsychicVoyage {
 			console.log("setting up the player's vars");
 			return new Promise(function(resolve,reject) {
 
-				GM.PC.maze_x = 0;
-				GM.PC.maze_y = 0;
+				GM.PC.maze_x = voy.level.findPlayerStart()[0];
+				GM.PC.maze_y = voy.level.findPlayerStart()[1];
 				GM.PC.maze_f = MAZE_NORTH;
 
 				resolve();
@@ -342,6 +375,47 @@ class PsychicVoyage {
 // REGULAR DRAWING - MINIMAP
 ////////////////////////////
 
+
+		buildMiniMapArray() {
+
+			let p = this;
+			let lev = this.level;
+			this.miniMapObjects = [];
+
+			let xRow = new Array;
+
+			for (let yDir = -2; yDir <= 2; yDir++) {
+
+				xRow = [];
+
+				for (let xDir = -2; xDir <= 2; xDir++) {
+
+					let xRelToPlr = xDir + GM.PC.reportMazePosition()[0];
+					let yRelToPlr = yDir + GM.PC.reportMazePosition()[1];
+
+					if (lev.roomExists(xRelToPlr,yRelToPlr)) {
+
+						// for now, just push that there's a room present to draw. Eventually will want to get the room contents, parse them, and add the appropriate symbol.
+
+						xRow.push(MINIMAP_SYMBOLS[1]);	// adds symbol for empty room
+					}
+
+					else {
+						xRow.push(MINIMAP_SYMBOLS[0]);	// adds symbol for wall
+					}
+
+//					console.log(`does a room exist at (${xRelToPlr}, ${yRelToPlr})? ${lev.roomExists(xRelToPlr,yRelToPlr)}`);
+				}
+
+				p.miniMapObjects.push(xRow);
+			}
+
+			console.log("here's the result of building the minimap:");
+			console.log(p.miniMapObjects);
+
+		}
+
+
 		drawMiniMap() {
 			this.drawBlankMap();
 			this.drawMMRooms();
@@ -357,12 +431,34 @@ class PsychicVoyage {
 
 		drawMMRooms() {
 			console.log("drawing minimap rooms");
+			this.buildMiniMapArray();
+
+			let p = this;
+
+			let horizontalOffset = (p.mmCanvas.width - (MM_ROOM_SIZE * 5)) / 2;
+			let verticalOffset = (p.mmCanvas.height - (MM_ROOM_SIZE * 5)) / 2;
+
+			for (let yDir = 0; yDir <=4 ; yDir++) {
+				for (let xDir = 0; xDir <= 4; xDir++) {
+					if (p.miniMapObjects[yDir][xDir] == MINIMAP_SYMBOLS[1]) {
+						p.drawOneMMRoom(horizontalOffset + (xDir * MM_ROOM_SIZE), verticalOffset + (yDir * MM_ROOM_SIZE));
+//						console.log(`tryna draw a room at ${horizontalOffset} + ${(xDir * MM_ROOM_SIZE)}, ${verticalOffset} + ${(yDir * MM_ROOM_SIZE)}!`);
+					}
+				}
+			}
+
 		}
 
+		drawOneMMRoom(x,y) {
+			let c = this.mm;
+
+			c.fillStyle = "#62A158";	// eventually parameterize this
+			c.fillRect(x,y,MM_ROOM_SIZE,MM_ROOM_SIZE);
+		}
 
 		drawMMPlayer() {
 
-			console.log(`drawing player at ${this.playerX}, ${this.playerY}, facing ${GM.PC.reportMazeFacing()}`);
+			console.log(`drawing player at ${GM.PC.reportMazePosition()}`);
 
 			let c = this.mm;
 
@@ -372,7 +468,7 @@ class PsychicVoyage {
 			let pointOffset = (Math.floor(Math.sqrt((MM_SIZE_OF_PLAYER * MM_SIZE_OF_PLAYER) - (baseOffset * baseOffset)))) / 2;
 			let triangleCenter = this.mmCanvas.height / 2;
 
-			console.log(`here are the player's pos vars: base offset = ${baseOffset}, point offset = ${pointOffset}, triangle center = ${triangleCenter}`);
+//			console.log(`here are the player's pos vars: base offset = ${baseOffset}, point offset = ${pointOffset}, triangle center = ${triangleCenter}`);
 
 			switch(GM.PC.reportMazeFacing()) {
 				case(MAZE_EAST):

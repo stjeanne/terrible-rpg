@@ -63,3 +63,5 @@ let MAZE_LEFT = 'a';
 let MAZE_STRAFELEFT = 'q';
 let MAZE_STRAFERIGHT = 'e';
 let MAZE_ACTIVATE = ' ';
+
+let MINIMAP_SYMBOLS = ["wall", "room", "pattern"];
