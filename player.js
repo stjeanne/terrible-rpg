@@ -145,6 +145,14 @@ class Player {
 		this.maze_y = y;
 	}
 
+	reportMazePosition() {			// returns an array with x,y,f
+		return [this.maze_x, this.maze_y, this.maze_f];
+	}
+
+	reportFacing() {
+		return this.maze_f;
+	}
+
 	setMazeFacing(f) {
 		this.maze_f = f;
 	}
@@ -154,7 +162,23 @@ class Player {
 	}
 
 	turnRight() {
-		
+
+	}
+
+	walkForward() {
+
+	}
+
+	walkBack() {
+
+	}
+
+	strafeLeft() {
+
+	}
+
+	strafeRight() {
+
 	}
 
 

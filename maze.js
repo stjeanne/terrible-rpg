@@ -3,6 +3,9 @@
 const PASSCODES = ["empty", "solid"];
 const MAZE_VERSION = 0.25; 	// now levels contain their own filenames
 
+
+const MM_SIZE_OF_PLAYER = 24;
+
 class Level {
 
 	constructor(lev) {
@@ -110,6 +113,11 @@ class PsychicVoyage {
 			this.redraw = false;
 
 			this.gfxLayer = null;
+			this.mm = null;				// drawing context for the minimap
+
+			this.playerX = 0;			// we'll echo these three whenever the player moves, and set up initially based on map data.
+			this.playerY = 0;			//
+			this.playerF = MAZE_NORTH;	//
 
 		}
 
@@ -129,20 +137,23 @@ class PsychicVoyage {
 
 		voyageLoop() {
 
-			let voy = this;
-
-			voy.timePasses();
+			this.timePasses();
 			/*
 				check the command stack + execute any extant commands.
 				check whether anything has triggered a redraw:
 					and if so, redraw it.
-				check whether anything has broken the loop: 
-					if not, return to the voyage loop.
+
 			*/
 
-//			if (voy.duration > 100) { voy.loopIsBroken = true; }
+			let voy = this;				// so we don't miss out on any changes made during the command executions
 
-			console.log("looping in a psychic voyage, you better wait! ha ha ha! iteration " + voy.duration + ", loopIsBroken is " + voy.loopIsBroken);
+			if (this.redraw) {
+				voy.drawMiniMap();
+				this.redraw = false;
+			}
+
+
+			if (!(voy.duration % 5)) { console.log("looping in a psychic voyage. ESC to emergency exit. iteration " + voy.duration); }
 
 			if (!voy.loopIsBroken) {
 				setTimeout(() => voy.voyageLoop(), MAZE_LOOP_TIME)
@@ -158,17 +169,19 @@ class PsychicVoyage {
 
 		beginVoyage() {
 			console.log("the psychic voyage BEGINS, exploring " + this.level.filename);
+			setMasterOverlay(1);
 
-			let p = new Promise((resolve,reject) => resolve()) // we don't know what fancy gfx/sounds we may need
+			let p = new Promise((resolve,reject) => resolve())
 
-			.then(() => this.loadAnyResources())
-			.then(() => this.setUpCanvasRoomLayout())			// build the maze layout in the DOM
+			.then(() => this.loadAnyResources())				// we don't know what fancy gfx/sounds we may need
+			.then(() => this.setUpMazeCanvasLayout())			// build the maze layout in the DOM
 			.then(() => this.setUpPlayerVariables())			// set up where the player is and is facing
 			.then(() => this.setUpInitialMapState())			// load any initial commands into the stack
 			.then(() => {
 
 				this.loopIsBroken = false;
 				this.duration = 0;
+				this.redraw = true;
 				this.voyageLoop();
 			})
 
@@ -198,6 +211,9 @@ class PsychicVoyage {
 			console.log("the psychic voyage ENDS");
 
 			this.clearUpGFX();	//eventually do this in a promise; for right now i'm tired
+
+			setMasterOverlay(0);
+
 
 			if(GM.isThisAnEditorTest()) {
 				GM.unsetTestingFlag();
@@ -244,6 +260,10 @@ class PsychicVoyage {
 // GRAPHICS RELATED
 ///
 
+////////////////////
+// INITIAL SETUP
+
+
 		loadAnyResources(resolve,reject) {
 
 			console.log("loading any resources we need");
@@ -253,7 +273,7 @@ class PsychicVoyage {
 			})
 		}
 
-		setUpCanvasRoomLayout() {
+		setUpMazeCanvasLayout() {
 
 			let p = this;
 
@@ -261,19 +281,26 @@ class PsychicVoyage {
 
 			return new Promise(function(resolve,reject) {
 
+				console.log("inside the canvas setup promise, preparing to create");
 				p.gfxLayer = document.createElement("div");
 				p.gfxLayer.id = "psychicvoyage";
+				p.mmCanvas = document.createElement("canvas");
+				p.mmCanvas.id = "minimapCanvas";
+				p.mm = p.mmCanvas.getContext("2d");
+
+				$("#wrapper").prepend(p.gfxLayer);
+				$("#psychicvoyage").append("<div id=\'minimap\'>");
+				$("#minimap").append(p.mmCanvas);
+				$("#psychicvoyage").append("<div id=\'stimuluswindow\'>");
+				$("#psychicvoyage").append("<div id=\'leftstat\'>");
+				$("#psychicvoyage").append("<div id=\'rightstat\'>");
+				$("#psychicvoyage").append("<div id=\'leftHUD\'>");
+				$("#psychicvoyage").append("<div id=\'rightHUD\'>");
+
 
 				resolve();
 
 			})
-
-
-//			return function(resolve);
-//						canvas overlay
-//						left and right stat windows
-//						left and right HUDs
-//						player message box
 
 		}
 
@@ -283,8 +310,15 @@ class PsychicVoyage {
 		}
 
 		setUpPlayerVariables() {
+
+			let voy = this;
+
 			console.log("setting up the player's vars");
 			return new Promise(function(resolve,reject) {
+
+				voy.playerX = 0;
+				voy.playerY = 0;
+				voy.playerF = MAZE_NORTH;
 
 				resolve();
 
@@ -298,5 +332,83 @@ class PsychicVoyage {
 				resolve();
 
 			})
+		}
+
+
+
+//////////////////////////
+// REGULAR DRAWING - MINIMAP
+////////////////////////////
+
+		drawMiniMap() {
+			this.drawBlankMap();
+			this.drawMMRooms();
+			this.drawMMPlayer();
+		}
+
+
+		drawBlankMap() {
+
+			console.log("clearing out the old map");
+			this.mm.clearRect(0,0, this.mmCanvas.width, this.mmCanvas.height);
+		}
+
+		drawMMRooms() {
+			console.log("drawing minimap rooms");
+		}
+
+
+		drawMMPlayer() {
+
+			console.log(`drawing player at ${this.playerX}, ${this.playerY}, facing ${this.playerF}`);
+
+			let c = this.mm;
+
+			c.fillStyle = "#FA0FFF";		// eventually parameterize this so the color changes based on state--would be cool if it's your dominant element
+
+			let baseOffset = MM_SIZE_OF_PLAYER / 2;
+			let pointOffset = (Math.floor(Math.sqrt((MM_SIZE_OF_PLAYER * MM_SIZE_OF_PLAYER) - (baseOffset * baseOffset)))) / 2;
+			let triangleCenter = this.mmCanvas.height / 2;
+
+			console.log(`here are the player's pos vars: base offset = ${baseOffset}, point offset = ${pointOffset}, triangle center = ${triangleCenter}`);
+
+			switch(this.playerF) {
+				case(MAZE_EAST):
+					c.beginPath();					
+					c.moveTo(triangleCenter - baseOffset, triangleCenter - pointOffset);
+					c.lineTo(triangleCenter - baseOffset, triangleCenter + pointOffset);
+					c.lineTo(triangleCenter + baseOffset, triangleCenter);
+					c.fill();
+				break;
+
+				break;
+
+				case(MAZE_SOUTH):
+					c.beginPath();					
+					c.moveTo(triangleCenter - baseOffset, triangleCenter - pointOffset);
+					c.lineTo(triangleCenter, triangleCenter + pointOffset);
+					c.lineTo(triangleCenter + baseOffset, triangleCenter - pointOffset);
+					c.fill();
+				break;
+
+				case(MAZE_WEST):
+					c.beginPath();					
+					c.moveTo(triangleCenter + baseOffset, triangleCenter - pointOffset);
+					c.lineTo(triangleCenter + baseOffset, triangleCenter + pointOffset);
+					c.lineTo(triangleCenter - baseOffset, triangleCenter);
+					c.fill();
+				break;
+
+				case(MAZE_NORTH):
+					c.beginPath();					
+					c.moveTo(triangleCenter - baseOffset, triangleCenter + pointOffset);
+					c.lineTo(triangleCenter, triangleCenter - pointOffset);
+					c.lineTo(triangleCenter + baseOffset, triangleCenter + pointOffset);
+					c.fill();
+				break;
+
+			}
+
+
 		}
 }
