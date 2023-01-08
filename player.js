@@ -174,6 +174,37 @@ class Player {
 
 	walkForward() {
 
+		let desiredX = 0;
+		let desiredY = 0;
+
+		switch(this.maze_f) {
+			case MAZE_NORTH:
+				desiredX = 0;
+				desiredY = -1;
+				break;
+
+			case MAZE_EAST:
+				desiredX = 1;
+				desiredY = 0;
+				break;
+
+			case MAZE_SOUTH:
+				desiredX = 0;
+				desiredY = 1;
+				break;
+
+			case MAZE_WEST:
+				desiredX = -1;
+				desiredY = 0;
+				break;
+
+		}
+
+		if(GM.PV.isItALegalMove(this.maze_x + desiredX, this.maze_y + desiredY)) {
+
+			GM.PV.movePlayer(this.maze_x + desiredX, this.maze_y + desiredY);
+		}
+
 	}
 
 	walkBack() {

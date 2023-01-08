@@ -169,6 +169,7 @@ class Game {
 
 				switch(k.key) {
 					case MAZE_FORWARD: console.log("walked forward in a psychic voyage.");
+						self.PC.walkForward();
 					break;
 
 					case MAZE_LEFT: console.log("turned left in a psychic voyage.");

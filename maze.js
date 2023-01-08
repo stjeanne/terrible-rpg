@@ -5,7 +5,7 @@ const MAZE_VERSION = 0.25; 	// now levels contain their own filenames
 
 
 const MM_SIZE_OF_PLAYER = 20;
-const MM_ROOM_SIZE = 24;
+const MM_ROOM_SIZE = 30;
 
 class Level {
 
@@ -108,7 +108,7 @@ class Room {
 			this.pass = PASSCODES[0];	// default to empty
 			this.id = null;
 			this.playerStart = false; // defaults to not being the player start point
-			this.playerIsHere = false; // defaults to the player not being here
+			this.playerIsHere = false; // defaults to the player not being here. right now this behavior is not used!
 			this.flavor = null;
 		}
 	}
@@ -346,7 +346,7 @@ class PsychicVoyage {
 
 			let voy = this;
 
-			console.log("setting up the player's vars");
+//			console.log("setting up the player's vars");
 			return new Promise(function(resolve,reject) {
 
 				GM.PC.maze_x = voy.level.findPlayerStart()[0];
@@ -368,6 +368,39 @@ class PsychicVoyage {
 		}
 
 		triggerRedraw() { this.redraw = true; }
+
+/////////////////////////
+// LEVEL LOGIC FUNCTIONS
+/////////////////////////
+
+		isItALegalMove(x,y) {
+
+			let p = this;
+
+			console.log(`asked whether it's okay for something to move to ${x}, ${y}`);
+
+			if(!p.level.roomExists(x,y)) {
+				console.log("there is no room there!");
+				return false;
+			}
+
+			else {
+				console.log("for now it seems like it'd be fine!");
+				return true;
+			}
+
+		}
+
+		movePlayer(x,y) {
+			GM.PC.setMazePosition(x,y);
+
+			this.triggerRedraw();
+
+			// eventually handle logic related to this / other entities here.
+
+		}
+
+
 
 
 
@@ -410,7 +443,7 @@ class PsychicVoyage {
 				p.miniMapObjects.push(xRow);
 			}
 
-			console.log("here's the result of building the minimap:");
+//			console.log("here's the result of building the minimap:");
 			console.log(p.miniMapObjects);
 
 		}
@@ -425,12 +458,12 @@ class PsychicVoyage {
 
 		drawBlankMap() {
 
-			console.log("clearing out the old map");
+//			console.log("clearing out the old map");
 			this.mm.clearRect(0,0, this.mmCanvas.width, this.mmCanvas.height);
 		}
 
 		drawMMRooms() {
-			console.log("drawing minimap rooms");
+//			console.log("drawing minimap rooms");
 			this.buildMiniMapArray();
 
 			let p = this;
