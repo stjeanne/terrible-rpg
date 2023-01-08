@@ -49,9 +49,17 @@ let CSS_TEXT = [0,0,0];
 const WORKING_LEVELS = ["debug.map"]; // an array of all levels in the active game
 const MAPS_PATH = "maps/";
 const MAXIMUM_MAZE_SIZE = 12;
-const MAZE_LOOP_TIME = 1000; // .5 seconds between calling the update loop in PV
+const MAZE_LOOP_TIME = 250; // .25 seconds between calling the update loop in PV
 
 const MAZE_EAST = 0;
 const MAZE_SOUTH = 1;
 const MAZE_WEST = 2;
 const MAZE_NORTH = 3;
+
+let MAZE_FORWARD = 'w';
+let MAZE_BACK = 's';
+let MAZE_RIGHT = 'd';
+let MAZE_LEFT = 'a';
+let MAZE_STRAFELEFT = 'q';
+let MAZE_STRAFERIGHT = 'e';
+let MAZE_ACTIVATE = ' ';

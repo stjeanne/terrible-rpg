@@ -168,16 +168,18 @@ class Game {
 			$(window).keydown(k => {
 
 				switch(k.key) {
-					case 'w': console.log("walked forward in a psychic voyage.");
+					case MAZE_FORWARD: console.log("walked forward in a psychic voyage.");
 					break;
 
-					case 'a': console.log("turned left in a psychic voyage.");
+					case MAZE_LEFT: console.log("turned left in a psychic voyage.");
+						self.PC.turnLeft();
 					break;
 
-					case 'd': console.log("turned right in a psychic voyage.");
+					case MAZE_RIGHT: console.log("turned right in a psychic voyage.");
+						self.PC.turnRight();
 					break;
 
-					case 's': console.log("stepped backward in a psychic voyage.");
+					case MAZE_BACK: console.log("stepped backward in a psychic voyage.");
 					break;
 
 					case 'q': console.log("strafed left in a psychic voyage."); 

@@ -316,9 +316,9 @@ class PsychicVoyage {
 			console.log("setting up the player's vars");
 			return new Promise(function(resolve,reject) {
 
-				voy.playerX = 0;
-				voy.playerY = 0;
-				voy.playerF = MAZE_NORTH;
+				GM.PC.maze_x = 0;
+				GM.PC.maze_y = 0;
+				GM.PC.maze_f = MAZE_NORTH;
 
 				resolve();
 
@@ -333,6 +333,8 @@ class PsychicVoyage {
 
 			})
 		}
+
+		triggerRedraw() { this.redraw = true; }
 
 
 
@@ -360,7 +362,7 @@ class PsychicVoyage {
 
 		drawMMPlayer() {
 
-			console.log(`drawing player at ${this.playerX}, ${this.playerY}, facing ${this.playerF}`);
+			console.log(`drawing player at ${this.playerX}, ${this.playerY}, facing ${GM.PC.reportMazeFacing()}`);
 
 			let c = this.mm;
 
@@ -372,7 +374,7 @@ class PsychicVoyage {
 
 			console.log(`here are the player's pos vars: base offset = ${baseOffset}, point offset = ${pointOffset}, triangle center = ${triangleCenter}`);
 
-			switch(this.playerF) {
+			switch(GM.PC.reportMazeFacing()) {
 				case(MAZE_EAST):
 					c.beginPath();					
 					c.moveTo(triangleCenter - baseOffset, triangleCenter - pointOffset);

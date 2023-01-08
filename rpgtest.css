@@ -231,7 +231,7 @@
 
 	background: #BCFFB1;
 	border: 5px solid #62A258;
-	filter: blur(2.5px);
+	filter: blur(1px);
 	z-index: 220;
 }
 

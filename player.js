@@ -145,24 +145,31 @@ class Player {
 		this.maze_y = y;
 	}
 
+	setMazeFacing(f) {
+		this.maze_f = f;
+		GM.PV.triggerRedraw();
+	}
+
 	reportMazePosition() {			// returns an array with x,y,f
 		return [this.maze_x, this.maze_y, this.maze_f];
 	}
 
-	reportFacing() {
+	reportMazeFacing() {
 		return this.maze_f;
 	}
 
-	setMazeFacing(f) {
-		this.maze_f = f;
-	}
+
 
 	turnLeft() {
+		this.maze_f += 4;
+		this.maze_f--;
+		this.setMazeFacing(Math.abs(this.maze_f) % 4);
 
 	}
 
 	turnRight() {
-
+		this.maze_f++;
+		this.setMazeFacing(this.maze_f % 4);
 	}
 
 	walkForward() {
