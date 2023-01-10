@@ -154,31 +154,33 @@
 	position: absolute;
 	left: 0px;
 	top: 0px;
-	width: 2000;
-	height: 1200;
+	width: 1440;
+	height: 1024;
 	background-color: #222C;
 	z-index: 99;
 }
 
-#editor .e_window {
-	width: 1024px;
+#editor #e_wrapper {
+	width: 100%;
+	margin: 0 auto;
 }
 
-#editor .e_main {
+#editor #e_leftcol {
 	float: left;
-	width: 724px;
+	width: 470px;
+	margin-right: 30px;
+	background-color: #FFF;
 }
 
-#editor .e_properties {
-	float: right;
-	width: 300px;
+#editor #e_rightcol {
+	float: left;
+	width: 670px;
+	background-color: #DFDFDF;
 }
 
 #editor .e_map {
-	margin-top: 10;
-	margin-left: 10;
-	height: 600;
-	width: 600;
+	height: 440;
+	width: 440;
 	z-index: 100;
 }
 

@@ -6,8 +6,8 @@ let eref = null; // yeah yeah yeah yeah
 // screen layouts //
 
 
-const MAPW = 600;
-const MAPH = 600;
+const MAPW = 440;
+const MAPH = 440;
 
 const TOOLS = ["toggle", "add", "erase", "focus", "playerstart"];
 
@@ -15,7 +15,7 @@ const TOOLW = 64;
 const TOOLH = 600;
 const TOOLSIZE = 32;
 
-const ED_DEFAULTROOMSIZE = 20;
+const ED_DEFAULTROOMSIZE = 16;
 const ED_DEFAULTBORDER = 2;
 
 const DEFAULT_START_MAP = "debug.map";
@@ -77,6 +77,11 @@ class Editor {
 			this.divID = document.createElement('div');
 			this.divID.id = "editor";
 			$('#wrapper').prepend(this.divID);
+			$(this.divID).append("<div id=\"e_wrapper\">");
+			$('#e_wrapper').append("<div id=\"e_leftcol\">");
+			$('#e_wrapper').append("<div id=\"e_rightcol\">");
+
+
 
 /*
 
@@ -106,19 +111,19 @@ class Editor {
 			this.canvasID.className = "e_map";
 			this.canvasID.width = MAPW;
 			this.canvasID.height = MAPH;
-			this.divID.appendChild(this.canvasID);
+
+			$("#e_leftcol").append(this.canvasID);
 			this.m = this.canvasID.getContext("2d");
 			
 			this.toolID = document.createElement('canvas');
 			this.toolID.className = "e_tool";
 			this.toolID.width = TOOLW;
 			this.toolID.height = TOOLH;
-			this.divID.appendChild(this.toolID);
+
+			$("#e_leftcol").append(this.toolID);
+
 			this.t = this.toolID.getContext("2d");
 
-			$(this.divID).append("</div></div>");
-
-			$(this.divID).append("<p>");
 			this.setTool("toggle");
 
 			this.AddTool("toggle");
@@ -137,7 +142,6 @@ class Editor {
 
 			$('.e_map').on("mousemove", () => this.calcMousePos(event.offsetX, event.offsetY));
 			$('.e_map').on("click", () => this.applyTool(this.targx,this.targy));
-
 			$('.e_tool').on("click", () => console.log("clicked the tool palette!"));
 
 
@@ -149,7 +153,7 @@ class Editor {
 		this.toolList.push(tool);
 		this.numTools++;
 
-		$('#editor').append("<button id=\"TOOL_" + tool + "\">" + tool + "</button>");
+		$('#e_rightcol').append("<p><button id=\"TOOL_" + tool + "\">" + tool + "</button>");
 		$('#TOOL_' + tool).on("click", () => this.setTool(tool));
 
 
@@ -158,13 +162,13 @@ class Editor {
 	}
 
 	PrepGUI() { // make this better later -- create this in the e_main div after the canvas
-			$('#editor').append("<p>");
-			$('#editor').append("<button id=\"GUI_save\">Save Current Map</button>");
-			$('#editor').append("<button id=\"GUI_saveAs\">Save As</button>");
-			$('#editor').append("<button id=\"GUI_loadfile\">Load Map From File</button>");
-			$('#editor').append("<button id=\"GUI_load\">Load Live Map</button>");
-			$('#editor').append("<button id=\"GUI_new\">New Map</button>");
-			$('#editor').append("<button id=\"GUI_test\">TEST</button>");
+			$('#e_rightcol').append("<p>");
+			$('#e_rightcol').append("<button id=\"GUI_save\">Save Current Map</button>");
+			$('#e_rightcol').append("<button id=\"GUI_saveAs\">Save As</button>");
+			$('#e_rightcol').append("<button id=\"GUI_loadfile\">Load Map From File</button>");
+			$('#e_rightcol').append("<button id=\"GUI_load\">Load Live Map</button>");
+			$('#e_rightcol').append("<button id=\"GUI_new\">New Map</button>");
+			$('#e_rightcol').append("<button id=\"GUI_test\">TEST</button>");
 
 
 			$('#GUI_save').on("click", () => this.saveCurrentLevel());
@@ -180,7 +184,7 @@ class Editor {
 				s += "<option value=\"" + tool + "\">" + tool + "</option>";
 			});
 
-			$('#editor').append("<select id=\"GUI_adhoctools\">" + s + "</select>");
+//			$('#e_rightcol').append("<select id=\"GUI_adhoctools\">" + s + "</select>");
 
 	}
 
@@ -587,12 +591,6 @@ class Editor {
 
 		GM.setTestingFlag();
 		GM.beginAPsychicVoyage(this.level);
-/*
-		let PV = new PsychicVoyage(this.level, "test"); 		// - we spawn a new psychic voyage
-
-		PV.beginVoyage();
-
-*/
 	}
 
 }
