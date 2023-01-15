@@ -11,8 +11,8 @@ const MAPH = 440;
 
 const TOOLS = ["toggle", "add", "erase", "focus", "playerstart"];
 
-const TOOLW = 64;
-const TOOLH = 600;
+const TOOLW = 440;
+const TOOLH = 38;
 const TOOLSIZE = 32;
 
 const ED_DEFAULTROOMSIZE = 16;
@@ -139,7 +139,6 @@ class Editor {
 
 			this.loadLevelForEditingFromFile(this.curmap);
 
-
 			$('.e_map').on("mousemove", () => this.calcMousePos(event.offsetX, event.offsetY));
 			$('.e_map').on("click", () => this.applyTool(this.targx,this.targy));
 			$('.e_tool').on("click", () => console.log("clicked the tool palette!"));
@@ -162,21 +161,28 @@ class Editor {
 	}
 
 	PrepGUI() { // make this better later -- create this in the e_main div after the canvas
-			$('#e_rightcol').append("<p>");
-			$('#e_rightcol').append("<button id=\"GUI_save\">Save Current Map</button>");
-			$('#e_rightcol').append("<button id=\"GUI_saveAs\">Save As</button>");
-			$('#e_rightcol').append("<button id=\"GUI_loadfile\">Load Map From File</button>");
-			$('#e_rightcol').append("<button id=\"GUI_load\">Load Live Map</button>");
-			$('#e_rightcol').append("<button id=\"GUI_new\">New Map</button>");
-			$('#e_rightcol').append("<button id=\"GUI_test\">TEST</button>");
 
+			/*
 
-			$('#GUI_save').on("click", () => this.saveCurrentLevel());
-			$('#GUI_saveAs').on("click", () => this.saveCurrentLevelAs());
-			$('#GUI_loadfile').on("click", () => this.loadLevelForEditingFromFile());
-			$('#GUI_load').on("click", () => this.requestLevelForEditing());
-			$('#GUI_new').on("click", () => this.createNewLevel());
-			$('#GUI_test').on("click", () => this.testLevel());
+					Improvement plan:
+
+					- make the fields functional as well, starting with the map name as a test. You can change the field and see
+					the map data update live.
+
+			*/
+
+			$("#e_leftcol").append("<div id=\"e_saveload\">");
+			$("#e_rightcol").append("<div id=\"e_properties\">");
+			$("#e_properties").append("<h3>MAP PROPERTIES</h3>");
+
+			this.makeButton("#e_saveload", "GUI_save", "Save Current Map", () => this.saveCurrentLevel());
+			this.makeButton("#e_saveload", "GUI_saveAs", "Save Map As New File", () => this.saveCurrentLevelAs());
+			this.makeButton("#e_saveload", "GUI_loadFile", "Load Map From File", () => this.loadLevelForEditingFromFile());
+			this.makeButton("#e_saveload", "GUI_load", "Load Live Map", () => this.requestLevelForEditing());
+			this.makeButton("#e_saveload", "GUI_new", "Create New Map", () => this.createNewLevel());
+			this.makeButton("#e_saveload", "GUI_test", "TEST", () => this.testLevel());
+
+			this.makeField("#e_properties", "GUI_mapName", "Name of map", () => this.updateMapName, "Update to change map name");
 
 			let s = "";
 
@@ -215,10 +221,36 @@ class Editor {
 
 
 
+///////////////////////
+// UX Setup Functions
+//
+
+	makeButton(section, name, label, callback) {
+
+		let s = `<button id=\"${name}\">${label}</button>`;
+
+		console.log(`makebutton with ${s}`);
+
+		$(section).append(s);
+		$("#" + name).on("click", callback);
+
+	}
 
 
+	makeField(section, name, label, callback, ...args) {
 
+		let defaultValue = "";
 
+		if (args[0]) { defaultValue = args[0]; }
+
+		console.log("called makefield, value is " + defaultValue);
+
+		let s = `<label for "${name}">${label}</label><input type="text" id="${name}" value="${defaultValue}">`;
+
+		$(section).append(s);
+		$("#" + name).on("change", { value: "scream", editor: this}, callback("test"));
+
+	}
 
 
 
@@ -285,7 +317,7 @@ class Editor {
 		this.toolList.forEach(tool => {
 
 			this.t.fillStyle = "#F00";
-			this.t.fillRect(4, (4 * (i + 1)) + (TOOLSIZE * i), TOOLSIZE, TOOLSIZE);
+			this.t.fillRect((4 * (i + 1)) + (TOOLSIZE * i), 4, TOOLSIZE, TOOLSIZE);
 			i++;
 
 			console.log("drawing button for " + tool);
@@ -389,6 +421,32 @@ class Editor {
 	getRoom(x, y) {	// takes an x y coordinate. if we're on a room, returns a reference to the room we're on. if not, returns false;
 		return this.level.rooms.filter(r => (x == r.x) && (y == r.y))[0];
 	}
+
+
+
+//////////////////
+// functions for editor controls
+//////////////////
+
+	updateMapName(n) {	// currently this doesn't seem to work unless it's happening through an event, which feels busted...
+
+		console.log(n); 
+
+		if (n.type == "change") {
+			console.log("we know we came here from an event");
+			console.log("called update map name, trying to change to " + n.target.value); // eventually need to do some protections around this
+			n.data.editor.level.changeName(n.target.value);
+			n.data.editor.redraw = true;
+		}
+
+		else if (typeof n == String) { // in this case we are calling it from within the house. Right now this doesn't work
+			console.log("we think n is a string, let's change the level name to " + n);
+			this.level.changeName(n);
+		}
+
+
+	}
+
 
 
 

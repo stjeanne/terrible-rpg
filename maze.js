@@ -60,12 +60,17 @@ class Level {
 		this.height = h;
 	}
 
+	changeName(n) {
+		this.mapname = n;
+	}
 
 /////////////////////
 // ACCESSORS
 ////////////////////
 
 	getRoom(x,y) { return this.rooms.filter(rm => (rm.x == x) && (rm.y == y))[0]; }		// returns a room. if there's more than one somehow with same x/y, returns the first.
+
+	getMapName() { return this.mapname; }
 
 	roomExists(x,y) {
 

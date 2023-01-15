@@ -294,8 +294,8 @@ let cmd_fakebattle = function() {
 let key_editorkey = function() {
 
 		if (GM.mode == "editing") {
-			console.log("whoa you pressed e to close the editor");
-			turnEditorOff();
+			console.log("whoa you pressed e to close the editor, debug mode is " + DEBUG_MODE);
+			if (DEBUG_MODE) {	turnEditorOff() };
 		}
 
 		else {
